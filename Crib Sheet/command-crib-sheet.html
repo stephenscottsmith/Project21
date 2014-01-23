@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Command Crib Sheet</title>
+        <link rel="stylesheet" href="command-crib-sheet.css">
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="command-crib-sheet.js"></script>
+    </head>
+    <body>
+    	<h1 id="headline">Command Crib Sheet</h1>
+
+    	<div id="main">
+    		<div class="simple-form">
+    			<div id="button">
+				  <ul>
+				    <li><a href="#">cat</a></li>
+				    <li><a href="#">traceroute</a></li>
+				    <li><a href="#">curl</a></li>
+				    <li><a href="#">ssh</a></li>
+				    <li><a href="#">sudo</a></li>
+				    <li><a href="#">grep</a></li>
+				    <li><a href="#">diff</a></li>
+				    <li><a href="#">man</a></li>
+				    <li><a href="#">script</a></li>
+				    <li><a href="#">hexdump</a></li>
+				  </ul>
+				</div>
+    		</div>
+        </div>
+
+        <div class="content">
+            <a class="activator" id="activator"></a>
+        </div>
+        <div class="overlay" id="overlay" style="display:none;"></div>
+        <div class="box" id="box">
+            <a class="boxclose" id="boxclose"></a>
+            <h1 id="commandName"></h1>
+            <div id="innerbox">
+	            <p id="description"></p>
+	            <p id="example"></p>
+	            <p id="action"></p>
+	        </div>
+        </div>
+    </body>
+</html>
