@@ -3,7 +3,7 @@ Project21
 
 Card Counting Application
 
-Schedule:
+Tentative Schedule:
 
 1/27/14 - 2/10/14
 Upload Preliminary UI Design Layout
@@ -26,15 +26,15 @@ Begin coding front end, delegate tasks
 Clean up code
 Test functionality of actual gameplay
 Refine
+Create login screen for user accounts
+Deploy to mobile devices
 
 3/3/14 - 3/17/14
 Set up node server
 Set up database for user statistics
-
-3/17/14 - 4/3/14
-Start pushing user statistics
-Create login screen for user accounts 
+Start pushing user statistics 
 Graphics - make pretty, add style
+
 
 
 
