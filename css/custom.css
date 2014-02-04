@@ -30,6 +30,13 @@ body {
 
 }
 
+.image{
+	background: url(Project21Splash.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+	-moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 .transbox {
     background-color: rgba(255,255,255,.4);
     border:2px solid black;
