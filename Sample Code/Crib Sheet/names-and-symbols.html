@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Names and Symbols Crib Sheet</title>
+        <link rel="stylesheet" href="command-crib-sheet.css">
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="command-crib-sheet.js"></script>
+    </head>
+    <body>
+    	<h1 id="headline">Names and Symbols Crib Sheet</h1>
+
+    	<div id="main">
+    		<div class="simple-form">
+    			<div id="button">
+				  <ul>
+				    <li><a href="#">.bash_profile</a></li>
+				    <li><a href="#">PATH</a></li>
+				    <li><a href="#">. (period)</a></li>
+				    <li><a href="#">$</a></li>
+				    <li><a href="#">|</a></li>
+				    <li><a href="#">></a></li>
+				    <li><a href="#"><</a></li>
+				    <li><a href="#">&&</a></li>
+				    <li><a href="#">||</a></li>
+				    <li><a href="#">*</a></li>
+				  </ul>
+				</div>
+    		</div>
+        </div>
+
+        <div class="content">
+            <a class="activator" id="activator"></a>
+        </div>
+        <div class="overlay" id="overlay" style="display:none;"></div>
+        <div class="box" id="box">
+            <a class="boxclose" id="boxclose"></a>
+            <h1 id="commandName"></h1>
+            <div id="innerbox">
+	            <p id="description"></p>
+	            <p id="example"></p>
+	            <p id="action"></p>
+	        </div>
+        </div>
+    </body>
+</html>
