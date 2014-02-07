@@ -13,3 +13,12 @@ npm install -g socket.io
 ```
 npm install -g ngrok
 ```
+
+# usage
+
+
+```
+$ node server.js
+```
+
+The server is listening on port 3000. The output from the console includes the url with which you can access the chatroom (tunneling with [ngrok](https://npmjs.org/package/ngrok)). 
