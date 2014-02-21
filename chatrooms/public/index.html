@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang='en'>
+<head>
+    <meta charset = 'utf-8'>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Chat</title>
+    <link href='/stylesheets/style.css' rel='stylesheet'>
+    <!--The viewport meta tag ensures proper rendering and touch zooming-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id='content'>
+        <div id='room'></div>
+
+        <div id='room-list'></div>
+
+        <div id='messages'></div>
+
+        <form id='send-form' name="send-form">
+            <input id='send-message'> <input id='send-button' type='submit'
+            value='Send'>
+
+            <div id='help'>
+                Chat commands:
+
+                <ul>
+                    <li>Change nickname: <code>/name [username]</code></li>
+
+                    <li>Join/create room: <code>/join [room name]</code></li>
+                </ul>
+            </div>
+        </form>
+    </div><script src='/socket.io/socket.io.js' type='text/javascript'></script><script src='http://code.jquery.com/jquery-1.8.0.min.js' type=
+'text/javascript'></script><script src='/javascripts/chat.js' type='text/javascript'></script><script src='/javascripts/chat_ui.js' type='text/javascript'></script>
+</body>
+</html>
