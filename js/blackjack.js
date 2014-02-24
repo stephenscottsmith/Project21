@@ -305,17 +305,9 @@ var displayCards = function(deck, speed, numCardsToDisplay)
             deckCount++;
             setTimeout(display, speed);
         }
-        else if(deckCount < numCardsToDisplay + SECONDSTOWAITAFTERFINISHED)
-        {
-            deckCount++;
-            setTimeout(display, 1000)
-        }
         else
         {
-            $('#count').hide();
-            alert("Proper count was: " + properCount + "\nYour count was: " + $('#count').val());
-            showBegins();
-
+            $('#submitcount').show().attr("propercount", properCount);
         }
     }
 
@@ -326,13 +318,13 @@ var hideBegins = function()
 {
     $('#beginbtn').hide();
     $('#instructions').hide();
-    $('#card').show();
+    $('#countgroup').show();
 }
 var showBegins = function()
 {
     $('#beginbtn').show();
     $('#instructions').show();
-    $('#card').hide();
+    $('#countgroup').hide();
 }
 
 var populateSelectSpeeds = function()
@@ -389,6 +381,16 @@ $(document).ready(function(){
     {
         populateSelectCards();
     });
+
+    $('#submitcount').click(function()
+    {
+    	$('#count').hide();
+    	$('#submitcount').hide();
+        alert("Proper count was: " + $('#submitcount').attr("propercount") + "\nYour count was: " + $('#count').val());
+        
+        showBegins();
+
+    })
 
     populateSelectSpeeds();
     populateSelectDecks();
