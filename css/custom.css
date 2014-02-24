@@ -65,3 +65,7 @@ body {
     opacity: 1;
     filter:alpha(opacity=100);
 }
+
+.card {
+    font-size: 2000%;
+}
