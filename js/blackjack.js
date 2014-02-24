@@ -178,7 +178,7 @@ var determineCorrectMove = function(playerCount, dealerUpCard) {
         dealerIndex = dealerUpCard - 2;
     }
 
-    alert(playerIndex + ", " + dealerIndex);
+    // alert(playerIndex + ", " + dealerIndex);
     return hardTable[dealerIndex][playerIndex];
 }
 
@@ -542,18 +542,6 @@ var populateSelectCards = function()
     }
 }
 
-var displayDealerHand = function (hand) {
-    for (var i = 0; i < hand.length; i++) {
-        $('#dealerHand').append(getUnicode(hand[i]));
-    }
-}
-
-var displayPlayerHand = function (hand) {
-    for (var i = 0; i < hand.length; i++) {
-        $('#playerHand').append(getUnicode(hand[i]));
-    }
-}
-
 var getCountOfHand = function (hand) {
     var handCount = 0;
     for (var i = 0; i < hand.length; i++) {
@@ -562,28 +550,62 @@ var getCountOfHand = function (hand) {
     return handCount;
 }
 
+var clearTable = function () {
+    // $('#playerHand').children().remove().end();
+    // $('#dealerHand').children().remove().end();
+    // document.getElementById('playerHand').innerHTML = '';
+    // document.getElementById('dealerHand').innerHTML = '';
+    $('#playerHand').text('');
+    $('#dealerHand').text('');
+}
+
+var hideStrategyBegins = function()
+{
+    $('#beginbtn').hide();
+    $('#instructions').hide();
+    
+    $('#dealerHand').show();
+    
+    $('#playerHand').show();
+}
+
+var displayHands = function (playerHand, dealerHand) {
+    for (var i = 0; i < playerHand.length; i++) {
+        $('#playerHand').append(getUnicode(playerHand[i]));
+    }
+    for (var i = 0; i < dealerHand.length - 1; i++) {
+        $('#dealerHand').append(getUnicode(dealerHand[i]));
+    }
+}
+
 var practiceStrategy = function (numberOfHands, deck) {
     var player = {cardArray: [], count: 0, isSoft: false};
     var dealer = {cardArray: [], count: 0, isSoft: false};
-    
     var startCards = 2;
     
     for (var i = 0; i < numberOfHands; i++) {
         player.cardArray = [];
         dealer.cardArray = [];
+        clearTable();
         for (var j = 0; j < startCards; j++) {
             player.cardArray.push(deck.pop());
             dealer.cardArray.push(deck.pop());
         }
-
-
-
         player.count = getCountOfHand(player.cardArray);
         dealer.count = getCountOfHand(dealer.cardArray);
-        var correctMove = determineCorrectMove(player.count, dealer.cardArray[0].rank);
-        displayDealerHand(dealer.cardArray);
-        displayPlayerHand(player.cardArray);
-        alert(correctMove);
+        displayHands(dealer.cardArray, player.cardArray);
+        
+        setTimeout(function() {
+            var correctMove = determineCorrectMove(player.count, dealer.cardArray[0].rank);
+            var playerMove = +prompt("Given the showing cards, should you hit(0), stand(1), doubleDown(2), or split(3)?")
+            if (playerMove === correctMove) {
+                alert("YOU MADE THE CORRECT MOVE!");
+            } else {
+                alert("You should have performed a: " + correctMove);
+            }
+            clearTable();
+            displayHands(dealer.cardArray, player.cardArray);
+        }, 2000);
 
         // for (var j = 0; j < player.cardArray.length; j++) {
         //     alert(player.cardArray[j].suit + ", " + player.cardArray[j].rank);
@@ -605,7 +627,6 @@ $(document).ready(function(){
         $('#count').show();
         var testDeck = tmpDeck(numDecks);
         var deckToDisplay = _.shuffle(testDeck);
-        alert(deckToDisplay[1].suit);
         displayCards(deckToDisplay, speed, numCards);
     });
 
@@ -622,7 +643,7 @@ $(document).ready(function(){
 
     $('#beginStrategyTest').click(function()
     {
-        hideBegins();
+        hideStrategyBegins();
 
         var numDecks = parseInt($('#numdecks').find(':selected').attr('value'));
         var numHands = parseInt($('#numhands').val());
