@@ -13,20 +13,24 @@ function Card(rank, suit) {
     this.suit = suit;
 
     if (rank > 13 || rank < 1) {
-        this.rank = "INVALID RANK ON CARD";
+        throw "INVALID RANK ON CARD";
     }
     if (suit < 1 || suit > 4) {
-        this.suit = "INVALID SUIT ON CARD";
+        throw "INVALID SUIT ON CARD";
     }
 }
 
 function Deck(numberOfDecks) {
+    if (numberOfDecks !== 4 && numberOfDecks !== 6 && numberOfDecks !== 8) {
+        throw "INVALID NUMBER OF DECKS";
+    }
     this.numberOfDecks = numberOfDecks;
+
     this.cardArray = [];
-    for (var deckCounter = 0; deckCounter < this.numberOfDecks; deckCounter++) {
-        for (var suitCounter = 1; suitCounter <= 4; suitCounter++) {
-            for (var rankCounter = 1; rankCounter <= 13; rankCounter++) {
-                this.cardArray.push(new Card(rankCounter, suitCounter));
+    for (var deck = 0; deck < this.numberOfDecks; deck++) {
+        for (var suit = 1; suit <= 4; suit++) {
+            for (var rank = 1; rank <= 13; rank++) {
+                this.cardArray.push(new Card(rank, suit));
             }
         }
     }
@@ -35,22 +39,8 @@ function Deck(numberOfDecks) {
 Deck.prototype.shuffle = function () {
     var numberOfDecks = this.numberOfDecks;
 
+    
     switch (numberOfDecks) {
-        case 1:
-            // lay out in front of you in 2 rows
-            // move around and combine
-            // split in about half and riffle together 3 times
-            // take about half to 2/3 of bottom part of deck
-            // take anywhere from 2-5 cards and place from top of the bottom part you just pulled
-            // and place on top of the smaller, previous top
-            // riffle one more time
-            // cut the deck
-
-            // have 2 deck be same as 1 deck for now
-
-        case 2:
-            alert("1 or 2 is " + numberOfDecks);
-            break;
 
         case 4:
 
@@ -129,7 +119,7 @@ var splitDeckIntoAlmostEqualParts = function (halfDeck, numberOfCuts) {
     return resultDeck.concat(halfDeck.slice(point1, halfDeck.length));
 };
 
-var splitDeckInSixths = function (thirdsDeck) {
+Deck.splitDeckInSixths = function (thirdsDeck) {
     var splitQuarter1 = splitDeckInHalf(thirdsDeck[0]);
     var splitHalf = splitDeckInHalf(thirdsDeck[1]);
     var splitQuarter2 = splitDeckInHalf(thirdsDeck[2]);
@@ -193,7 +183,7 @@ var validDeck = function (deck) {
 
 
 
-/* Validating deck and card methods */
+/* Validating deck and card methods  PLACE IN TEST FILE SEPARATE FROM CODE BASE */
 var containsThisMany = function(card, deckToSearch) {
     var count = 0;
     for (var i = 0; i < deckToSearch.length; i++) {

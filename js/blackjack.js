@@ -294,11 +294,11 @@ var displayCards = function(deck, speed, numCardsToDisplay)
 
             if(_.contains(HIGHCOUNT, deck[deckCount].rank))
             {
-                properCount++;
+                properCount--;
             }
             else if(_.contains(LOWCOUNT, deck[deckCount].rank))
             {
-                properCount--;
+                properCount++;
             }
 
 
