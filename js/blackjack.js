@@ -25,7 +25,6 @@ var VALIDSPEEDS = [0.5, 1, 2, 3];
 var VALIDDECKS = [1, 2, 4, 6, 8];
 
 var NUMCARDSINDECK = 52;
-var SECONDSTOWAITAFTERFINISHED = 4;
 
 
 function Card(rank, suit) {
@@ -250,7 +249,7 @@ var displayCardByUnicode = function(card)
 {
     if (card.rank < 1 || card.rank > 13 || card.suit < 1 || card.suit > 4)
     {
-        alert("Invalid rank our suit");
+        alert("Invalid rank or suit");
         return false;
     }
     var arrayRank = card.rank - 1;
@@ -384,8 +383,8 @@ $(document).ready(function(){
 
     $('#submitcount').click(function()
     {
-    	$('#count').hide();
-    	$('#submitcount').hide();
+        $('#count').hide();
+        $('#submitcount').hide();
         alert("Proper count was: " + $('#submitcount').attr("propercount") + "\nYour count was: " + $('#count').val());
         
         showBegins();
