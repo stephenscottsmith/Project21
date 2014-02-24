@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-	    <title>My Website</title>
+	    <title>Project 21</title>
 	    <link href="css/bootstrap.min.css" rel="stylesheet">
 	    <link href="css/custom.css" rel="stylesheet">
 	    <!-- respond.min.js needs to be in header to work w/ older versions of IE -->
@@ -21,14 +21,20 @@
 	        <div class="row-fluid rowextend">
 	            <div class="transbox">
 	            	<div id="mainbox">
-		                <h1 class="bg-success">Project 21</h1>
+		                <h1 class="bg-success">Learn Basic Strategy</h1>
 		                <div class="bg-info">
 		                	<div id="instructions" type="text">
 		                		<p>Basic card counting assigns a positive, negative, or zero value to each card value available. When a card of that value is dealt, the count is adjusted by that card's counting value. Low cards increase the count as they increase the percentage of high cards in the remaining shoe, while high cards decrease it for the opposite reason. For instance, the Hi-Lo system subtracts one for each dealt ten, Jack, Queen, King or Ace, and adds one for any value 2-6. Values 7-9 are assigned a value of zero and therefore do not affect the count.</p>
 		                		<p class="bg-warning"><a href=http://en.wikipedia.org/wiki/Card_counting#Systems>Copied from Wikipedia</a></p>
 		                	</div>
-		                	<p class="card" id="card" type="text" style="display:none">&nbsp;</p>
-			            <input type="number" class="form-control input-lg" id="count" value="0" style="display:none">
+		                	<div id="dealer" type="text">
+		                		<p id="dealerHand" type="text"></p>
+		                	</div>
+		                	<div id="player" type="text">
+		                		<p id="playerHand" type="text"></p>
+		                	</div>
+		                	
+		                	
 			            </div>
 		                <div id="beginbtn">
 		                	<table class="table table-condensed bg-danger">
@@ -38,16 +44,14 @@
 		                	</tr>
 		                	<tr>
 		                		<td>
-		                			<select class="form-control" id="numdecks">
-		                			</select>
+		                			<select class="form-control" id="numdecks"></select>
 		                		</td>
 		                		<td>
-		                			<select class="form-control" id="numhands">
-		                			</select>
+		                			<input type="number" class="form-control input-md" id="numhands">
 		                		</td>
 		                	</tr>
 		                	</table>
-		                	<button class="btn btn-primary" id="begin">Begin</button>
+		                	<button class="btn btn-primary" id="beginStrategyTest">Begin Strategy</button>
 		                </div>
 
 		            </div>
