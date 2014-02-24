@@ -1,5 +1,8 @@
 Project21
 =========
+Tmp URL: http://project21.ajschneider.com/
+
+No guarentee on how out of date it is.
 
 Card Counting Application
 

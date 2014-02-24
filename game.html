@@ -20,42 +20,49 @@
     <div class="container containerextend">
         <div class="row-fluid rowextend">
             <div class="transbox">
-            	<div id="mainbox">
-	                <h1 class="bg-success">Project 21</h1>
-	                <div class="bg-info">
-	                	<div id="instructions" type="text">
-	                		<p>Basic card counting assigns a positive, negative, or zero value to each card value available. When a card of that value is dealt, the count is adjusted by that card's counting value. Low cards increase the count as they increase the percentage of high cards in the remaining shoe, while high cards decrease it for the opposite reason. For instance, the Hi-Lo system subtracts one for each dealt ten, Jack, Queen, King or Ace, and adds one for any value 2-6. Values 7-9 are assigned a value of zero and therefore do not affect the count.</p>
-	                		<p class="bg-warning"><a href=http://en.wikipedia.org/wiki/Card_counting#Systems>Copied from Wikipedia</a></p>
-	                	</div>
-	                	<p class="card" id="card" type="text" style="display:none">&nbsp;</p>
-		            <input type="number" class="form-control input-lg" id="count" value="0" style="display:none">
-		            </div>
-	                <div id="beginbtn">
-	                	<table class="table table-condensed bg-danger">
-	                	<tr>
-	                		<th>Speed that cards get displayed (in seconds)</th>
-	                		<th>Number of decks</th>
-	                		<th>Number of cards to count</th>
-	                	</tr>
-	                	<tr>
-	                		<td>
-	                			<select class="form-control" id="speed">
-	                			</select>
-	                		</td>
-	                		<td>
-	                			<select class="form-control" id="numdecks">
-	                			</select>
-	                		</td>
-	                		<td>
-	                			<select class="form-control" id="numcards">
-	                			</select>
-	                		</td>
-	                	</tr>
-	                	</table>
-	                	<button class="btn btn-primary" id="begin">Begin</button>
-	                </div>
+                <div id="mainbox">
+                    <h1 class="bg-success">Project 21</h1>
+                    <div class="bg-info">
+                        <div id="instructions" type="text">
+                            <p>Basic card counting assigns a positive, negative, or zero value to each card value available. When a card of that value is dealt, the count is adjusted by that card's counting value. Low cards increase the count as they increase the percentage of high cards in the remaining shoe, while high cards decrease it for the opposite reason. For instance, the Hi-Lo system subtracts one for each dealt ten, Jack, Queen, King or Ace, and adds one for any value 2-6. Values 7-9 are assigned a value of zero and therefore do not affect the count.</p>
+                            <p class="bg-warning"><a href=http://en.wikipedia.org/wiki/Card_counting#Systems>Copied from Wikipedia</a></p>
+                        </div>
+                        <div id="countgroup" style="display:none">
+                            <p class="card" id="card" type="text">&nbsp;</p>
+                            <input type="number" class="form-control input" id="count" value="0">
 
-	            </div>
+                                <button class="btn btn-default" style="display:none" id="submitcount" type="button">Submit Count</button>
+
+                        </div>
+                    </div>
+                    <div id="beginbtn">
+                        <div class="table-responsive">
+                        <table class="table table-hover bg-danger">
+                        <tr>
+                            <th>Speed that cards get displayed (in seconds)</th>
+                            <th>Number of decks</th>
+                            <th>Number of cards to count</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select class="form-control" id="speed">
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" id="numdecks">
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" id="numcards">
+                                </select>
+                            </td>
+                        </tr>
+                        </table>
+                        </div>
+                        <button class="btn btn-primary" id="begin">Begin</button>
+                    </div>
+
+                </div>
                 <div class="clearfix"></div>
             </div>
         </div>
