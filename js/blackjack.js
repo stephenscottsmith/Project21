@@ -6,7 +6,6 @@
 // 5. Create play x number of shoes that will give you an alert as to whether or not you made
 //    the correct move
 
-
 // Suit then rank so as to say "9 of Hearts"
 
 var ACES = 1;
@@ -18,14 +17,13 @@ var DIAMONDS = 2;
 var HEARTS = 3;
 var SPADES = 4;
 
-var HIGHCOUNT = [ACES, 10, JACK, QUEEN, KING];
-var LOWCOUNT = [2, 3, 4, 5, 6];
+var HIGH_COUNT = [ACES, 10, JACK, QUEEN, KING];
+var LOW_COUNT = [2, 3, 4, 5, 6];
 
-var VALIDSPEEDS = [0.5, 1, 2, 3];
-var VALIDDECKS = [1, 2, 4, 6, 8];
+var VALID_SPEEDS = [0.5, 1, 2, 3];
+var VALID_DECKS = [1, 2, 4, 6, 8];
 
-var NUMCARDSINDECK = 52;
-
+var NUM_CARDS_IN_DECK = 52;
 
 var hit = 0;
 var stand = 1;
@@ -157,7 +155,7 @@ hardTable[7][10] = stand;
 hardTable[8][10] = stand;
 hardTable[9][10] = stand;
 
-var determineCorrectMove = function(playerCount, dealerUpCard) {
+var determineCorrectMove = function (playerCount, dealerUpCard) {
     var correctMove = 0;
     var playerIndex;
     var dealerIndex;
@@ -227,7 +225,6 @@ function Deck(numberOfDecks) {
 
 //         case 4:
 
-
 //         case 6:
 //             // for now do the same shuffle for 4, 6, 8 deck
 //             alert(this.cardArray.length);
@@ -246,7 +243,7 @@ function Deck(numberOfDecks) {
 //             alert(JSON.stringify(preCutDeck));
 //             var inputNumber = +prompt("Choose a number from 1 to " + cardArrayLength + " to cut at: ") - 1;
 //             var postCutDeck = cut(preCutDeck, inputNumber);
-            
+
 //             alert(JSON.stringify(postCutDeck));
 
 //             break;
@@ -276,7 +273,7 @@ function Deck(numberOfDecks) {
 // var combineSixths = function (sixthsDeck) {
 //     var combinedFirstQuarterAndFirstHalf = riffle(sixthsDeck[2], riffle(sixthsDeck[0], sixthsDeck[4]));
 //     var combinedSecondQuarterAndSecondHalf = riffle(sixthsDeck[3], riffle(sixthsDeck[1], sixthsDeck[5]));
-    
+
 //     return combinedFirstQuarterAndFirstHalf.concat(combinedSecondQuarterAndSecondHalf);
 // };
 
@@ -298,7 +295,7 @@ function Deck(numberOfDecks) {
 //         point1 = splitPoints[index - 1];
 //         point2 = splitPoints[index++];
 //     }
-    
+
 //     return resultDeck.concat(halfDeck.slice(point1, halfDeck.length));
 // };
 
@@ -322,7 +319,7 @@ function Deck(numberOfDecks) {
 
 // var splitDeckInHalf = function (deck) {
 //     var splitPoint = Math.floor(deck.length / 2 + generateRandom(17, -8));
-    
+
 //     return [deck.slice(0, splitPoint), deck.slice(splitPoint, deck.length)];
 // };
 
@@ -360,11 +357,9 @@ function Deck(numberOfDecks) {
 //     if (uniqueCards.length === 52) {
 //         return true;
 //     }
-    
+
 //     return false;
 // };
-
-
 
 // /* Validating deck and card methods */
 // var containsThisMany = function(card, deckToSearch) {
@@ -374,7 +369,7 @@ function Deck(numberOfDecks) {
 //             count++;
 //         }
 //     }
-    
+
 //     return count;
 // };
 
@@ -384,7 +379,7 @@ function Deck(numberOfDecks) {
 //             return true;
 //         }
 //     }
-    
+
 //     return false;
 // };
 
@@ -394,15 +389,12 @@ function Deck(numberOfDecks) {
 //             return false;
 //         }
 //     }
-    
+
 //     return true;
 // };
 
-
-var displayCardByUnicode = function(card)
-{
-    if (card.rank < 1 || card.rank > 13 || card.suit < 1 || card.suit > 4)
-    {
+var displayCardByUnicode = function (card) {
+    if (card.rank < 1 || card.rank > 13 || card.suit < 1 || card.suit > 4) {
         alert("Invalid rank or suit");
         return false;
     }
@@ -418,10 +410,8 @@ var displayCardByUnicode = function(card)
     document.getElementById("card").innerHTML = cardRank;
 }
 
-var getUnicode = function(card)
-{
-    if (card.rank < 1 || card.rank > 13 || card.suit < 1 || card.suit > 4)
-    {
+var getUnicode = function (card) {
+    if (card.rank < 1 || card.rank > 13 || card.suit < 1 || card.suit > 4) {
         alert("Invalid rank our suit");
         return false;
     }
@@ -436,15 +426,11 @@ var getUnicode = function(card)
     return RANKS[arrayRank] + SUITS[arraySuit];
 }
 
-var tmpDeck = function(numberOfDecks)
-{
+var tmpDeck = function (numberOfDecks) {
     cardArray = [];
-    for (var deckCounter = 0; deckCounter < numberOfDecks; deckCounter++) 
-    {
-        for (var suitCounter = CLUBS; suitCounter <= SPADES; suitCounter++) 
-        {
-            for (var rankCounter = ACES; rankCounter <= KING; rankCounter++) 
-            {
+    for (var deckCounter = 0; deckCounter < numberOfDecks; deckCounter++) {
+        for (var suitCounter = CLUBS; suitCounter <= SPADES; suitCounter++) {
+            for (var rankCounter = ACES; rankCounter <= KING; rankCounter++) {
                 cardArray.push(new Card(rankCounter, suitCounter));
             }
         }
@@ -453,31 +439,23 @@ var tmpDeck = function(numberOfDecks)
     return cardArray;
 }
 
-var displayCards = function(deck, speed, numCardsToDisplay)
-{
+var displayCards = function (deck, speed, numCardsToDisplay) {
     var deckCount = 0;
     var properCount = 0;
-    function display() 
-    {
-        if (deckCount < numCardsToDisplay) 
-        {
+
+    function display() {
+        if (deckCount < numCardsToDisplay) {
             displayCardByUnicode(deck[deckCount]);
 
-            if (_.contains(HIGHCOUNT, deck[deckCount].rank))
-            {
+            if (_.contains(HIGHCOUNT, deck[deckCount].rank)) {
                 properCount--;
-            }
-            else if (_.contains(LOWCOUNT, deck[deckCount].rank))
-            {
+            } else if (_.contains(LOWCOUNT, deck[deckCount].rank)) {
                 properCount++;
             }
 
-
             deckCount++;
             setTimeout(display, speed);
-        }
-        else
-        {
+        } else {
             $('#submitcount').show().attr("propercount", properCount);
         }
     }
@@ -485,49 +463,40 @@ var displayCards = function(deck, speed, numCardsToDisplay)
     display();
 }
 
-var hideBegins = function()
-{
+var hideBegins = function () {
     $('#beginbtn').hide();
     $('#instructions').hide();
     $('#countgroup').show();
 }
-var showBegins = function()
-{
+var showBegins = function () {
     $('#beginbtn').show();
     $('#instructions').show();
     $('#countgroup').hide();
 }
 
-var populateSelectSpeeds = function()
-{
-    for(var i = 0; i < VALIDSPEEDS.length; i++)
-    {
-        $('#speed')
-            .append($("<option></option>")
+var populateSelectSpeeds = function () {
+    for (var i = 0; i < VALIDSPEEDS.length; i++) {
+        $('#speed').append($("<option></option>")
             .attr("value", VALIDSPEEDS[i])
             .text(VALIDSPEEDS[i] + " sec"));
     }
 }
 
-var populateSelectDecks = function()
-{
-    for(var i = 0; i < VALIDDECKS.length; i++)
-    {
-        $('#numdecks')
-            .append($("<option></option>")
+var populateSelectDecks = function () {
+    for (var i = 0; i < VALIDDECKS.length; i++) {
+        $('#numdecks').append($("<option></option>")
             .attr("value", VALIDDECKS[i])
-            .text(VALIDDECKS[i] ));
+            .text(VALIDDECKS[i]));
     }
 }
 
-var populateSelectCards = function()
-{
-    var maxVal = $('#numdecks').find(':selected').attr('value') * NUMCARDSINDECK;
+var populateSelectCards = function () {
+    var maxVal = $('#numdecks')
+        .find(':selected')
+        .attr('value') * NUMCARDSINDECK;
     $('#numcards').children().remove().end();
-    for(var i = 2; i <= maxVal; i++)
-    {
-        $('#numcards')
-            .append($("<option></option>")
+    for (var i = 2; i <= maxVal; i++) {
+        $('#numcards').append($("<option></option>")
             .attr("value", i)
             .text(i + " cards"));
     }
@@ -536,7 +505,7 @@ var populateSelectCards = function()
 var getCountOfHand = function (hand) {
     var handCount = 0;
     for (var i = 0; i < hand.length; i++) {
-        handCount += (hand[i].rank > 10 ? 10: hand[i].rank);
+        handCount += (hand[i].rank > 10 ? 10 : hand[i].rank);
     }
     return handCount;
 }
@@ -550,13 +519,12 @@ var clearTable = function () {
     $('#dealerHand').text('');
 }
 
-var hideStrategyBegins = function()
-{
+var hideStrategyBegins = function () {
     $('#beginbtn').hide();
     $('#instructions').hide();
-    
+
     $('#dealerHand').show();
-    
+
     $('#playerHand').show();
 }
 
@@ -570,10 +538,18 @@ var displayHands = function (playerHand, dealerHand) {
 }
 
 var practiceStrategy = function (numberOfHands, deck) {
-    var player = {cardArray: [], count: 0, isSoft: false};
-    var dealer = {cardArray: [], count: 0, isSoft: false};
+    var player = {
+        cardArray: [],
+        count: 0,
+        isSoft: false
+    };
+    var dealer = {
+        cardArray: [],
+        count: 0,
+        isSoft: false
+    };
     var startCards = 2;
-    
+
     for (var i = 0; i < numberOfHands; i++) {
         player.cardArray = [];
         dealer.cardArray = [];
@@ -585,10 +561,13 @@ var practiceStrategy = function (numberOfHands, deck) {
         player.count = getCountOfHand(player.cardArray);
         dealer.count = getCountOfHand(dealer.cardArray);
         displayHands(dealer.cardArray, player.cardArray);
-        
-        setTimeout(function() {
-            var correctMove = determineCorrectMove(player.count, dealer.cardArray[0].rank);
-            var playerMove = +prompt("Given the showing cards, should you hit(0), stand(1), doubleDown(2), or split(3)?")
+
+        setTimeout(function () {
+            var correctMove = determineCorrectMove(player.count, dealer.cardArray[
+                0].rank);
+            var playerMove = +prompt(
+                "Given the showing cards, should you hit(0), stand(1), doubleDown(2), or split(3)?"
+            )
             if (playerMove === correctMove) {
                 alert("YOU MADE THE CORRECT MOVE!");
             } else {
@@ -604,34 +583,36 @@ var practiceStrategy = function (numberOfHands, deck) {
     }
 }
 
-
-
-$(document).ready(function(){
+$(document).ready(function () {
     $('#begin').button();
 
-    $('#begin').click(function()
-    {
+    $('#begin').click(function () {
         hideBegins();
-        var speed = parseFloat($('#speed').find(':selected').attr('value'), 10) * 1000;
-        var numDecks = parseInt($('#numdecks').find(':selected').attr('value'));
-        var numCards = parseInt($('#numcards').find(':selected').attr('value'));
+        var speed = parseFloat($('#speed')
+            .find(':selected')
+            .attr('value'), 10) * 1000;
+        var numDecks = parseInt($('#numdecks')
+            .find(':selected')
+            .attr('value'));
+        var numCards = parseInt($('#numcards')
+            .find(':selected')
+            .attr('value'));
         $('#count').show();
         var testDeck = tmpDeck(numDecks);
         var deckToDisplay = _.shuffle(testDeck);
         displayCards(deckToDisplay, speed, numCards);
     });
 
-    $('#numdecks').change(function()
-    {
+    $('#numdecks').change(function () {
         populateSelectCards();
     });
 
-    $('#submitcount').click(function()
-    {
+    $('#submitcount').click(function () {
         $('#count').hide();
         $('#submitcount').hide();
-        alert("Proper count was: " + $('#submitcount').attr("propercount") + "\nYour count was: " + $('#count').val());
-        
+        alert("Proper count was: " + $('#submitcount').attr("propercount") +
+            "\nYour count was: " + $('#count').val());
+
         showBegins();
 
     })
@@ -642,17 +623,15 @@ $(document).ready(function(){
 
     $('#beginStrategyTest').button();
 
-    $('#beginStrategyTest').click(function()
-    {
+    $('#beginStrategyTest').click(function () {
         hideStrategyBegins();
 
-        var numDecks = parseInt($('#numdecks').find(':selected').attr('value'));
+        var numDecks = parseInt($('#numdecks')
+            .find(':selected')
+            .attr('value'));
         var numHands = parseInt($('#numhands').val());
         var deck = _.shuffle(tmpDeck(numDecks));
 
         practiceStrategy(numHands, deck);
     });
-
-
-
 });

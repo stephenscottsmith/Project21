@@ -6,51 +6,47 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+    /* IE10 Consumer Preview */
 
-    /* IE10 Consumer Preview */ 
-    background-image: -ms-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+background-image: -ms-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+    /* Mozilla Firefox */
 
-    /* Mozilla Firefox */ 
-    background-image: -moz-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+background-image: -moz-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+    /* Opera */
 
-    /* Opera */ 
-    background-image: -o-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+background-image: -o-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+    /* Webkit (Safari/Chrome 10) */
 
-    /* Webkit (Safari/Chrome 10) */ 
-    background-image: -webkit-gradient(radial, center center, 0, center center, 140, color-stop(0, #000000), color-stop(1, #FF0000));
+background-image: -webkit-gradient(radial, center center, 0, center center, 140, color-stop(0, #000000), color-stop(1, #FF0000));
+    /* Webkit (Chrome 11+) */
 
-    /* Webkit (Chrome 11+) */ 
-    background-image: -webkit-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+background-image: -webkit-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
+    /* W3C Markup, IE10 Release Preview */
 
-    /* W3C Markup, IE10 Release Preview */ 
-    background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #FF0000 100%);
+background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #FF0000 100%);
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
-
 }
-
-.image{
-	background: url(Project21Splash.jpg) no-repeat center center fixed; 
+.image {
+    background: url(Project21Splash.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
-	-moz-background-size: cover;
+    -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
 .transbox {
-    background-color: rgba(255,255,255,.4);
-    border:2px solid black;
-    filter:alpha(opacity=50);
+    background-color: rgba(255, 255, 255, .4);
+    border: 2px solid black;
+    filter: alpha(opacity=50);
     padding: 25px 50px;
 }
-
 .containerextend {
     height: 100%;
     display: table;
     width: 75%;
     padding: 0;
 }
-
 .rowextend {
     height: 100%;
     display: table-cell;
@@ -60,12 +56,10 @@ body {
     float: none;
     margin: 0 auto;
 }
-
 .solid {
     opacity: 1;
-    filter:alpha(opacity=100);
+    filter: alpha(opacity=100);
 }
-
 .card {
     font-size: 1000%;
 }
