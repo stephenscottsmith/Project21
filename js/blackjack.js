@@ -215,14 +215,20 @@ var determineCorrectMove = function (playerCount, dealerUpCard) {
 var Card = function (rank, suit) {
     this.rank = rank;
     this.suit = suit;
+    this.displayRank = ["A", "2", "3", "4", "5", "6",
+                        "7", "8", "9", "T", "J", "Q", "K"];
+    this.displaySuit = ["S", "H", "C", "D"];
 
     if (rank > 13 || rank < 1) {
+        alert("FUCK");
         this.rank = "INVALID RANK ON CARD";
     }
     if (suit < 1 || suit > 4) {
+        alert("SHIT");
         this.suit = "INVALID SUIT ON CARD";
     }
-}
+    this.displayURL = "Cards/" + this.displayRank[rank - 1] + "" + this.displaySuit[suit - 1] + ".png";
+};
 
 var Deck = function (numberOfDecks) {
     this.numberOfDecks = numberOfDecks;
@@ -234,7 +240,7 @@ var Deck = function (numberOfDecks) {
             }
         }
     }
-}
+};
 
 // Deck.prototype.shuffle = function () {
 //     var numberOfDecks = this.numberOfDecks;
@@ -462,8 +468,8 @@ var getUnicode = function (card) {
 var tmpDeck = function (numberOfDecks) {
     cardArray = [];
     for (var deckCounter = 0; deckCounter < numberOfDecks; deckCounter++) {
-        for (var suitCounter = CLUBS; suitCounter <= SPADES; suitCounter++) {
-            for (var rankCounter = ACES; rankCounter <= KING; rankCounter++) {
+        for (var suitCounter = 1; suitCounter <= 4; suitCounter++) {
+            for (var rankCounter = 1; rankCounter <= 13; rankCounter++) {
                 cardArray.push(new Card(rankCounter, suitCounter));
             }
         }
@@ -550,8 +556,8 @@ var clearTable = function () {
     // document.getElementById('playerHand').innerHTML = '';
     // document.getElementById('dealerHand').innerHTML = '';
     
-    $('#playerHand').empty();
-    $('#dealerHand').empty();
+    $('#dealer').children().remove().end();
+    $('#player').children().remove().end();
 }
 
 var hideStrategyBegins = function () {
@@ -564,11 +570,18 @@ var hideStrategyBegins = function () {
 }
 
 var displayHands = function (playerHand, dealerHand) {
-    for (var i = 0; i < playerHand.length; i++) {
-        $('#playerHand').append(getUnicode(playerHand[i]));
+    for (var i = 0; i < 1; i++) {
+        //$('#playerHand').append(getUnicode(playerHand[i].displayURL));
+        $('#dealer').append($("<img>")
+            .attr("src", dealerHand[i].displayURL)
+            .attr("height", 200)
+            .attr("width", 50));
     }
-    for (var i = 0; i < dealerHand.length - 1; i++) {
-        $('#dealerHand').append(getUnicode(dealerHand[i]));
+    for (var i = 0; i < 2; i++) {
+        $('#player').append($("<img>")
+            .attr("src", dealerHand[i].displayURL)
+            .attr("height", 200)
+            .attr("width", 50));
     }
 }
 
