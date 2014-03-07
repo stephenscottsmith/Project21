@@ -55,7 +55,7 @@ var DEALER_HITS_17_SOFT_TABLE = [
     "HHDDDHHHHH",
     "HHDDDHHHHH",
     "HDDDDHHHHH",
-    "DDDDDSSHHH",
+    "DDDDDSSHHH"
 
 ];
 
@@ -480,9 +480,9 @@ var displayCards = function (deck, speed, numCardsToDisplay) {
         if (deckCount < numCardsToDisplay) {
             displayCardByUnicode(deck[deckCount]);
 
-            if (_.contains(HIGHCOUNT, deck[deckCount].rank)) {
+            if (_.contains(HIGH_COUNT, deck[deckCount].rank)) {
                 properCount--;
-            } else if (_.contains(LOWCOUNT, deck[deckCount].rank)) {
+            } else if (_.contains(LOW_COUNT, deck[deckCount].rank)) {
                 properCount++;
             }
 
@@ -508,25 +508,25 @@ var showBegins = function () {
 }
 
 var populateSelectSpeeds = function () {
-    for (var i = 0; i < VALIDSPEEDS.length; i++) {
+    for (var i = 0; i < VALID_SPEEDS.length; i++) {
         $('#speed').append($("<option></option>")
-            .attr("value", VALIDSPEEDS[i])
-            .text(VALIDSPEEDS[i] + " sec"));
+            .attr("value", VALID_SPEEDS[i])
+            .text(VALID_SPEEDS[i] + " sec"));
     }
 }
 
 var populateSelectDecks = function () {
-    for (var i = 0; i < VALIDDECKS.length; i++) {
+    for (var i = 0; i < VALID_DECKS.length; i++) {
         $('#numdecks').append($("<option></option>")
-            .attr("value", VALIDDECKS[i])
-            .text(VALIDDECKS[i]));
+            .attr("value", VALID_DECKS[i])
+            .text(VALID_DECKS[i]));
     }
 }
 
 var populateSelectCards = function () {
     var maxVal = $('#numdecks')
         .find(':selected')
-        .attr('value') * NUMCARDSINDECK;
+        .attr('value') * NUM_CARDS_IN_DECK;
     $('#numcards').children().remove().end();
     for (var i = 2; i <= maxVal; i++) {
         $('#numcards').append($("<option></option>")
@@ -549,8 +549,9 @@ var clearTable = function () {
     // $('#dealerHand').children().remove().end();
     // document.getElementById('playerHand').innerHTML = '';
     // document.getElementById('dealerHand').innerHTML = '';
-    $('#playerHand').text('');
-    $('#dealerHand').text('');
+    
+    $('#playerHand').empty();
+    $('#dealerHand').empty();
 }
 
 var hideStrategyBegins = function () {
@@ -571,7 +572,7 @@ var displayHands = function (playerHand, dealerHand) {
     }
 }
 
-var practiceStrategy = function (numberOfHands, deck) {
+var practiceStrategy = function (numberOfHandsToBePlayed, deck) {
     var player = {
         cardArray: [],
         count: 0,
@@ -582,40 +583,57 @@ var practiceStrategy = function (numberOfHands, deck) {
         count: 0,
         isSoft: false
     };
-    var startCards = 2;
+    var startCards = 2,
+        numberOfHandsPlayed = 0;
 
-    for (var i = 0; i < numberOfHands; i++) {
-        player.cardArray = [];
-        dealer.cardArray = [];
-        clearTable();
-        for (var j = 0; j < startCards; j++) {
-            player.cardArray.push(deck.pop());
-            dealer.cardArray.push(deck.pop());
-        }
-        player.count = getCountOfHand(player.cardArray);
-        dealer.count = getCountOfHand(dealer.cardArray);
-        displayHands(dealer.cardArray, player.cardArray);
+    
 
-        setTimeout(function () {
-            var correctMove = determineCorrectMove(player.count, dealer.cardArray[
-                0].rank);
+    function playHand () {
+        if (numberOfHandsPlayed < numberOfHandsToBePlayed) {
+            player.cardArray = [];
+            dealer.cardArray = [];
+            clearTable();
+            for (var j = 0; j < startCards; j++) {
+                player.cardArray.push(deck.pop());
+                dealer.cardArray.push(deck.pop());
+            }
+            player.count = getCountOfHand(player.cardArray);
+            dealer.count = getCountOfHand(dealer.cardArray);
+            displayHands(dealer.cardArray, player.cardArray);
+
+            var correctMove = determineCorrectMove(player.count, 
+                                                   dealer.cardArray[0].rank);
             var playerMove = +prompt(
                 "Given the showing cards, should you hit(0), stand(1), doubleDown(2), or split(3)?"
-            )
+            );
+
             if (playerMove === correctMove) {
                 alert("YOU MADE THE CORRECT MOVE!");
             } else {
                 alert("You should have performed a: " + correctMove);
             }
-            clearTable();
-            displayHands(dealer.cardArray, player.cardArray);
-        }, 2000);
 
-        // for (var j = 0; j < player.cardArray.length; j++) {
-        //     alert(player.cardArray[j].suit + ", " + player.cardArray[j].rank);
-        // }
+            numberOfHandsPlayed++;
+
+            playHand();
+        }        
     }
-}
+
+    playHand();
+        // setTimeout(function () {
+        //     
+        //     var playerMove = +prompt(
+        //         "Given the showing cards, should you hit(0), stand(1), doubleDown(2), or split(3)?"
+        //     )
+
+        //     clearTable();
+        //     displayHands(dealer.cardArray, player.cardArray);
+        // }, 2000);
+
+    // for (var j = 0; j < player.cardArray.length; j++) {
+    //     alert(player.cardArray[j].suit + ", " + player.cardArray[j].rank);
+    // }
+};
 
 $(document).ready(function () {
     $('#begin').button();
