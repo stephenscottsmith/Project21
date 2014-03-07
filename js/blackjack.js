@@ -25,135 +25,168 @@ var VALID_DECKS = [1, 2, 4, 6, 8];
 
 var NUM_CARDS_IN_DECK = 52;
 
-var hit = 0;
-var stand = 1;
-var doubleDown = 2;
-var split = 3;
+// var hit = 0;
+// var stand = 1;
+// var doubleDown = 2;
+// var split = 3;
+
+var HIT = "H";
+var STAND = "S";
+var DOUBLE_DOWN = "D";
+var SPLIT = "S";
+
+var DEALER_HITS_17_HARD_TABLE = [
+    "HHHHHHHHHH",
+    "HDDDDHHHHH",
+    "DDDDDDDDHH",
+    "DDDDDDDDDD",
+    "HHSSSHHHHH",
+    "SSSSSHHHHH",
+    "SSSSSHHHHH",
+    "SSSSSHHHHH",
+    "SSSSSHHHHH",
+    "SSSSSSSSSS",
+    "SSSSSSSSSS"
+];
+
+var DEALER_HITS_17_SOFT_TABLE = [
+    "HHHDDHHHHH",
+    "HHHDDHHHHH",
+    "HHDDDHHHHH",
+    "HHDDDHHHHH",
+    "HDDDDHHHHH",
+    "DDDDDSSHHH",
+
+];
+
+var DEALER_HITS_17_SPLITS_TABLE = [
+
+];
 
 var hardTable = [];
 for (var i = 0; i < 10; i++) {
     hardTable[i] = [];
 }
-hardTable[0][0] = hit;
-hardTable[1][0] = hit;
-hardTable[2][0] = hit;
-hardTable[3][0] = hit;
-hardTable[4][0] = hit;
-hardTable[5][0] = hit;
-hardTable[6][0] = hit;
-hardTable[7][0] = hit;
-hardTable[8][0] = hit;
-hardTable[9][0] = hit;
+// hardTable[0][0] = hit;
+// hardTable[1][0] = hit;
+// hardTable[2][0] = hit;
+// hardTable[3][0] = hit;
+// hardTable[4][0] = hit;
+// hardTable[5][0] = hit;
+// hardTable[6][0] = hit;
+// hardTable[7][0] = hit;
+// hardTable[8][0] = hit;
+// hardTable[9][0] = hit;
 
-hardTable[0][1] = hit;
-hardTable[1][1] = doubleDown;
-hardTable[2][1] = doubleDown;
-hardTable[3][1] = doubleDown;
-hardTable[4][1] = doubleDown;
-hardTable[5][1] = hit;
-hardTable[6][1] = hit;
-hardTable[7][1] = hit;
-hardTable[8][1] = hit;
-hardTable[9][1] = hit;
+// hardTable[0][1] = hit;
+// hardTable[1][1] = doubleDown;
+// hardTable[2][1] = doubleDown;
+// hardTable[3][1] = doubleDown;
+// hardTable[4][1] = doubleDown;
+// hardTable[5][1] = hit;
+// hardTable[6][1] = hit;
+// hardTable[7][1] = hit;
+// hardTable[8][1] = hit;
+// hardTable[9][1] = hit;
 
-hardTable[0][2] = doubleDown;
-hardTable[1][2] = doubleDown;
-hardTable[2][2] = doubleDown;
-hardTable[3][2] = doubleDown;
-hardTable[4][2] = doubleDown;
-hardTable[5][2] = doubleDown;
-hardTable[6][2] = doubleDown;
-hardTable[7][2] = doubleDown;
-hardTable[8][2] = hit;
-hardTable[9][2] = hit;
+// hardTable[0][2] = doubleDown;
+// hardTable[1][2] = doubleDown;
+// hardTable[2][2] = doubleDown;
+// hardTable[3][2] = doubleDown;
+// hardTable[4][2] = doubleDown;
+// hardTable[5][2] = doubleDown;
+// hardTable[6][2] = doubleDown;
+// hardTable[7][2] = doubleDown;
+// hardTable[8][2] = hit;
+// hardTable[9][2] = hit;
 
-hardTable[0][3] = doubleDown;
-hardTable[1][3] = doubleDown;
-hardTable[2][3] = doubleDown;
-hardTable[3][3] = doubleDown;
-hardTable[4][3] = doubleDown;
-hardTable[5][3] = doubleDown;
-hardTable[6][3] = doubleDown;
-hardTable[7][3] = doubleDown;
-hardTable[8][3] = doubleDown;
-hardTable[9][3] = doubleDown;
+// hardTable[0][3] = doubleDown;
+// hardTable[1][3] = doubleDown;
+// hardTable[2][3] = doubleDown;
+// hardTable[3][3] = doubleDown;
+// hardTable[4][3] = doubleDown;
+// hardTable[5][3] = doubleDown;
+// hardTable[6][3] = doubleDown;
+// hardTable[7][3] = doubleDown;
+// hardTable[8][3] = doubleDown;
+// hardTable[9][3] = doubleDown;
 
-hardTable[0][4] = hit;
-hardTable[1][4] = hit;
-hardTable[2][4] = stand;
-hardTable[3][4] = stand;
-hardTable[4][4] = stand;
-hardTable[5][4] = hit;
-hardTable[6][4] = hit;
-hardTable[7][4] = hit;
-hardTable[8][4] = hit;
-hardTable[9][4] = hit;
+// hardTable[0][4] = hit;
+// hardTable[1][4] = hit;
+// hardTable[2][4] = stand;
+// hardTable[3][4] = stand;
+// hardTable[4][4] = stand;
+// hardTable[5][4] = hit;
+// hardTable[6][4] = hit;
+// hardTable[7][4] = hit;
+// hardTable[8][4] = hit;
+// hardTable[9][4] = hit;
 
-hardTable[0][5] = stand;
-hardTable[1][5] = stand;
-hardTable[2][5] = stand;
-hardTable[3][5] = stand;
-hardTable[4][5] = stand;
-hardTable[5][5] = hit;
-hardTable[6][5] = hit;
-hardTable[7][5] = hit;
-hardTable[8][5] = hit;
-hardTable[9][5] = hit;
+// hardTable[0][5] = stand;
+// hardTable[1][5] = stand;
+// hardTable[2][5] = stand;
+// hardTable[3][5] = stand;
+// hardTable[4][5] = stand;
+// hardTable[5][5] = hit;
+// hardTable[6][5] = hit;
+// hardTable[7][5] = hit;
+// hardTable[8][5] = hit;
+// hardTable[9][5] = hit;
 
-hardTable[0][6] = stand;
-hardTable[1][6] = stand;
-hardTable[2][6] = stand;
-hardTable[3][6] = stand;
-hardTable[4][6] = stand;
-hardTable[5][6] = hit;
-hardTable[6][6] = hit;
-hardTable[7][6] = hit;
-hardTable[8][6] = hit;
-hardTable[9][6] = hit;
+// hardTable[0][6] = stand;
+// hardTable[1][6] = stand;
+// hardTable[2][6] = stand;
+// hardTable[3][6] = stand;
+// hardTable[4][6] = stand;
+// hardTable[5][6] = hit;
+// hardTable[6][6] = hit;
+// hardTable[7][6] = hit;
+// hardTable[8][6] = hit;
+// hardTable[9][6] = hit;
 
-hardTable[0][7] = stand;
-hardTable[1][7] = stand;
-hardTable[2][7] = stand;
-hardTable[3][7] = stand;
-hardTable[4][7] = stand;
-hardTable[5][7] = hit;
-hardTable[6][7] = hit;
-hardTable[7][7] = hit;
-hardTable[8][7] = hit;
-hardTable[9][7] = hit;
+// hardTable[0][7] = stand;
+// hardTable[1][7] = stand;
+// hardTable[2][7] = stand;
+// hardTable[3][7] = stand;
+// hardTable[4][7] = stand;
+// hardTable[5][7] = hit;
+// hardTable[6][7] = hit;
+// hardTable[7][7] = hit;
+// hardTable[8][7] = hit;
+// hardTable[9][7] = hit;
 
-hardTable[0][8] = stand;
-hardTable[1][8] = stand;
-hardTable[2][8] = stand;
-hardTable[3][8] = stand;
-hardTable[4][8] = stand;
-hardTable[5][8] = hit;
-hardTable[6][8] = hit;
-hardTable[7][8] = hit;
-hardTable[8][8] = hit;
-hardTable[9][8] = hit;
+// hardTable[0][8] = stand;
+// hardTable[1][8] = stand;
+// hardTable[2][8] = stand;
+// hardTable[3][8] = stand;
+// hardTable[4][8] = stand;
+// hardTable[5][8] = hit;
+// hardTable[6][8] = hit;
+// hardTable[7][8] = hit;
+// hardTable[8][8] = hit;
+// hardTable[9][8] = hit;
 
-hardTable[0][9] = stand;
-hardTable[1][9] = stand;
-hardTable[2][9] = stand;
-hardTable[3][9] = stand;
-hardTable[4][9] = stand;
-hardTable[5][9] = stand;
-hardTable[6][9] = stand;
-hardTable[7][9] = stand;
-hardTable[8][9] = stand;
-hardTable[9][9] = stand;
+// hardTable[0][9] = stand;
+// hardTable[1][9] = stand;
+// hardTable[2][9] = stand;
+// hardTable[3][9] = stand;
+// hardTable[4][9] = stand;
+// hardTable[5][9] = stand;
+// hardTable[6][9] = stand;
+// hardTable[7][9] = stand;
+// hardTable[8][9] = stand;
+// hardTable[9][9] = stand;
 
-hardTable[0][10] = stand;
-hardTable[1][10] = stand;
-hardTable[2][10] = stand;
-hardTable[3][10] = stand;
-hardTable[4][10] = stand;
-hardTable[5][10] = stand;
-hardTable[6][10] = stand;
-hardTable[7][10] = stand;
-hardTable[8][10] = stand;
-hardTable[9][10] = stand;
+// hardTable[0][10] = stand;
+// hardTable[1][10] = stand;
+// hardTable[2][10] = stand;
+// hardTable[3][10] = stand;
+// hardTable[4][10] = stand;
+// hardTable[5][10] = stand;
+// hardTable[6][10] = stand;
+// hardTable[7][10] = stand;
+// hardTable[8][10] = stand;
+// hardTable[9][10] = stand;
 
 var determineCorrectMove = function (playerCount, dealerUpCard) {
     var correctMove = 0;
@@ -179,7 +212,7 @@ var determineCorrectMove = function (playerCount, dealerUpCard) {
     return hardTable[dealerIndex][playerIndex];
 }
 
-function Card(rank, suit) {
+var Card = function (rank, suit) {
     this.rank = rank;
     this.suit = suit;
 
@@ -191,7 +224,7 @@ function Card(rank, suit) {
     }
 }
 
-function Deck(numberOfDecks) {
+var Deck = function (numberOfDecks) {
     this.numberOfDecks = numberOfDecks;
     this.cardArray = [];
     for (var deckCounter = 0; deckCounter < this.numberOfDecks; deckCounter++) {
@@ -497,6 +530,7 @@ var populateSelectCards = function () {
     $('#numcards').children().remove().end();
     for (var i = 2; i <= maxVal; i++) {
         $('#numcards').append($("<option></option>")
+
             .attr("value", i)
             .text(i + " cards"));
     }
