@@ -35,6 +35,7 @@ var Strategy = {
 
     getCountOfHand: function (hand) {
         var handCount = 0;
+        console.log(hand);
         for (var i = 0; i < hand.length; i++) {
             handCount += (hand[i].cardRank > 10 ? 10 : hand[i].cardRank);
         }
@@ -54,16 +55,10 @@ var Strategy = {
     displayHands: function (playerHand, dealerHand) {
         for (var i = 0; i < 1; i++) {
             //$('#playerHand').append(getUnicode(playerHand[i].displayURL));
-            $('#dealer').append($("<img>")
-                .attr("src", dealerHand[i].displayURL)
-                .attr("height", 200)
-                .attr("width", 50));
+            dealerHand[i].displayImage('#dealer');
         }
         for (var i = 0; i < 2; i++) {
-            $('#player').append($("<img>")
-                .attr("src", dealerHand[i].displayURL)
-                .attr("height", 200)
-                .attr("width", 50));
+            playerHand[i].displayImage('#player');
         }
     },
 
@@ -86,7 +81,7 @@ var Strategy = {
         } else {
             dealerIndex = dealerUpCard - 2;
         }
-        
+
         return Strategy.DEALER_HITS_17_HARD_TABLE[dealerIndex][playerIndex];
     },
 
@@ -150,6 +145,36 @@ var Strategy = {
         // for (var j = 0; j < player.cardArray.length; j++) {
         //     alert(player.cardArray[j].suit + ", " + player.cardArray[j].rank);
         // }
-    }
+    },
+
+    hideStrategyBegins: function () {
+        $('#beginbtn').hide();
+        $('#instructions').hide();
+
+        $('#dealerHand').show();
+
+        $('#playerHand').show();
+    },
 
 };
+
+$(document).ready(function () {
+    $('#beginStrategyTest').button();
+
+    $('#beginStrategyTest').click(function () {
+        Strategy.hideStrategyBegins();
+
+        var numDecks = parseInt($('#numdecks')
+            .find(':selected')
+            .attr('value'));
+        var numHands = parseInt($('#numhands').val());
+
+        var deck = Blackjack.deckObj(numDecks);
+        deck.shuffle();
+
+        Strategy.practiceStrategy(numHands, deck.cardArray);
+    });
+
+
+    Blackjack.populateSelectDecks();
+});
