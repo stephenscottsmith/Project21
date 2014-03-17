@@ -59,7 +59,7 @@ var Counting = {
 };
 
 $(document).ready(function () {
-    $('#begin').button();
+    // $('#begin').button();
 
     $('#begin').click(function () {
         Counting.hideBegins();
