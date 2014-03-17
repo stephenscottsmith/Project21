@@ -208,20 +208,6 @@ var Strategy = {
             playHand();
             numberOfHandsPlayed++;
         }
-        
-            // setTimeout(function () {
-            //     
-            //     var playerMove = +prompt(
-            //         "Given the showing cards, should you hit(0), stand(1), doubleDown(2), or split(3)?"
-            //     )
-
-            //     clearTable();
-            //     displayHands(dealer.cardArray, player.cardArray);
-            // }, 2000);
-
-        // for (var j = 0; j < player.cardArray.length; j++) {
-        //     alert(player.cardArray[j].suit + ", " + player.cardArray[j].rank);
-        // }
     },
 
     hideStrategyBegins: function () {
@@ -243,21 +229,21 @@ var loadStrategy = function () {
         var numHands = parseInt($('#numhands').val());
         var deck = Blackjack.deckObj(numDecks);
         deck.shuffle();
-
+        alert("HERE");
         Strategy.practiceStrategy(numHands, deck.cardArray);
     });
 
-    $('#hit').click(function () {
-        var playerMove = "H";
-        var correctMove = Strategy.correctMove;
-        alert("Correct Move: " + correctMove);
-        // Compare
-        if (nubmerOfHandsPlayed < numberOfHandsToBePlayed) {
-            playHand();
-        } else {
-            // reload menu
-        }
-    });
+    // $('#hit').click(function () {
+    //     var playerMove = "H";
+    //     var correctMove = Strategy.correctMove;
+    //     alert("Correct Move: " + correctMove);
+    //     // Compare
+    //     if (nubmerOfHandsPlayed < numberOfHandsToBePlayed) {
+    //         playHand();
+    //     } else {
+    //         // reload menu
+    //     }
+    // });
 
     $('#stand').click(function () {
         
