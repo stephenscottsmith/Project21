@@ -5,9 +5,6 @@ var SPLIT = "P";
 
 var Strategy = {
     correctMove: "", 
-    deck: ,
-    numberOfHandsToBePlayed: 0,
-
 
     getCountOfHand: function (hand) {
         var handCount = 0;
@@ -255,13 +252,8 @@ $(document).ready(function () {
         var correctMove = Strategy.correctMove;
         alert("Correct Move: " + correctMove);
         // Compare
-        
-        var numHands = parseInt($('#numhands').val());
-        var deck = Blackjack.deckObj(numDecks);
-        deck.shuffle();
-        Strategy.practiceStrategy.playHand(1, deck);
         if (nubmerOfHandsPlayed < numberOfHandsToBePlayed) {
-            
+            playHand();
         } else {
             // reload menu
         }
