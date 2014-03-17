@@ -9,9 +9,16 @@ var Counting = {
         var deckCount = 0;
         var properCount = 0;
 
+        var wait = false
+
         function count() {
             if (deckCount < numCardsToDisplay) {
                 $('#card').children().remove().end();
+                if (wait) {
+                    wait = false;
+                    setTimeout(count, 500);
+                    return;
+                }
                 deck[deckCount].displayImage('#card');
                 if (_.contains(Counting.HIGH_COUNT, deck[deckCount].cardRank)) {
                     properCount--;
@@ -19,6 +26,7 @@ var Counting = {
                     properCount++;
                 }
                 deckCount++;
+                wait = true;
                 setTimeout(count, speed);
             } else {
                 $('#count').show();
@@ -58,8 +66,9 @@ var Counting = {
 
 };
 
-$(document).ready(function () {
-    // $('#begin').button();
+
+var loadCount = function () {
+    $('#begin').button();
 
     $('#begin').click(function () {
         Counting.hideBegins();
@@ -97,4 +106,4 @@ $(document).ready(function () {
     Counting.populateSelectSpeeds();
     Blackjack.populateSelectDecks();
     Counting.populateSelectCards();
-});
+};

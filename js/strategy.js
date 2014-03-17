@@ -231,7 +231,7 @@ var Strategy = {
 
 };
 
-$(document).ready(function () {
+var loadStrategy = function () {
     $('#beginStrategyTest').button();
 
     $('#beginStrategyTest').click(function () {
@@ -273,4 +273,4 @@ $(document).ready(function () {
 
 
     Blackjack.populateSelectDecks();
-});
+};
