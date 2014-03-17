@@ -85,37 +85,4 @@ var Blackjack = {
                 .text(this.VALID_DECKS[i]));
         }
     },
-
-    // displayCardByUnicode: function (card) {
-    //     if (card.cardRank < 1 || card.cardRank > 13 || card.cardSuit < 1 || card.cardSuit > 4) {
-    //         alert("Invalid rank or suit");
-    //         return false;
-    //     }
-    //     var arrayRank = card.cardRank - 1;
-    //     var arraySuit = card.cardSuit - 1;
-    //     var CLUB_UNICODE = "\u2663";
-    //     var DIAMOND_UNICODE = "\u2662";
-    //     var HEART_UNICODE = "\u2661";
-    //     var SPADE_UNICODE = "\u2660";
-    //     var SUITS = [CLUB_UNICODE, DIAMOND_UNICODE, HEART_UNICODE, SPADE_UNICODE];
-    //     var RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    //     var cardRank = RANKS[arrayRank] + SUITS[arraySuit];
-    //     document.getElementById("card").innerHTML = cardRank;
-    // },
-
-    // getUnicode: function (card) {
-    //     if (card.rank < 1 || card.rank > 13 || card.suit < 1 || card.suit > 4) {
-    //         alert("Invalid rank our suit");
-    //         return false;
-    //     }
-    //     var arrayRank = card.rank - 1;
-    //     var arraySuit = card.suit - 1;
-    //     var CLUB_UNICODE = "\u2663";
-    //     var DIAMOND_UNICODE = "\u2662";
-    //     var HEART_UNICODE = "\u2661";
-    //     var SPADE_UNICODE = "\u2660";
-    //     var SUITS = [CLUB_UNICODE, DIAMOND_UNICODE, HEART_UNICODE, SPADE_UNICODE];
-    //     var RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    //     return RANKS[arrayRank] + SUITS[arraySuit];
-    // },
 };
