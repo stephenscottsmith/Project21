@@ -61,5 +61,6 @@ background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #F
     filter: alpha(opacity=100);
 }
 .card {
-    font-size: 1000%;
+    margin: 10px;
+
 }
