@@ -36,8 +36,7 @@ var Card = function (rank, suit) {
     this.displayImage = function (divID) {
         $(divID).append($('<img>')
                 .attr('src', displayURL)
-                .attr("height", 200)
-                .attr("width", 50));
+                .attr("height", 200));
     }
 };
 
