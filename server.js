@@ -13,9 +13,9 @@ app.configure(function(){
 
 app.get('/', function(req, res){
     res.redirect("/index.html");
-};
+});
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
     console.log("Listening on " + port);
-}
+});
