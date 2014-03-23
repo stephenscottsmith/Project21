@@ -33,9 +33,10 @@ var Card = function (rank, suit) {
 
     var displayURL = "Cards/" + this.displayRank[this.cardRank - 1] + "" + this.displaySuit[this.cardSuit - 1] + ".png";
 
-    this.displayImage = function (divID) {
+    this.displayImage = function (divID,flipped) {
+        var imgToDisplay = (flipped?"Cards/CB.png":displayURL) //Should we label so you can access specific cards if you want to flip them?
         $(divID).append($('<img>')
-                .attr('src', displayURL)
+                .attr('src', imgToDisplay)
                 .attr("height", 200)
                 .attr("class", "card"));
     }

@@ -26,10 +26,11 @@ var Strategy = {
     },
 
     displayHands: function (playerHand, dealerHand) {
-        for (var i = 0; i < 2; i++) {
-            dealerHand[i].displayImage('#dealer');
+        dealerHand[0].displayImage('#dealer',"flipped");
+        for (var i = 1; i < dealerHand.length;i++){
+            dealerHand[1].displayImage('#dealer');
         }
-        for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < playerHand.length; i++) {   //changed so if hands grow it will still work
             playerHand[i].displayImage('#player');
         }
     },
@@ -87,6 +88,8 @@ var Strategy = {
                     player.cardArray.push(deck.pop());
                     dealer.cardArray.push(deck.pop());
                 }
+                dealer.cardArray[0].flipped = true;
+
                 player.count = Strategy.getCountOfHand(player.cardArray);
                 dealer.count = Strategy.getCountOfHand(dealer.cardArray);
                 alert("DEALER: " + dealer.count + "\nPlayer: " + player.count);
