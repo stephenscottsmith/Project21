@@ -1,8 +1,8 @@
 Project21
 =========
-Tmp URL: http://project21.ajschneider.com/
+URL: http://project-21.herokuapp.com
 
-No guarentee on how out of date it is.
+Updates after every push to git.
 
 Card Counting Application
 
