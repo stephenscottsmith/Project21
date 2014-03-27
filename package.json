@@ -1,9 +1,10 @@
 {
   "name": "Project21",
-  "version": "0.0.1",
-  "description": "Card Counting App",
+  "version": "0.0.0",
+  "description": "Project21\r =========\r URL: http://project-21.herokuapp.com",
   "main": "server.js",
   "dependencies": {
+    "pg": "~2.11.1",
     "express": "~3.4.8"
   },
   "devDependencies": {},
@@ -15,12 +16,8 @@
     "type": "git",
     "url": "git://github.com/stephenscottsmith/Project21.git"
   },
-  "keywords": [
-    "project21",
-    "project-21"
-  ],
   "author": "",
-  "license": "BSD",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/stephenscottsmith/Project21/issues"
   },
