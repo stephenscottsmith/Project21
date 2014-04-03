@@ -12,6 +12,54 @@ client.connect(function (err) {
 	}
 });
 
+var UserList = {
+	users: {},
+	initializeUserList: function(){
+		client.query("SELECT * FROM users", function(err, result) {
+			result.rows.forEach(function(row) {
+
+				UserList.users[row['user_name']] = {password: row['password']};
+			})
+		});
+	},
+
+	/*
+	 * Returns false if the user already exists in the database. This needs to be handled.
+	 */
+	addUser: function(user, pass, callback) {
+
+		if(UserList.users[user] !== undefined) {
+			return false;
+		}
+		var queryConf = {
+			text: "INSERT INTO users (user_name, password) VALUES ($1, $2)",
+			values: [user, pass]};
+		client.query(queryConf, function(err, result) {
+			UserList.users[user] = {password: pass};
+			callback();
+		});
+	},
+
+	removeUser: function(user, pass) {
+		if(UserList.users[user] === undefined || UserList.users[user]['password'] !== pass)
+		{
+			console.log();
+			return false;
+		}
+		var queryConf = {
+			text: "DELETE FROM users WHERE user_name=$1",
+			values: [user]};
+		client.query(queryConf, function(err, result) {
+
+			delete UserList.users[user];
+		})
+	}
+}
+
+
+UserList.initializeUserList();
+
+
 
 app.configure(function(){
     app.use(express.static(__dirname));
@@ -68,10 +116,43 @@ app.post('/login', function(request, response) {
         response.redirect('/restricted');
         });
     }*/
-    var result = client.query("SELECT password FROM users WHERE user_name='" + username + "'");
-    result.on('row', function(row) {
-    	console.log(row.password);
-    })
+    if(UserList.users[username]['password'] === password) {
+    	request.session.regenerate(function() {
+        	request.session.user = username;
+        	response.redirect('/restricted');
+        });
+    }
+});
+
+app.get('/register', function(request, response) {
+   response.send('<form method="post" action="/register">' +
+  '<p>' +
+    '<label>Username:</label>' +
+    '<input type="text" name="username">' +
+  '</p>' +
+  '<p>' +
+    '<label>Password:</label>' +
+    '<input type="text" name="password">' +
+  '</p>' +
+  '<p>' +
+    '<input type="submit" value="Register">' +
+  '</p>' +
+  '</form>');
+});
+ 
+app.post('/register', function(request, response) {
+ 
+    var username = request.body.username;
+    var password = request.body.password;
+    if(UserList.users[username] !== undefined) {
+    	response.send('You are already registered! click <a href="/login">here to login</a>');
+    }
+    UserList.addUser(username, password, function(){
+    	request.session.regenerate(function(){
+        	request.session.user = username;
+        	response.redirect('/restricted');
+        });
+    });
 });
  
 app.get('/logout', function(request, response){
