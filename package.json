@@ -1,11 +1,12 @@
 {
   "name": "Project21",
   "version": "0.0.0",
-  "description": "Project21\r =========\r URL: http://project-21.herokuapp.com",
+  "description": "Project21 ========= URL: http://project-21.herokuapp.com",
   "main": "server.js",
   "dependencies": {
-    "pg": "~2.11.1",
-    "express": "~3.4.8"
+    "bcrypt-nodejs": "~0.0.3",
+    "express": "~3.4.8",
+    "pg": "~2.11.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -17,7 +18,7 @@
     "url": "git://github.com/stephenscottsmith/Project21.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/stephenscottsmith/Project21/issues"
   },

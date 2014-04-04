@@ -1,5 +1,6 @@
 var express = require('express');
 var pg = require('pg');
+var bcrypt = require('bcrypt-nodejs');
 var app = express();
 var param = { host: 'ec2-54-204-31-33.compute-1.amazonaws.com', user: 'klwtcpzgmsaemn', password: 'lXQSJDtOudAvUhhaEJ-Ha4-Lra', database: 'd66b9oqhlet7me', ssl: true}
 //var conString = "postgres://klwtcpzgmsaemn:lXQSJDtOudAvUhhaEJ-Ha4-Lra@ec2-54-204-31-33.compute-1.amazonaws.com:5432/d66b9oqhlet7me"
@@ -17,27 +18,28 @@ var UserList = {
 	initializeUserList: function(){
 		client.query("SELECT * FROM users", function(err, result) {
 			result.rows.forEach(function(row) {
-
 				UserList.users[row['user_name']] = {password: row['password']};
 			})
 		});
 	},
 
 	/*
-	 * Returns false if the user already exists in the database. This needs to be handled.
+	 * Callback after function is complete. Takes no arguments.  
 	 */
 	addUser: function(user, pass, callback) {
 
 		if(UserList.users[user] !== undefined) {
 			return false;
 		}
-		var queryConf = {
-			text: "INSERT INTO users (user_name, password) VALUES ($1, $2)",
-			values: [user, pass]};
-		client.query(queryConf, function(err, result) {
-			UserList.users[user] = {password: pass};
-			callback();
-		});
+        bcrypt.hash(pass, null, null, function(err, hash) {
+            var queryConf = {
+                text: "INSERT INTO users (user_name, password) VALUES ($1, $2)",
+                values: [user, hash]};
+            client.query(queryConf, function(err, result) {
+                UserList.users[user] = {password: hash};
+                callback();
+            });
+        });
 	},
 
 	removeUser: function(user, pass) {
@@ -50,10 +52,15 @@ var UserList = {
 			text: "DELETE FROM users WHERE user_name=$1",
 			values: [user]};
 		client.query(queryConf, function(err, result) {
-
 			delete UserList.users[user];
 		})
-	}
+	},
+    /*
+     * Callback with two arguments, err and res. res===true if correct password, false otherwise
+     */
+    checkPassword: function(user, pass, callback) {
+        bcrypt.compare(pass, UserList.users[user]['password'], callback)
+    }
 }
 
 
@@ -109,19 +116,20 @@ app.post('/login', function(request, response) {
     var username = request.body.username;
     var password = request.body.password;
 
- 	
-/*    if(username == 'demo' && password == 'demo'){
-        request.session.regenerate(function(){
-        request.session.user = username;
-        response.redirect('/restricted');
-        });
-    }*/
-    if(UserList.users[username]['password'] === password) {
-    	request.session.regenerate(function() {
-        	request.session.user = username;
-        	response.redirect('/restricted');
-        });
+    if(username === undefined || password === undefined) {
+        response.send('Invalid username or password. Click <a href"/login">here to go back</a>');
     }
+    UserList.checkPassword(username, password, function(err, res)
+    {
+        if(res === true) {
+            request.session.regenerate(function() {
+                request.session.user = username;
+                response.redirect('/restricted');
+            });
+        } else {
+            response.send('Invalid username or password. Click <a href="/login">here</a> to go back');
+        }
+    })
 });
 
 app.get('/register', function(request, response) {
@@ -144,6 +152,9 @@ app.post('/register', function(request, response) {
  
     var username = request.body.username;
     var password = request.body.password;
+    if(username === undefined || password === undefined) {
+        response.send('Invalid username or password. Click <a href="/register">here</a> to go back')
+    }
     if(UserList.users[username] !== undefined) {
     	response.send('You are already registered! click <a href="/login">here to login</a>');
     }
