@@ -1,6 +1,6 @@
 var express = require('express');
 var pg = require('pg');
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcryptjs');
 var app = express();
 var param = { host: 'ec2-54-204-31-33.compute-1.amazonaws.com', user: 'klwtcpzgmsaemn', password: 'lXQSJDtOudAvUhhaEJ-Ha4-Lra', database: 'd66b9oqhlet7me', ssl: true}
 //var conString = "postgres://klwtcpzgmsaemn:lXQSJDtOudAvUhhaEJ-Ha4-Lra@ec2-54-204-31-33.compute-1.amazonaws.com:5432/d66b9oqhlet7me"
@@ -9,7 +9,6 @@ var client = new pg.Client(param);
 client.connect(function (err) {
 	if(err) {
 		throw "Cannot connect to Postgres: " + err;
-		//return console.error("could not connect to postgres", err);
 	}
 });
 
@@ -17,8 +16,12 @@ var UserList = {
 	users: {},
 	initializeUserList: function(){
 		client.query("SELECT * FROM users", function(err, result) {
+			if(err) {
+				throw "Couldn't select users: " + err;
+			}
 			result.rows.forEach(function(row) {
-				UserList.users[row['user_name']] = {password: row['password']};
+				UserList.users[row['user_name']] = {password: row['password'],
+													id: row['user_id']};
 			})
 		});
 	},
@@ -31,27 +34,44 @@ var UserList = {
 		if(UserList.users[user] !== undefined) {
 			return false;
 		}
-        bcrypt.hash(pass, null, null, function(err, hash) {
+        bcrypt.hash(pass, 12, function(err, hash) {
+        	if(err) {
+				throw "Couldn't hash password: " + err;
+			}
             var queryConf = {
-                text: "INSERT INTO users (user_name, password) VALUES ($1, $2)",
+                text: "INSERT INTO users (user_name, password) VALUES ($1, $2) RETURNING user_id",
                 values: [user, hash]};
             client.query(queryConf, function(err, result) {
-                UserList.users[user] = {password: hash};
+            	if(err) {
+            		throw "Couldn't insert user: " + err;
+            	}
+                UserList.users[user] = {password: hash,
+                						id: result.rows[0].user_id};
                 callback();
             });
         });
 	},
-
 	removeUser: function(user, pass) {
-		if(UserList.users[user] === undefined || UserList.users[user]['password'] !== pass)
-		{
-			console.log();
-			return false;
-		}
+		var result;
+		UserList.checkPassword(user, pass, function(err, res) {
+			if(err) {
+				throw "Couldn't remove user: " + err;
+			}
+			if(res) {
+				remvoeUserAdmin(user);
+			}
+		});
+
+	},
+
+	removeUserAdmin: function(user) {
 		var queryConf = {
 			text: "DELETE FROM users WHERE user_name=$1",
 			values: [user]};
 		client.query(queryConf, function(err, result) {
+			if(err) {
+				throw "Couldn't remove user: " + err;
+			}
 			delete UserList.users[user];
 		})
 	},
@@ -63,8 +83,55 @@ var UserList = {
     }
 }
 
+var ScoreList = {
+	scores: new Array(),
+
+	initializeScoreList: function() {
+		client.query("SELECT scores.score, scores.score_date, users.user_name FROM scores \
+						INNER JOIN users \
+							ON scores.userid = users.user_id \
+						ORDER BY scores.score DESC", function(err, result) {
+			if(err) {
+				throw "Couldn't select scores: " + err;
+			}
+			result.rows.forEach(function(row) {
+				ScoreList.scores.push({
+					username: row['user_name'],
+					score: row['score'],
+					date: row['score_date']});
+			});
+			console.log(ScoreList.scores);
+		});
+	},
+
+	addScore: function(user, score) {
+		var userId = UserList.users[user]['id'];
+		var queryConf = {
+			text: "INSERT INTO scores (userid, score) VALUES ($1, $2) RETURNING scoreid",
+			values: [userId, score] };
+		client.query(queryConf, function(err, result) {
+			if(err) {
+				throw "Could not insert score: " + err;
+			}
+            ScoreList.scores.push({
+            	username: row['user_name'],
+				score: row['score'],
+				date: row['score_date'] });
+
+            ScoreList.scores.sort(function(a, b) {
+            	return b.score - a.score;
+            });
+        });
+	},
+
+	topNScores: function(n) {
+		return ScoreList.scores.slice(0, n);
+	},
+}
+
 
 UserList.initializeUserList();
+ScoreList.initializeScoreList();
 
 
 
@@ -174,6 +241,10 @@ app.get('/logout', function(request, response){
  
 app.get('/restricted', restrict, function(request, response){
   response.send('This is the restricted area! Hello ' + request.session.user + '! click <a href="/logout">here to logout</a>');
+});
+
+app.get('/highscore/:num', function(request, response) {
+	response.send(ScoreList.topNScores(request.param("num")));
 });
 
 app.get('/', function(req, res){

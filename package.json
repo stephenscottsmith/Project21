@@ -4,9 +4,9 @@
   "description": "Project21 ========= URL: http://project-21.herokuapp.com",
   "main": "server.js",
   "dependencies": {
-    "bcrypt-nodejs": "~0.0.3",
     "express": "~3.4.8",
-    "pg": "~2.11.1"
+    "pg": "~2.11.1",
+    "bcryptjs": "~0.7.12"
   },
   "devDependencies": {},
   "scripts": {
