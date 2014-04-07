@@ -1,11 +1,3 @@
-// TO DO List:
-// 1. Finish shuffle algorithm for 6 deck
-// 2. Revamp combine so it account for "sticky cards" or "dealer error"
-// 3. Create Dealer constructor
-// 4. Create Player constructor
-// 5. Create play x number of shoes that will give you an alert as to whether or not you made
-//    the correct move
-
 // Suit then rank so as to say "9 of Hearts"
 
 var ACES        = 1;

@@ -1,10 +1,163 @@
+    
 var HIT = "H";
 var STAND = "S";
 var DOUBLE_DOWN = "D";
 var SPLIT = "P";
 
+
+// Do I want to store strategy as a function? If so how would I do that when 
+// I need to access the Strategy.playHand() function to play the game?
+// Make sure to test multiple simulations of the game so as to check whether 
+// or not numberOfHandsToBePlayed is reset as well as the deck and numberOfHandsPlayed
 var Strategy = {
-    correctMove: "", 
+    numberofHandsToBePlayed: 0,
+    numberOfHandsPlayed: 0,
+    deck: null,
+    correctMove: "",
+
+    player: {
+        cardArray: [],
+        count: 0,
+        numberOfCorrectMoves: 0,
+        numberOfIncorrectMoves: 0
+    },
+
+    dealer: {
+        cardArray: [],
+        count: 0
+    },
+
+    playHand: function () {
+        Strategy.clearTable();
+        Strategy.resetPlayers();
+
+        for (var j = 0, startCards = 2; j < startCards; j++) {
+                Strategy.player.cardArray.push(Strategy.deck.cardArray.pop());
+                Strategy.dealer.cardArray.push(Strategy.deck.cardArray.pop());
+        }
+        console.log(Strategy.player.cardArray[0].cardSuit + ", " + Strategy.player.cardArray[0].cardRank + 
+                    " -- " + Strategy.player.cardArray[1].cardSuit + ", " + Strategy.player.cardArray[1].cardRank);
+        Strategy.dealer.cardArray[0].flipped = true;
+
+        Strategy.player.count = Strategy.getCountOfHand(Strategy.player.cardArray);
+        // Strategy.dealer.count = Strategy.getCountOfHand(Strategy.dealer.cardArray);
+        // console.log("DEALER: " + Strategy.dealer.count + "\nPlayer: " + Strategy.player.count);
+        
+        var dealerUpcardValue = Strategy.getCountOfHand(Strategy.dealer.cardArray.slice(0, 1));
+        Strategy.determineCorrectMove(Strategy.player.cardArray, 
+                                      Strategy.player.count, 
+                                      dealerUpcardValue);
+        Strategy.numberOfHandsPlayed++;
+        Strategy.displayHands();
+        Strategy.showChoiceButtons();
+
+    },
+
+    displayHands: function () {
+        for (var i = 0; i < Strategy.dealer.cardArray.length; i++) {
+            if (i % 2 === 0) {
+                Strategy.dealer.cardArray[i].displayImage(dealer, false);
+            } else {
+                Strategy.dealer.cardArray[i].displayImage(dealer, true);
+            }  
+            Strategy.player.cardArray[i].displayImage(player, false);
+        }
+    },
+
+    determineCorrectMove: function (playerHand, playerCount, dealerCount) {
+        var table = Strategy.determineTable(playerHand);
+        console.log("Player Count: " + playerCount + "\nDealer Count: " + dealerCount);
+        Strategy.correctMove = table[playerCount][dealerCount];
+    },
+
+    determineTable: function (playerHand) {
+        var DEALER_HITS_17_HARD_TABLE = [
+            "",
+            "",
+            "",
+            "",
+            "  HHHHHHHHHH",
+            "  HHHHHHHHHH",
+            "  HHHHHHHHHH",
+            "  HHHHHHHHHH",
+            "  HHHHHHHHHH",
+            "  HDDDDHHHHH",
+            "  DDDDDDDDHH",
+            "  DDDDDDDDDD",
+            "  HHSSSHHHHH",
+            "  SSSSSHHHHH",
+            "  SSSSSHHHHH",
+            "  SSSSSHHHHH",
+            "  SSSSSHHHHH",
+            "  SSSSSSSSSS",
+            "  SSSSSSSSSS",
+            "  SSSSSSSSSS",
+            "  SSSSSSSSSS",
+            "  SSSSSSSSSS",
+        ],
+
+        DEALER_HITS_17_SOFT_TABLE = [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "  HHHDDHHHHH",
+            "  HHHDDHHHHH",
+            "  HHDDDHHHHH",
+            "  HHDDDHHHHH",
+            "  HDDDDHHHHH",
+            "  DDDDDSSHHH",
+            "  SSSSDSSSSS",
+            "  SSSSSSSSSS",
+            "  SSSSSSSSSS"
+        ],
+
+        DEALER_HITS_17_SPLITS_TABLE = [
+            "",
+            "",
+            "",
+            "",
+            "  PPPPPPHHHH",
+            "",
+            "  PPPPPPHHHH",
+            "",
+            "  HHHPPHHHHH",
+            "",
+            "  HHHHHHHHHH",
+            "",
+            "  PPPPPHHHHH",
+            "",
+            "  PPPPPPHHHH",
+            "",
+            "  PPPPPPPPPP",
+            "",
+            "  PPPPPSPPSS",
+            "",
+            "  PPPPPPPPPP",
+            ""
+        ];
+
+        if (playerHand[0].cardRank === playerHand[1].cardRank) {
+            console.log("SPLIT");
+            return DEALER_HITS_17_SPLITS_TABLE;
+        } else if (playerHand[0].cardRank === Blackjack.ACES || 
+                   playerHand[1].cardRank === Blackjack.ACES) {
+            console.log("SOFT");
+            return DEALER_HITS_17_SOFT_TABLE;
+        } else {
+            console.log("HARD");
+            return DEALER_HITS_17_HARD_TABLE;
+        }
+    },
 
     getCountOfHand: function (hand) {
         var handCount = 0;
@@ -20,203 +173,60 @@ var Strategy = {
         return handCount;
     },
 
+    resetPlayers: function () {
+        Strategy.dealer.cardArray = [];
+        Strategy.dealer.count = 0;
+        Strategy.player.cardArray = [];
+        Strategy.dealer.count = 0;
+    },
+
+    showChoiceButtons: function () {
+        $('#hit').show();
+        $('#stand').show();
+        $('#split').show();
+        $('#double').show();
+    },
+
+    hideChoiceButtons: function () {
+        $('#hit').hide();
+        $('#stand').hide();
+        $('#split').hide();
+        $('#double').hide();
+    },
+
     clearTable: function () {
         $('#dealer').children().remove().end();
         $('#player').children().remove().end();
     },
 
-    displayHands: function (playerHand, dealerHand) {
-        dealerHand[0].displayImage('#dealer',"flipped");
-        for (var i = 1; i < dealerHand.length;i++){
-            dealerHand[1].displayImage('#dealer');
-        }
-        for (var i = 0; i < playerHand.length; i++) {   //changed so if hands grow it will still work
-            playerHand[i].displayImage('#player');
-        }
-    },
-
-    setCorrectMove: function (move) {
-        Strategy.correctMove = move;
-    },
-
-    determineCorrectMove: function (playerCount, dealerUpCard) {
-        var correctMove = 0;
-        var playerIndex;
-        var dealerIndex;
-        if (playerCount >= 4 && playerCount <= 8) {
-            playerIndex = 0;
-        } else if (playerCount >= 18) {
-            playerIndex = 9;
-        } else {
-            playerIndex = playerCount - 8;
-        }
-
-        if (dealerUpCard >= 10 && dealerUpCard <= 13) {
-            dealerIndex = 8;
-        } else if (dealerUpCard === 1) {
-            dealerIndex = 9;
-        } else {
-            dealerIndex = dealerUpCard - 2;
-        }
-
-        return Strategy.DEALER_HITS_17_HARD_TABLE[dealerIndex][playerIndex];
-    },
-
-    practiceStrategy: function (numberOfHandsToBePlayed, deck) {
-        var player = {
-            cardArray: [],
-            count: 0,
-            isSoft: false
-        };
-        var dealer = {
-            cardArray: [],
-            count: 0,
-            isSoft: false
-        };
-        var startCards = 2,
-            numberOfHandsPlayed = 0;
-
-
-
-        function playHand () {
-            alert("PLAYING");
-            if (numberOfHandsPlayed < numberOfHandsToBePlayed) {
-                player.cardArray = [];
-                dealer.cardArray = [];
-                Strategy.clearTable();
-                for (var j = 0; j < startCards; j++) {
-                    player.cardArray.push(deck.pop());
-                    dealer.cardArray.push(deck.pop());
-                }
-                dealer.cardArray[0].flipped = true;
-
-                player.count = Strategy.getCountOfHand(player.cardArray);
-                dealer.count = Strategy.getCountOfHand(dealer.cardArray);
-                alert("DEALER: " + dealer.count + "\nPlayer: " + player.count);
-                Strategy.displayHands(player.cardArray, dealer.cardArray);
-
-                $('#hit').show();
-                $('#stand').show();
-                $('#split').show();
-                $('#double').show();
-
-                var dealerUpcardValue = Strategy.getCountOfHand(dealer.cardArray.slice(0, 1));
-                var correctMove = determineCorrectMove(player.cardArray, player.count, dealerUpcardValue);
-                Strategy.setCorrectMove(correctMove);
-
-                alert("MOVE: " + correctMove);
-                numberOfHandsPlayed++;
-            }        
-        }
-
-        function determineCorrectMove (playerHand, playerCount, dealerCount) {
-            var table = determineTable(playerHand);
-            
-            //alert("Dealer Count : " + dealerCount + "\nPlayer Count: " + playerCount);
-
-            return table[playerCount][dealerCount];
-        }
-
-        function determineTable (playerHand) {
-            var DEALER_HITS_17_HARD_TABLE = [
-                "",
-                "",
-                "",
-                "",
-                "  HHHHHHHHHH",
-                "  HHHHHHHHHH",
-                "  HHHHHHHHHH",
-                "  HHHHHHHHHH",
-                "  HHHHHHHHHH",
-                "  HDDDDHHHHH",
-                "  DDDDDDDDHH",
-                "  DDDDDDDDDD",
-                "  HHSSSHHHHH",
-                "  SSSSSHHHHH",
-                "  SSSSSHHHHH",
-                "  SSSSSHHHHH",
-                "  SSSSSHHHHH",
-                "  SSSSSSSSSS",
-                "  SSSSSSSSSS",
-                "  SSSSSSSSSS",
-                "  SSSSSSSSSS",
-                "  SSSSSSSSSS",
-            ],
-
-            DEALER_HITS_17_SOFT_TABLE = [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "  HHHDDHHHHH",
-                "  HHHDDHHHHH",
-                "  HHDDDHHHHH",
-                "  HHDDDHHHHH",
-                "  HDDDDHHHHH",
-                "  DDDDDSSHHH",
-                "  SSSSDSSSSS",
-                "  SSSSSSSSSS",
-                "  SSSSSSSSSS"
-            ],
-
-            DEALER_HITS_17_SPLITS_TABLE = [
-                "",
-                "",
-                "",
-                "",
-                "  PPPPPPHHHH",
-                "",
-                "  PPPPPPHHHH",
-                "",
-                "  HHHPPHHHHH",
-                "",
-                "  HHHHHHHHHH",
-                "",
-                "  PPPPPHHHHH",
-                "",
-                "  PPPPPPHHHH",
-                "",
-                "  PPPPPPPPPP",
-                "",
-                "  PPPPPSPPSS",
-                "",
-                "  PPPPPPPPPP",
-                ""
-            ];
-
-            if (playerHand[0].cardRank === playerHand[1].cardRank) {
-                alert("SPLIT");
-                return DEALER_HITS_17_SPLITS_TABLE;
-            } else if (playerHand[0].cardRank === Blackjack.ACES || 
-                       playerHand[1].cardRank === Blackjack.ACES) {
-                alert("SOFT");
-                return DEALER_HITS_17_SOFT_TABLE;
-            } else {
-                alert("HARD");
-                return DEALER_HITS_17_HARD_TABLE;
-            }
-        }
-
-        while (numberOfHandsPlayed <= numberOfHandsToBePlayed) {
-            
-            playHand();
-            numberOfHandsPlayed++;
-        }
-    },
+    showStrategyBegins: function () {
+        $('#beginbtn').show();
+        $('#instructions').show();
+    }, 
 
     hideStrategyBegins: function () {
         $('#beginbtn').hide();
         $('#instructions').hide();
+    }, 
+
+    displayOutcomeMessage: function (playerMove) {
+        if (playerMove === Strategy.correctMove) {
+            Strategy.player.numberOfCorrectMoves += 1;
+            alert("YOU MADE THE CORRECT MOVE!!!");
+        } else {
+            Strategy.player.numberOfIncorrectMoves += 1;
+            alert("WRONG MOVE! You should have done a: " + Strategy.correctMove);
+        }
+        console.log("Correct: " + Strategy.player.numberOfCorrectMoves + 
+                    "\nIncorrect: " + Strategy.player.numberOfIncorrectMoves);
     },
+
+    gameDone: function () {
+        Strategy.clearTable();
+        Strategy.hideChoiceButtons();
+        Strategy.showStrategyBegins();
+
+    }
 
 };
 
@@ -230,34 +240,63 @@ var loadStrategy = function () {
             .find(':selected')
             .attr('value'));
         var numHands = parseInt($('#numhands').val());
-        var deck = Blackjack.deckObj(numDecks);
-        deck.shuffle();
-        alert("HERE");
-        Strategy.practiceStrategy(numHands, deck.cardArray);
+        var newDeck = Blackjack.deckObj(numDecks);
+
+        newDeck.shuffle();
+        Strategy.numberofHandsToBePlayed = numHands;
+        Strategy.deck = newDeck;
+        Strategy.playHand();
+
     });
 
-    // $('#hit').click(function () {
-    //     var playerMove = "H";
-    //     var correctMove = Strategy.correctMove;
-    //     alert("Correct Move: " + correctMove);
-    //     // Compare
-    //     if (nubmerOfHandsPlayed < numberOfHandsToBePlayed) {
-    //         playHand();
-    //     } else {
-    //         // reload menu
-    //     }
-    // });
+
+
+    $('#hit').click(function () {
+        var playerMove = "H";
+        Strategy.displayOutcomeMessage(playerMove);
+        // Compare
+        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+            Strategy.playHand();
+        } else {
+            // reload menu
+            Strategy.gameDone();
+        }
+    });
 
     $('#stand').click(function () {
-        
+        var playerMove = "S";
+        Strategy.displayOutcomeMessage(playerMove);
+        // Compare
+        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+            Strategy.playHand();
+        } else {
+            // reload menu
+            Strategy.gameDone();
+        }
     });
 
     $('#split').click(function () {
-        
+        var playerMove = "P";
+        Strategy.displayOutcomeMessage(playerMove);
+        // Compare
+        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+            Strategy.playHand();
+        } else {
+            // reload menu
+            Strategy.gameDone();
+        }
     });
 
     $('#double').click(function () {
-        
+        var playerMove = "D";
+        Strategy.displayOutcomeMessage(playerMove);
+        // Compare
+        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+            Strategy.playHand();
+        } else {
+            // reload menu
+            Strategy.gameDone();
+        }
     });
 
 
