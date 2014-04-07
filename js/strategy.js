@@ -7,8 +7,10 @@ var SPLIT = "P";
 
 // Do I want to store strategy as a function? If so how would I do that when 
 // I need to access the Strategy.playHand() function to play the game?
-// Make sure to test multiple simulations of the game so as to check whether 
-// or not numberOfHandsToBePlayed is reset as well as the deck and numberOfHandsPlayed
+
+// Where I left off:
+// Test for when the deck runs out of cards and the number of hands played 
+// exceeds the possible number of hands - should we just reshuffle or exit to menu?
 var Strategy = {
     numberofHandsToBePlayed: 0,
     numberOfHandsPlayed: 0,
