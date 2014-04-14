@@ -77,5 +77,5 @@ var Blackjack = {
                 .attr("value", this.VALID_DECKS[i])
                 .text(this.VALID_DECKS[i]));
         }
-    },
+    }
 };
