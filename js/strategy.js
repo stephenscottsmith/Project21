@@ -12,8 +12,19 @@ var SPLIT = "P";
 // Test for when the deck runs out of cards and the number of hands played 
 // exceeds the possible number of hands - should we just reshuffle or exit to menu?
 
-// BUG: Need to fetch correct number of hands and probably decks 
+// BUG1: Need to fetch correct number of hands and probably decks 
 // to play once finished playing
+
+// Things to do:
+// 1. Fix Bug1 above
+// 2. Test for when deck runs out
+// 3. Write Qunit Test
+// 4. Meet w/ Alex for database
+// 5. Look at login for posting a new registry
+//      a. server.js - try to use html only
+//          write a post in this file
+//      b. index.html
+//          write a form with input with username and password
 var Strategy = {
     numberofHandsToBePlayed: 0,
     numberOfHandsPlayed: 0,
