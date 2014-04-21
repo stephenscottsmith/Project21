@@ -8,6 +8,8 @@ var SPLIT = "P";
 // Test for when the deck runs out of cards and the number of hands played 
 // exceeds the possible number of hands - should we just reshuffle or exit to menu?
 
+// 1. Implement back
+// 2. Fix the constant highlight of a previous move
 // 3. Write Qunit Test
 // 4. Meet w/ Alex for database
 // 5. Look at login for posting a new registry
@@ -15,6 +17,8 @@ var SPLIT = "P";
 //          write a post in this file
 //      b. index.html
 //          write a form with input with username and password
+// 6. Get signed up for developer account
+
 var Strategy = {
     numberOfHandsToBePlayed: 0,
     numberOfHandsPlayed: 0,
@@ -253,7 +257,6 @@ var loadStrategy = function () {
         var numHands = parseInt($('#numhands').val());
         var newDeck = Blackjack.deckObj(numDecks);
         Strategy.numberOfDecks = numDecks;
-        alert(numDecks);
         Strategy.numberOfHandsToBePlayed = numHands;
         Strategy.numberOfHandsPlayed = 0;
         newDeck.shuffle();
