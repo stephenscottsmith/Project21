@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	    <title>Project 21</title>
+	    <link href="css/bootstrap.min.css" rel="stylesheet">
+	    <link href="css/custom.css" rel="stylesheet">
+	    <!-- respond.min.js needs to be in header to work w/ older versions of IE -->
+	    <script src="js/respond.min.js"></script>
+	</head>
+	<body>
+		<!-- javascript: placed here will load page faster -->
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<!-- always put this bootstrap after the jquery, b/c it's dependent on jquery -->
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/underscore-min.js"></script>
+		<script src="js/blackjack.js"></script>
+		<script src="js/strategy.js"></script>
+
+		<div class="container containerextend">
+	        <div class="row-fluid rowextend">
+	            <div class="transbox">
+	            	<div id="mainbox">
+		                <h1 class="bg-success">Learn Basic Strategy</h1>
+		                <div class="bg-info">
+		                	<div id="instructions" type="text">
+		                		<p>To use the basic strategy, look up your hand along the left vertical edge and the dealer's up card along the top. In both cases an A stands for ace. From top to bottom are the hard totals, soft totals, and splittable hands. There are two charts depending on whether the dealer hits or stands on soft 17.</p>
+		                		<p class="bg-warning"><a href=http://wizardofodds.com/games/blackjack/strategy/4-decks/>Click here for a reference when learning basic strategy for a 4 to 8-Deck deck.</a></p>
+		                	</div>
+		                	<div id="dealer" type="text">
+		                		
+		                	</div>
+		                	<div id="player" type="text">
+		                		
+		                	</div>
+		                	<div id="buttongroup">
+		                		<button class="btn btn-default" style="display:none" id="hit" type="button">Hit</button>
+		                		<button class="btn btn-default" style="display:none" id="stand" type="button">Stand</button>
+		                		<button class="btn btn-default" style="display:none" id="split" type="button">Split</button>
+		                		<button class="btn btn-default" style="display:none" id="double" type="button">Double Down</button>
+		                	</div>
+		                	
+		                	
+			            </div>
+		                <div id="beginbtn">
+		                	<table class="table table-condensed bg-danger">
+		                	<tr>
+		                		<th>Number of decks</th>
+		                		<th>Number of hands to play</th>
+		                	</tr>
+		                	<tr>
+		                		<td>
+		                			<select class="form-control" id="numdecks"></select>
+		                		</td>
+		                		<td>
+		                			<input type="number" class="form-control input-md" id="numhands" value="1" min="1">
+		                		</td>
+		                	</tr>
+		                	</table>
+		                	<button class="btn btn-primary" id="beginStrategyTest">Begin Strategy</button>
+		                </div>
+
+		            </div>
+	                <div class="clearfix"></div>
+	            </div>
+	        </div>
+	    </div>
+	</body>
+</html>
