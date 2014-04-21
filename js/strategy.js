@@ -4,20 +4,10 @@ var STAND = "S";
 var DOUBLE_DOWN = "D";
 var SPLIT = "P";
 
-
-// Do I want to store strategy as a function? If so how would I do that when 
-// I need to access the Strategy.playHand() function to play the game?
-
 // Where I left off:
 // Test for when the deck runs out of cards and the number of hands played 
 // exceeds the possible number of hands - should we just reshuffle or exit to menu?
 
-// BUG1: Need to fetch correct number of hands and probably decks 
-// to play once finished playing
-
-// Things to do:
-// 1. Fix Bug1 above
-// 2. Test for when deck runs out
 // 3. Write Qunit Test
 // 4. Meet w/ Alex for database
 // 5. Look at login for posting a new registry
