@@ -26,10 +26,11 @@ var SPLIT = "P";
 //      b. index.html
 //          write a form with input with username and password
 var Strategy = {
-    numberofHandsToBePlayed: 0,
+    numberOfHandsToBePlayed: 0,
     numberOfHandsPlayed: 0,
     deck: null,
     correctMove: "",
+    numberOfDecks: 0,
 
     player: {
         cardArray: [],
@@ -47,6 +48,10 @@ var Strategy = {
         Strategy.clearTable();
         Strategy.resetPlayers();
 
+        if (Strategy.deck.cardArray.length===0) {
+            var newDeck = Blackjack.deckObj(Strategy.numberOfDecks);
+            Strategy.deck = newDeck;
+        }
         for (var j = 0, startCards = 2; j < startCards; j++) {
                 Strategy.player.cardArray.push(Strategy.deck.cardArray.pop());
                 Strategy.dealer.cardArray.push(Strategy.deck.cardArray.pop());
@@ -257,9 +262,12 @@ var loadStrategy = function () {
             .attr('value'));
         var numHands = parseInt($('#numhands').val());
         var newDeck = Blackjack.deckObj(numDecks);
-
+        Strategy.numberOfDecks = numDecks;
+        alert(numDecks);
+        Strategy.numberOfHandsToBePlayed = numHands;
+        Strategy.numberOfHandsPlayed = 0;
         newDeck.shuffle();
-        Strategy.numberofHandsToBePlayed = numHands;
+        
         Strategy.deck = newDeck;
         Strategy.playHand();
 
@@ -271,7 +279,7 @@ var loadStrategy = function () {
         var playerMove = "H";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
@@ -283,7 +291,7 @@ var loadStrategy = function () {
         var playerMove = "S";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
@@ -295,7 +303,7 @@ var loadStrategy = function () {
         var playerMove = "P";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
@@ -307,7 +315,7 @@ var loadStrategy = function () {
         var playerMove = "D";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
