@@ -27,6 +27,7 @@ background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #F
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
+    background-attachment: fixed;
 }
 .image {
     background: url(Project21Splash.jpg) no-repeat center center fixed;
