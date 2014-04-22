@@ -5,8 +5,8 @@ var DOUBLE_DOWN = "D";
 var SPLIT = "P";
 
 // Where I left off:
-// Test for when the deck runs out of cards and the number of hands played 
-// exceeds the possible number of hands - should we just reshuffle or exit to menu?
+// Finish tests.
+
 
 // 1. Implement back
 // 2. Fix the constant highlight of a previous move
