@@ -19,10 +19,10 @@ $(document).ready(function() {
         loadStrategy();
     });
 
-    $("#login").click(function()){
+    $("#login").click(function(){
         $('#container').empty();
         var login = $('#login-container').html();
-    }
+    });
 
     $("#stats").click(function() {
         $("li").removeClass("active");
