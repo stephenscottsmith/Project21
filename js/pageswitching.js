@@ -19,6 +19,11 @@ $(document).ready(function() {
         loadStrategy();
     });
 
+    $("#login").click(function()){
+        $('#container').empty();
+        var login = $('#login-container').html();
+    }
+
     $("#stats").click(function() {
         $.get("/highscore/10", function(data) {
             var users =  new Array();
