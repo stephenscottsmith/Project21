@@ -153,9 +153,9 @@ app.use(express.cookieParser('shhhh, very secret'));
 app.use(express.session());
  
  
-function restrict(req, res, next) {
+function restrict(req, res, callback) {
   if (req.session.user) {
-    next();
+    callback();
   } else {
     req.session.error = 'Access denied!';
     res.redirect('/login');
@@ -245,6 +245,10 @@ app.get('/restricted', restrict, function(request, response){
 
 app.get('/highscore/:num', function(request, response) {
 	response.send(ScoreList.topNScores(request.param("num")));
+});
+
+app.post('/highscore/:num', restrict, function(request, response) {
+  ScoreList.addScore(request.session.user, request.param("num"));
 });
 
 app.get('/', function(req, res){
