@@ -20,6 +20,8 @@ $(document).ready(function() {
     });
 
     $("#stats").click(function() {
+        $("li").removeClass("active");
+        $(this).addClass("active");
         $.get("/highscore/10", function(data) {
             var users =  new Array();
             data.forEach(function(user) {
@@ -35,6 +37,14 @@ $(document).ready(function() {
             console.log(templateUsers);
         });
     });
+
+    $("#chat").click(function() {
+        $("li").removeClass("active");
+        $(this).addClass("active");
+        var chat = $("#chat-container").html();
+        $("#container").empty();
+        $("#container").prepend(chat);
+    })
 });
 
 var clearActives = function() {

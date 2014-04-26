@@ -19,6 +19,9 @@
     <script src="js/strategy.js"></script>
     <script src="js/pageswitching.js"></script>
     <script src="js/handlebars-v1.3.0.js"></script>
+    <script src='/js/chat.js' type='text/javascript'></script>
+    <script src='/js/chat_ui.js' type='text/javascript'></script>
+    <script src='/socket.io/socket.io.js' type='text/javascript'></script>
 
     <!-- Index's handlebars -->
 
@@ -126,6 +129,33 @@
       {{/each}}
       </ul>
     </script>
+
+    <!-- Chat Template -->
+    <script id="chat-container" type="text/x-handlebars-template">
+      <div id='content'>
+        <div id='room'></div>
+
+        <div id='room-list'></div>
+
+        <div id='messages'></div>
+
+        <form id='send-form' name="send-form">
+            <input id='send-message'> <input id='send-button' type='submit'
+            value='Send'>
+
+            <div id='help'>
+                Chat commands:
+
+                <ul>
+                    <li>Change nickname: <code>/name [username]</code></li>
+
+                    <li>Join/create room: <code>/join [room name]</code></li>
+                </ul>
+            </div>
+        </form>
+      </div>
+    </script>
+
     <div class="container containerextend">
         <div class="row-fluid rowextend">
             <div id="container" class="transbox">

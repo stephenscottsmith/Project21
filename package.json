@@ -6,7 +6,9 @@
   "dependencies": {
     "express": "~3.4.8",
     "pg": "~2.11.1",
-    "bcryptjs": "~0.7.12"
+    "bcryptjs": "~0.7.12",
+    "socket.io": "^0.9.16",
+    "http": "0.0.0"
   },
   "devDependencies": {},
   "scripts": {

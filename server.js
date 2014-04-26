@@ -1,7 +1,9 @@
 var express = require('express');
 var pg = require('pg');
 var bcrypt = require('bcryptjs');
+var http = require('http');
 var app = express();
+var server = http.createServer(app);
 var param = { host: 'ec2-54-204-31-33.compute-1.amazonaws.com', user: 'klwtcpzgmsaemn', password: 'lXQSJDtOudAvUhhaEJ-Ha4-Lra', database: 'd66b9oqhlet7me', ssl: true}
 //var conString = "postgres://klwtcpzgmsaemn:lXQSJDtOudAvUhhaEJ-Ha4-Lra@ec2-54-204-31-33.compute-1.amazonaws.com:5432/d66b9oqhlet7me"
 
@@ -227,7 +229,8 @@ app.post('/register', function(request, response) {
     }
     UserList.addUser(username, password, function(){
     	request.session.regenerate(function(){
-        	request.session.user = username;
+        	request.session.use$("li").removeClass("active");
+        $(this).addClass("active");r = username;
         	response.redirect('/restricted');
         });
     });
@@ -256,6 +259,9 @@ app.get('/', function(req, res){
 });
 
 var port = process.env.PORT || 3000;
-app.listen(port, function() {
+server.listen(port, function() {
     console.log("Listening on " + port);
 });
+
+var chatServer = require('./modules/chat_server');
+chatServer.listen(server);
