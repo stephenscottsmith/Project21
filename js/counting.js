@@ -9,7 +9,7 @@ var Counting = {
         var deckCount = 0;
         var properCount = 0;
 
-        var wait = false
+        var wait = false;
 
         function count() {
             if (deckCount < numCardsToDisplay) {
