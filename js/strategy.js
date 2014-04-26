@@ -240,13 +240,12 @@ var Strategy = {
         Strategy.clearTable();
         Strategy.hideChoiceButtons();
         Strategy.showStrategyBegins();
-
     }
 
 };
 
 var loadStrategy = function () {
-    $('#beginStrategyTest').button();
+    //$('#beginStrategyTest').button();
 
     $('#beginStrategyTest').click(function () {
         Strategy.hideStrategyBegins();
