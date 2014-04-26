@@ -24,7 +24,15 @@ $(function () {
 		equal(card4.cardRank, 13, "Passing 13 in for rank (Looking for King: 13).");
 		equal(card4.cardSuit, 1, "Passing 1 in for suit (Looking for Spades: 1).");
 
+		throws(function() { var card5 = new card(14, 1); }, "No rank greater than 13 allowed.");
+		throws(function() { var card6 = new card(13, 5); }, "No suit greater than 4 allowed.");
+		throws(function() { var card7 = new card(24, 17); }, "No rank greater than 13 and suit greater than 4 allowed.");
+		throws(function() { var card5 = new card(0, 1); }, "No rank less than 1 allowed.");
+		throws(function() { var card6 = new card(4, 0); }, "No suit less than 1 allowed.");
+		throws(function() { var card7 = new card(-3, -89); }, "No rank and suit less than 1 allowed.");
 	});
+
+
 
 	test("Basic Instantiation of Decks", function () {
 		var deck1 = new Deck(1);
@@ -46,6 +54,13 @@ $(function () {
 		var deck5 = new Deck(8);
 		equal(deck5.numberOfDecks, 8, "Passing 8 in for deck size");
 		equal(deck5.cardArray.length, 416, "Card Array Length (52).");
+
+		throws(function() { var deck6 = new Deck(3); }, "No deck of size 3 allowed.");
+		throws(function() { var deck7 = new Deck(5); }, "No deck of size 5 allowed.");
+		throws(function() { var deck8 = new Deck(7); }, "No deck of size 7 allowed.");
+		throws(function() { var deck9 = new Deck(0); }, "No deck of size 0 allowed.");
+		throws(function() { var deck9 = new Deck(8.5); }, "No partial decks allowed.");
+		throws(function() { var deck9 = new Deck(-4); }, "No negative sized decks allowed.");
 
 	});
 
@@ -121,10 +136,13 @@ $(function () {
 		equal(deck9.cardArray.length, deck10.cardArray.length, "Deck10 length is still the same as Deck9 length.");
 		notDeepEqual(deck9.cardArray, deck10.cardArray, "2 8-Deck Decks should be different after one is shuffled.");
 	});
-
-	// test("Basic Instantiation and Access of Blackjack Cards and Decks", function () {
+	
+	// Test display image?
+	// test("", function () {
 
 	// });
+
+
 
 	// test("Basic Instantiation and Access of Blackjack Cards and Decks", function () {
 
