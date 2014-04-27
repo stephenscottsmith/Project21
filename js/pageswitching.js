@@ -19,13 +19,11 @@ $(document).ready(function() {
         loadStrategy();
     });
 
-<<<<<<< HEAD
-=======
     $("#login").click(function(){
         $('#container').empty();
         var login = $('#login-container').html();
     });
->>>>>>> 2dd90f0a044cce415dd3d7b22c4728c9d9ef94af
+
 
     $("#stats").click(function() {
         $("li").removeClass("active");
