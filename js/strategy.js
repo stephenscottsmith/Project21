@@ -80,12 +80,12 @@ var Strategy = {
     },
 
     determineCorrectMove: function (playerHand, playerCount, dealerCount) {
-        var table = Strategy.determineTable(playerHand);
+        var table = Strategy.determineTable(playerHand, playerCount);
         console.log("Player Count: " + playerCount + "\nDealer Count: " + dealerCount);
         Strategy.correctMove = table[playerCount][dealerCount];
     },
 
-    determineTable: function (playerHand) {
+    determineTable: function (playerHand, playerCount) {
         var DEALER_HITS_17_HARD_TABLE = [
             "",
             "",
@@ -161,7 +161,7 @@ var Strategy = {
             ""
         ];
 
-        if (playerHand[0].cardRank === playerHand[1].cardRank) {
+        if ((playerHand[0].cardRank === playerHand[1].cardRank) && playerCount !== 20) {
             console.log("SPLIT");
             return DEALER_HITS_17_SPLITS_TABLE;
         } else if (playerHand[0].cardRank === Blackjack.ACES || 
