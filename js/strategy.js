@@ -55,17 +55,13 @@ var Strategy = {
         Strategy.dealer.cardArray[0].flipped = true;
 
         Strategy.player.count = Strategy.getCountOfHand(Strategy.player.cardArray);
-        // Strategy.dealer.count = Strategy.getCountOfHand(Strategy.dealer.cardArray);
-        // console.log("DEALER: " + Strategy.dealer.count + "\nPlayer: " + Strategy.player.count);
-        
-        var dealerUpcardValue = Strategy.getCountOfHand(Strategy.dealer.cardArray.slice(0, 1));
-        Strategy.determineCorrectMove(Strategy.player.cardArray, 
-                                      Strategy.player.count, 
-                                      dealerUpcardValue);
+        Strategy.dealer.count = Strategy.getCountOfHand(Strategy.dealer.cardArray.slice(0, 1));
+        Strategy.correctMove = Strategy.determineCorrectMove(Strategy.player.cardArray, 
+                                                             Strategy.player.count, 
+                                                             Strategy.dealer.count);
         Strategy.numberOfHandsPlayed++;
         Strategy.displayHands();
         Strategy.showChoiceButtons();
-
     },
 
     displayHands: function () {
@@ -82,7 +78,7 @@ var Strategy = {
     determineCorrectMove: function (playerHand, playerCount, dealerCount) {
         var table = Strategy.determineTable(playerHand, playerCount);
         console.log("Player Count: " + playerCount + "\nDealer Count: " + dealerCount);
-        Strategy.correctMove = table[playerCount][dealerCount];
+        return table[playerCount][dealerCount];
     },
 
     determineTable: function (playerHand, playerCount) {
@@ -158,7 +154,8 @@ var Strategy = {
             "  PPPPPSPPSS",
             "",
             "  PPPPPPPPPP",
-            ""
+            "",
+            "  PPPPPPPPPP",
         ];
 
         if ((playerHand[0].cardRank === playerHand[1].cardRank) && playerCount !== 20) {
