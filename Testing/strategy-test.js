@@ -93,6 +93,24 @@ $(function () {
 
     	var hand5 = [new Card(13, 1), new Card(1, 2)];
     	equal(Strategy.getCountOfHand(hand5), 21, "13 and Ace = 21");
+
+        var hand6 = [new Card(1, 3)];
+        equal(Strategy.getCountOfHand(hand6), 11, "Ace = 11");
+
+        var hand7 = [new Card(13, 1)];
+        equal(Strategy.getCountOfHand(hand7), 10, "King = 10");
+
+        var hand8 = [new Card(12, 2)];
+        equal(Strategy.getCountOfHand(hand8), 10, "Queen = 10");
+
+        var hand9 = [new Card(11, 3)];
+        equal(Strategy.getCountOfHand(hand9), 10, "Jack = 10");
+
+        var hand10 = [new Card(10, 4)];
+        equal(Strategy.getCountOfHand(hand10), 10, "10 = 10");
+
+        var hand11 = [new Card(8, 3)];
+        equal(Strategy.getCountOfHand(hand11), 8, "8 = 8");
 	});
 
 	test("Determine Table Function Test", function () {
@@ -169,9 +187,9 @@ $(function () {
 				  DEALER_HITS_SOFT_17_HARD_TABLE, "8 and 2 should result in hard table.");
 	});
 
-	test("Determine Correct Move Function Tests", function () {
+	// test("Determine Correct Move Function Tests", function () {
 
-	});
+	// });
 
 	// test("Basic Instantiation and Access of Blackjack Cards and Decks", function () {
 
