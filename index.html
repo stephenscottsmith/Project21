@@ -13,6 +13,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- always put this bootstrap after the jquery, b/c it's dependent on jquery -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/blackjack.js"></script>
     <script src="js/counting.js"></script>
     <script src="js/underscore-min.js"></script>
@@ -117,11 +118,56 @@
       </div>
       <div class="clearfix"></div>
     </script>
+<script type="text/javascript">
+
+            $(function() {
+            $('#myModal').modal({
+                backdrop: true;
+            });
+        });
+
+     </script>
 
 
-    <script id= "login-container" type="text/x-handlebars-template">
-      
-    </script>
+      <div class="modal" id="myModal">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">✕</button>
+              <h3>Login to Website</h3>
+          </div>
+              <div class="modal-body" style="text-align:center;">
+              <div class="row-fluid">
+                  <div class="span10 offset1">
+                      <div id="modalTab">
+                          <div class="tab-content">
+                              <div class="tab-pane active" id="login">
+                                  <form method="post" action='' name="login_form">
+                                      <p><input type="text" class="span12" name="eid" id="email" placeholder="Email"></p>
+                                      <p><input type="password" class="span12" name="passwd" placeholder="Password"></p>
+                                      <p><button type="submit" class="btn btn-primary">Sign in</button>
+                                      <a href="#forgotpassword" data-toggle="tab">Forgot Password?</a>
+                                      </p>
+                                  </form>
+                              </div>
+                              <div class="tab-pane fade" id="forgotpassword">
+                                  <form method="post" action='' name="forgot_password">
+                                      <p>Hey this stuff happens, send us your email and we'll reset it for you!</p>
+                                      <input type="text" class="span12" name="eid" id="email" placeholder="Email">
+                                      <p><button type="submit" class="btn btn-primary">Submit</button>
+                                      <a href="#login" data-toggle="tab">Wait, I remember it now!</a>
+                                      </p>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
     <!-- High Scores Template -->
     <script id="scores-container" type="text/x-handlebars-template">
@@ -131,6 +177,7 @@
       {{/each}}
       </ul>
     </script>
+
     <div class="container containerextend">
         <div class="row-fluid rowextend">
             <div id="container" class="transbox">
@@ -155,7 +202,7 @@
           <li id="count"><a href="#">Count</a></li>
           <li id="strategy"><a href="#">Strategy</a></li>
           <li id="chat"><a href="#">Chat</a></li>
-          <li id="login"><a href="#">Login</a></li>
+          <li><a href="#myModal" role="button" data-toggle="modal">Login</a></li>
         </ul>
       </div>
     </nav>
