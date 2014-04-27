@@ -305,8 +305,8 @@ $(function () {
         var hand22 = [new Card(1, 1), new Card(1, 4)];
         for (var i = 2; i < 12; i++) {
             equal(Strategy.determineCorrectMove(hand22, Strategy.getCountOfHand(hand22), i),
-                      "P",
-                      "Player has Ace, Ace with any valid dealer count should be: P");
+                  "P",
+                  "Player has Ace, Ace with any valid dealer count should be: P");
         }
 	});
 
