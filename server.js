@@ -81,7 +81,11 @@ var UserList = {
      * Callback with two arguments, err and res. res===true if correct password, false otherwise
      */
     checkPassword: function(user, pass, callback) {
-        bcrypt.compare(pass, UserList.users[user]['password'], callback)
+      try{
+        bcrypt.compare(pass, UserList.users[user]['password'], callback);
+      } catch (err) {
+        callback(false, false);
+      }
     }
 }
 
@@ -229,8 +233,7 @@ app.post('/register', function(request, response) {
     }
     UserList.addUser(username, password, function(){
     	request.session.regenerate(function(){
-        	request.session.use$("li").removeClass("active");
-        $(this).addClass("active");r = username;
+        	request.session.user = username;
         	response.redirect('/restricted');
         });
     });

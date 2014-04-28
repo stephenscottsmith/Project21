@@ -23,6 +23,13 @@ $(document).ready(function() {
         $('#container').empty();
         var login = $('#login-container').html();
     });
+    $("#chat").click(function() {
+        $("li").removeClass("active");
+        $(this).addClass("active");
+        var chat = $("#chat-container").html();
+        $("#container").empty();
+        $("#container").prepend(chat);
+    })
 
     $("#stats").click(function() {
         $.get("/highscore/10", function(data) {
