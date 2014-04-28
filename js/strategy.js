@@ -52,9 +52,6 @@ var Strategy = {
                 Strategy.dealer.cardArray.push(Strategy.deck.cardArray.pop());
         }
         
-        console.log(Strategy.player.cardArray[0].cardSuit + ", " + Strategy.player.cardArray[0].cardRank + 
-                    " -- " + Strategy.player.cardArray[1].cardSuit + ", " + Strategy.player.cardArray[1].cardRank);
-        
         Strategy.dealer.cardArray[0].flipped = true;
         Strategy.player.count = Strategy.getCountOfHand(Strategy.player.cardArray);
         Strategy.dealer.count = Strategy.getCountOfHand(Strategy.dealer.cardArray.slice(0, 1));
@@ -156,7 +153,8 @@ var Strategy = {
             "  PPPPPSPPSS",
             "",
             "  PPPPPPPPPP",
-            ""
+            "",
+            "  PPPPPPPPPP",
         ];
 
         if ((playerHand[0].cardRank === playerHand[1].cardRank) && playerCount !== 20) {
