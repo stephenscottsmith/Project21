@@ -19,15 +19,12 @@ $(document).ready(function() {
         loadStrategy();
     });
 
-<<<<<<< HEAD
-    
-=======
+
     $("#login").click(function(){
         $('#container').empty();
         var login = $('#login-container').html();
     });
 
->>>>>>> 92c7387baa3a8bcbfa717ef3f5804210c2682b1b
 
     $("#stats").click(function() {
         $.get("/highscore/10", function(data) {
