@@ -16,11 +16,12 @@ var Card = function (rank, suit) {
                         "7", "8", "9", "T", "J", "Q", "K"];
     this.displaySuit = ["S", "H", "C", "D"];
 
-    if (this.cardRank > 13 || this.cardRank < 1) {
-        this.cardRank = "INVALID RANK ON CARD";
+    if (this.cardRank > 13 || this.cardRank < 1 || this.cardRank % 1 !== 0) {
+        //this.cardRank = "INVALID RANK ON CARD";
+        throw "Invalid rank for card!";
     }
-    if (this.cardSuit < 1 || this.cardSuit > 4) {
-        this.cardSuit = "INVALID SUIT ON CARD";
+    if (this.cardSuit < 1 || this.cardSuit > 4 || this.cardSuit % 1 !== 0) {
+        throw "Invalid suit for card!";
     }
 
     var displayURL = "Cards/" + this.displayRank[this.cardRank - 1] + "" + this.displaySuit[this.cardSuit - 1] + ".png";
@@ -35,6 +36,9 @@ var Card = function (rank, suit) {
 };
 
 var Deck = function (deckNum) {
+    if (deckNum !== 1 && deckNum !== 2 && deckNum !== 4 && deckNum !== 6 && deckNum !== 8 || deckNum % 1 !== 0) {
+        throw "Invalid number of decks!";
+    }
     this.numberOfDecks = deckNum;
     this.cardArray = [];
     for (var deckCounter = 0; deckCounter < this.numberOfDecks; deckCounter++) {

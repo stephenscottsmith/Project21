@@ -4,32 +4,22 @@ var STAND = "S";
 var DOUBLE_DOWN = "D";
 var SPLIT = "P";
 
-
-// Do I want to store strategy as a function? If so how would I do that when 
-// I need to access the Strategy.playHand() function to play the game?
-
-// Where I left off:
-// Test for when the deck runs out of cards and the number of hands played 
-// exceeds the possible number of hands - should we just reshuffle or exit to menu?
-
-// BUG1: Need to fetch correct number of hands and probably decks 
-// to play once finished playing
-
-// Things to do:
-// 1. Fix Bug1 above
-// 2. Test for when deck runs out
-// 3. Write Qunit Test
+// 1. Implement back
+// 2. Fix the constant highlight of a previous move
 // 4. Meet w/ Alex for database
 // 5. Look at login for posting a new registry
 //      a. server.js - try to use html only
 //          write a post in this file
 //      b. index.html
 //          write a form with input with username and password
+// 6. Get signed up for developer account
+
 var Strategy = {
-    numberofHandsToBePlayed: 0,
+    numberOfHandsToBePlayed: 0,
     numberOfHandsPlayed: 0,
     deck: null,
     correctMove: "",
+    numberOfDecks: 0,
 
     player: {
         cardArray: [],
@@ -44,29 +34,37 @@ var Strategy = {
     },
 
     playHand: function () {
+        console.log("numberOfHandsToBePlayed: " + Strategy.numberOfHandsPlayed + "\n" +
+                    "numberOfHandsPlayed: " + Strategy.numberOfHandsPlayed + "\n" +
+                    "deck: " + Strategy.deck.length + "\n" +
+                    "correctMove: " + Strategy.correctMove + "\n" +
+                    "playerCards: " + Strategy.player.cardArray.length + "\n" +
+                    "correctMoves: " + Strategy.player.numberOfCorrectMoves + "\n" +
+                    "incorrectMoves: " + Strategy.player.numberOfIncorrectMoves + "\n" +
+                    "dealerCards: " + Strategy.player.cardArray.length + "\n")
+
         Strategy.clearTable();
         Strategy.resetPlayers();
 
+        if (Strategy.deck.cardArray.length===0) {
+            var newDeck = Blackjack.deckObj(Strategy.numberOfDecks);
+            Strategy.deck = newDeck;
+        }
+        
         for (var j = 0, startCards = 2; j < startCards; j++) {
                 Strategy.player.cardArray.push(Strategy.deck.cardArray.pop());
                 Strategy.dealer.cardArray.push(Strategy.deck.cardArray.pop());
         }
-        console.log(Strategy.player.cardArray[0].cardSuit + ", " + Strategy.player.cardArray[0].cardRank + 
-                    " -- " + Strategy.player.cardArray[1].cardSuit + ", " + Strategy.player.cardArray[1].cardRank);
-        Strategy.dealer.cardArray[0].flipped = true;
-
-        Strategy.player.count = Strategy.getCountOfHand(Strategy.player.cardArray);
-        // Strategy.dealer.count = Strategy.getCountOfHand(Strategy.dealer.cardArray);
-        // console.log("DEALER: " + Strategy.dealer.count + "\nPlayer: " + Strategy.player.count);
         
-        var dealerUpcardValue = Strategy.getCountOfHand(Strategy.dealer.cardArray.slice(0, 1));
-        Strategy.determineCorrectMove(Strategy.player.cardArray, 
-                                      Strategy.player.count, 
-                                      dealerUpcardValue);
+        Strategy.dealer.cardArray[0].flipped = true;
+        Strategy.player.count = Strategy.getCountOfHand(Strategy.player.cardArray);
+        Strategy.dealer.count = Strategy.getCountOfHand(Strategy.dealer.cardArray.slice(0, 1));
+        Strategy.correctMove = Strategy.determineCorrectMove(Strategy.player.cardArray, 
+                                                             Strategy.player.count, 
+                                                             Strategy.dealer.count);
         Strategy.numberOfHandsPlayed++;
         Strategy.displayHands();
         Strategy.showChoiceButtons();
-
     },
 
     displayHands: function () {
@@ -81,12 +79,12 @@ var Strategy = {
     },
 
     determineCorrectMove: function (playerHand, playerCount, dealerCount) {
-        var table = Strategy.determineTable(playerHand);
-        console.log("Player Count: " + playerCount + "\nDealer Count: " + dealerCount);
-        Strategy.correctMove = table[playerCount][dealerCount];
+        var table = Strategy.determineTable(playerHand, playerCount);
+        //console.log("Player Count: " + playerCount + "\nDealer Count: " + dealerCount);
+        return table[playerCount][dealerCount];
     },
 
-    determineTable: function (playerHand) {
+    determineTable: function (playerHand, playerCount) {
         var DEALER_HITS_17_HARD_TABLE = [
             "",
             "",
@@ -159,18 +157,19 @@ var Strategy = {
             "  PPPPPSPPSS",
             "",
             "  PPPPPPPPPP",
-            ""
+            "",
+            "  PPPPPPPPPP",
         ];
 
-        if (playerHand[0].cardRank === playerHand[1].cardRank) {
-            console.log("SPLIT");
+        if ((playerHand[0].cardRank === playerHand[1].cardRank) && playerCount !== 20) {
+            //console.log("SPLIT");
             return DEALER_HITS_17_SPLITS_TABLE;
         } else if (playerHand[0].cardRank === Blackjack.ACES || 
                    playerHand[1].cardRank === Blackjack.ACES) {
-            console.log("SOFT");
+            //console.log("SOFT");
             return DEALER_HITS_17_SOFT_TABLE;
         } else {
-            console.log("HARD");
+            //console.log("HARD");
             return DEALER_HITS_17_HARD_TABLE;
         }
     },
@@ -233,21 +232,20 @@ var Strategy = {
             Strategy.player.numberOfIncorrectMoves += 1;
             alert("WRONG MOVE! You should have done a: " + Strategy.correctMove);
         }
-        console.log("Correct: " + Strategy.player.numberOfCorrectMoves + 
-                    "\nIncorrect: " + Strategy.player.numberOfIncorrectMoves);
+        //console.log("Correct: " + Strategy.player.numberOfCorrectMoves + 
+        //            "\nIncorrect: " + Strategy.player.numberOfIncorrectMoves);
     },
 
     gameDone: function () {
         Strategy.clearTable();
         Strategy.hideChoiceButtons();
         Strategy.showStrategyBegins();
-
     }
 
 };
 
 var loadStrategy = function () {
-    $('#beginStrategyTest').button();
+    //$('#beginStrategyTest').button();
 
     $('#beginStrategyTest').click(function () {
         Strategy.hideStrategyBegins();
@@ -257,9 +255,11 @@ var loadStrategy = function () {
             .attr('value'));
         var numHands = parseInt($('#numhands').val());
         var newDeck = Blackjack.deckObj(numDecks);
-
+        Strategy.numberOfDecks = numDecks;
+        Strategy.numberOfHandsToBePlayed = numHands;
+        Strategy.numberOfHandsPlayed = 0;
         newDeck.shuffle();
-        Strategy.numberofHandsToBePlayed = numHands;
+        
         Strategy.deck = newDeck;
         Strategy.playHand();
 
@@ -271,7 +271,7 @@ var loadStrategy = function () {
         var playerMove = "H";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
@@ -283,7 +283,7 @@ var loadStrategy = function () {
         var playerMove = "S";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
@@ -295,7 +295,7 @@ var loadStrategy = function () {
         var playerMove = "P";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
@@ -307,7 +307,7 @@ var loadStrategy = function () {
         var playerMove = "D";
         Strategy.displayOutcomeMessage(playerMove);
         // Compare
-        if (Strategy.numberOfHandsPlayed < Strategy.numberofHandsToBePlayed) {
+        if (Strategy.numberOfHandsPlayed < Strategy.numberOfHandsToBePlayed) {
             Strategy.playHand();
         } else {
             // reload menu
