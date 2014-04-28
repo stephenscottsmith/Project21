@@ -19,17 +19,9 @@ $(document).ready(function() {
         loadStrategy();
     });
 
-<<<<<<< HEAD
-=======
-    $("#login").click(function(){
-        $('#container').empty();
-        var login = $('#login-container').html();
-    });
->>>>>>> 2dd90f0a044cce415dd3d7b22c4728c9d9ef94af
+    
 
     $("#stats").click(function() {
-        $("li").removeClass("active");
-        $(this).addClass("active");
         $.get("/highscore/10", function(data) {
             var users =  new Array();
             data.forEach(function(user) {
@@ -45,14 +37,6 @@ $(document).ready(function() {
             console.log(templateUsers);
         });
     });
-
-    $("#chat").click(function() {
-        $("li").removeClass("active");
-        $(this).addClass("active");
-        var chat = $("#chat-container").html();
-        $("#container").empty();
-        $("#container").prepend(chat);
-    })
 });
 
 var clearActives = function() {
