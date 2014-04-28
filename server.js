@@ -242,9 +242,6 @@ app.get('/logout', function(request, response){
     });
 });
  
-app.get('/restricted', restrict, function(request, response){
-  response.send('This is the restricted area! Hello ' + request.session.user + '! click <a href="/logout">here to logout</a>');
-});
 
 app.get('/highscore/:num', function(request, response) {
 	response.send(ScoreList.topNScores(request.param("num")));
