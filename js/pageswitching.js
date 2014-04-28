@@ -29,6 +29,7 @@ $(document).ready(function() {
         var chat = $("#chat-container").html();
         $("#container").empty();
         $("#container").prepend(chat);
+        loadChat();
     })
 
     $("#stats").click(function() {
