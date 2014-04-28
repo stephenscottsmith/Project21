@@ -36,6 +36,7 @@ $(document).ready(function() {
         var chat = $("#chat-container").html();
         $("#container").empty();
         $("#container").prepend(chat);
+        loadChat();
     })
 >>>>>>> 1ae8ad4b0d16f97159df7b24ccfd3b1547d83ee1
 

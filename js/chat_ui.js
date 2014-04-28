@@ -24,7 +24,10 @@ function processUserInput(chatApp, socket) {
 }
 
 var socket = io.connect();
-$(document).ready(function () {
+var loadChat = function () {
+    alert(' I AM SETTING THE LISTENER TO ' + document.getElementById("chatSend"))
+    
+
     var chatApp = new Chat(socket);
     socket.on('nameResult', function (result) {
         var message;
@@ -59,9 +62,15 @@ $(document).ready(function () {
     setInterval(function () {
         socket.emit('rooms');
     }, 1000);
-    $('#send-message').focus();
-    $('#send-form').submit(function () {
+    $('#chatSend').click(function () {
         processUserInput(chatApp, socket);
         return false;
     });
-});
+
+}
+    /*$('#send-message').focus();
+    $('#send-form').submit(function () {
+        alert(1);
+        processUserInput(chatApp, socket);
+        return false;
+    });*/
