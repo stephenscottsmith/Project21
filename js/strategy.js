@@ -4,13 +4,8 @@ var STAND = "S";
 var DOUBLE_DOWN = "D";
 var SPLIT = "P";
 
-// Where I left off:
-// Finish tests.
-
-
 // 1. Implement back
 // 2. Fix the constant highlight of a previous move
-// 3. Write Qunit Test
 // 4. Meet w/ Alex for database
 // 5. Look at login for posting a new registry
 //      a. server.js - try to use html only
@@ -39,6 +34,15 @@ var Strategy = {
     },
 
     playHand: function () {
+        console.log("numberOfHandsToBePlayed: " + Strategy.numberOfHandsPlayed + "\n" +
+                    "numberOfHandsPlayed: " + Strategy.numberOfHandsPlayed + "\n" +
+                    "deck: " + Strategy.deck.length + "\n" +
+                    "correctMove: " + Strategy.correctMove + "\n" +
+                    "playerCards: " + Strategy.player.cardArray.length + "\n" +
+                    "correctMoves: " + Strategy.player.numberOfCorrectMoves + "\n" +
+                    "incorrectMoves: " + Strategy.player.numberOfIncorrectMoves + "\n" +
+                    "dealerCards: " + Strategy.player.cardArray.length + "\n")
+
         Strategy.clearTable();
         Strategy.resetPlayers();
 
@@ -76,7 +80,7 @@ var Strategy = {
 
     determineCorrectMove: function (playerHand, playerCount, dealerCount) {
         var table = Strategy.determineTable(playerHand, playerCount);
-        console.log("Player Count: " + playerCount + "\nDealer Count: " + dealerCount);
+        //console.log("Player Count: " + playerCount + "\nDealer Count: " + dealerCount);
         return table[playerCount][dealerCount];
     },
 
@@ -158,14 +162,14 @@ var Strategy = {
         ];
 
         if ((playerHand[0].cardRank === playerHand[1].cardRank) && playerCount !== 20) {
-            console.log("SPLIT");
+            //console.log("SPLIT");
             return DEALER_HITS_17_SPLITS_TABLE;
         } else if (playerHand[0].cardRank === Blackjack.ACES || 
                    playerHand[1].cardRank === Blackjack.ACES) {
-            console.log("SOFT");
+            //console.log("SOFT");
             return DEALER_HITS_17_SOFT_TABLE;
         } else {
-            console.log("HARD");
+            //console.log("HARD");
             return DEALER_HITS_17_HARD_TABLE;
         }
     },
@@ -228,8 +232,8 @@ var Strategy = {
             Strategy.player.numberOfIncorrectMoves += 1;
             alert("WRONG MOVE! You should have done a: " + Strategy.correctMove);
         }
-        console.log("Correct: " + Strategy.player.numberOfCorrectMoves + 
-                    "\nIncorrect: " + Strategy.player.numberOfIncorrectMoves);
+        //console.log("Correct: " + Strategy.player.numberOfCorrectMoves + 
+        //            "\nIncorrect: " + Strategy.player.numberOfIncorrectMoves);
     },
 
     gameDone: function () {
