@@ -7,6 +7,12 @@ var server = http.createServer(app);
 var param = { host: 'ec2-54-204-31-33.compute-1.amazonaws.com', user: 'klwtcpzgmsaemn', password: 'lXQSJDtOudAvUhhaEJ-Ha4-Lra', database: 'd66b9oqhlet7me', ssl: true}
 //var conString = "postgres://klwtcpzgmsaemn:lXQSJDtOudAvUhhaEJ-Ha4-Lra@ec2-54-204-31-33.compute-1.amazonaws.com:5432/d66b9oqhlet7me"
 
+var RES_DENIED = "denied";
+var RES_SUCCESS = "success";
+var RES_FAIL = "fail";
+var RES_DUPLICATE_USER = "duplicate";
+
+
 var client = new pg.Client(param);
 client.connect(function (err) {
 	if(err) {
@@ -163,26 +169,25 @@ function restrict(req, res, callback) {
   if (req.session.user) {
     callback();
   } else {
-    req.session.error = 'Access denied!';
-    res.redirect('/login');
+    res.send(RES_DENIED);
   }
 }
  
-app.get('/login', function(request, response) {
-   response.send('<form method="post" action="/login">' +
-  '<p>' +
-    '<label>Username:</label>' +
-    '<input type="text" name="username">' +
-  '</p>' +
-  '<p>' +
-    '<label>Password:</label>' +
-    '<input type="text" name="password">' +
-  '</p>' +
-  '<p>' +
-    '<input type="submit" value="Login">' +
-  '</p>' +
-  '</form>');
-});
+// app.get('/login', function(request, response) {
+//    response.send('<form method="post" action="/login">' +
+//   '<p>' +
+//     '<label>Username:</label>' +
+//     '<input type="text" name="username">' +
+//   '</p>' +
+//   '<p>' +
+//     '<label>Password:</label>' +
+//     '<input type="text" name="password">' +
+//   '</p>' +
+//   '<p>' +
+//     '<input type="submit" value="Login">' +
+//   '</p>' +
+//   '</form>');
+// });
  
 app.post('/login', function(request, response) {
  
@@ -190,51 +195,51 @@ app.post('/login', function(request, response) {
     var password = request.body.password;
 
     if(username === undefined || password === undefined) {
-        response.send('Invalid username or password. Click <a href"/login">here to go back</a>');
+        response.send(RES_FAIL);
     }
     UserList.checkPassword(username, password, function(err, res)
     {
         if(res === true) {
             request.session.regenerate(function() {
                 request.session.user = username;
-                response.redirect('/restricted');
+                response.send(RES_SUCCESS);
             });
         } else {
-            response.send('Invalid username or password. Click <a href="/login">here</a> to go back');
+            response.send(RES_FAIL);
         }
     })
 });
 
-app.get('/register', function(request, response) {
-   response.send('<form method="post" action="/register">' +
-  '<p>' +
-    '<label>Username:</label>' +
-    '<input type="text" name="username">' +
-  '</p>' +
-  '<p>' +
-    '<label>Password:</label>' +
-    '<input type="text" name="password">' +
-  '</p>' +
-  '<p>' +
-    '<input type="submit" value="Register">' +
-  '</p>' +
-  '</form>');
-});
+// app.get('/register', function(request, response) {
+//    response.send('<form method="post" action="/register">' +
+//   '<p>' +
+//     '<label>Username:</label>' +
+//     '<input type="text" name="username">' +
+//   '</p>' +
+//   '<p>' +
+//     '<label>Password:</label>' +
+//     '<input type="text" name="password">' +
+//   '</p>' +
+//   '<p>' +
+//     '<input type="submit" value="Register">' +
+//   '</p>' +
+//   '</form>');
+// });
  
 app.post('/register', function(request, response) {
  
     var username = request.body.username;
     var password = request.body.password;
     if(username === undefined || password === undefined) {
-        response.send('Invalid username or password. Click <a href="/register">here</a> to go back')
+        response.send(RES_FAIL)
     }
     if(UserList.users[username] !== undefined) {
-    	response.send('You are already registered! click <a href="/login">here to login</a>');
+    	response.send(RES_DUPLICATE_USER);
     }
     UserList.addUser(username, password, function(){
     	request.session.regenerate(function(){
         	request.session.user = username;
-        	response.redirect('/restricted');
+        	response.send(RES_SUCCESS);
         });
     });
 });
@@ -250,8 +255,9 @@ app.get('/highscore/:num', function(request, response) {
 	response.send(ScoreList.topNScores(request.param("num")));
 });
 
-app.post('/highscore/:num', restrict, function(request, response) {
-  ScoreList.addScore(request.session.user, request.param("num"));
+app.post('/highscore/', restrict, function(request, response) {
+  var score = request.body.score;
+  ScoreList.addScore(request.session.user, score);
 });
 
 app.get('/', function(req, res){
