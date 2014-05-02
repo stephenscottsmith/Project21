@@ -2,14 +2,16 @@ var Counting = {
 
     HIGH_COUNT: [ACES, 10, JACK, QUEEN, KING],
     LOW_COUNT:  [2, 3, 4, 5, 6],
-
     VALID_SPEEDS: [0.5, 1, 2, 3],
+    count: 0,
 
     countCards: function (deck, speed, numCardsToDisplay) {
         var deckCount = 0;
         var properCount = 0;
-
         var wait = false;
+        Counting.count = 0;
+        $('#count').val(0);
+
 
         function count() {
             if (deckCount < numCardsToDisplay) {
@@ -30,7 +32,8 @@ var Counting = {
                 setTimeout(count, speed);
             } else {
                 $('#count').show();
-                $('#submitcount').show().attr("propercount", properCount);
+                Counting.count = properCount;
+                $('#submitcount').show();
             }
         }
 
@@ -96,7 +99,7 @@ var loadCount = function () {
     $('#submitcount').click(function () {
         $('#count').hide();
         $('#submitcount').hide();
-        alert("Proper count was: " + $('#submitcount').attr("propercount") +
+        alert("Proper count was: " + Counting.count +
             "\nYour count was: " + $('#count').val());
 
         Counting.showBegins();

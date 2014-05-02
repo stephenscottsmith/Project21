@@ -46,7 +46,7 @@ background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #F
     height: 100%;
     display: table;
     width: 75%;
-    padding: 0;
+    padding: 5;
 }
 .rowextend {
     height: 100%;
@@ -63,5 +63,4 @@ background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #F
 }
 .card {
     margin: 10px;
-
 }
