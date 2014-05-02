@@ -230,7 +230,13 @@ var Strategy = {
             alert("YOU MADE THE CORRECT MOVE!!!");
         } else {
             Strategy.player.numberOfIncorrectMoves += 1;
-            alert("WRONG MOVE! You should have done a: " + Strategy.correctMove);
+            var move = "";
+            if (Strategy.correctMove === "H") {move = "HIT";} 
+            else if (Strategy.correctMove === "S") {move = "STAND";}
+            else if (Strategy.correctMove === "P") {move = "SPLIT";}
+            else if (Strategy.correctMove === "D") {move = "DOUBLE DOWN";}
+
+            alert("WRONG MOVE! You should have done a " + move + "!");
         }
         //console.log("Correct: " + Strategy.player.numberOfCorrectMoves + 
         //            "\nIncorrect: " + Strategy.player.numberOfIncorrectMoves);
