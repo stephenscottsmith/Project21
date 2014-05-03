@@ -206,11 +206,15 @@ var ScoreList = {
     },
 
     getScore: function(user) {
+        return ScoreList.getUserScore(user).score;
+    },
+
+    getUserScore: function(user) {
         var index = ScoreList.findScoreIndexByUser(user);
         if(index === -1) {
             return false;
         }
-        return ScoreList.scores[index].score;
+        return ScoreList.scores[index];
     },
 
     findScoreIndexByUser: function(user) {
@@ -229,7 +233,8 @@ var ScoreList = {
 
 module.exports = {
     UserList: UserList,
-    ScoreList: ScoreList
+    ScoreList: ScoreList,
+    app: app
 };
 
 
@@ -316,6 +321,10 @@ app.get('/logout', function(request, response){
 
 app.get('/highscore/:num', function(request, response) {
     response.send(ScoreList.topNScores(request.param("num")));
+});
+
+app.get('/score/:user', function(request, response) {
+    response.send(ScoreList.getUserScore(request.param("user")));
 });
 
 app.post('/highscore/', restrict, function(request, response) {

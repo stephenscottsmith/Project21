@@ -104,3 +104,17 @@ describe('ScoreList', function() {
         });
     });
 });
+
+describe('GET', function() {
+    it('should return the index', function(done) {
+        request(server.app).get('/').expect(200, done);
+    });
+
+    it('should return high scores in json format', function(done) {
+        request(server.app).get('/highscore/10')
+                            .set('Accept', 'application/json')
+                            .expect('Content-Type', /json/)
+                            .expect(200, done);
+    });
+});
+
