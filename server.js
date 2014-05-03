@@ -27,69 +27,73 @@ var UserList = {
 	initializeUserList: function(){
 		client.query("SELECT * FROM users", function(err, result) {
 			if(err) {
-				throw "Couldn't select users: " + err;
+				throw err;
 			}
 			result.rows.forEach(function(row) {
-				UserList.users[row['user_name']] = {password: row['password'],
-													id: row['user_id']};
-			});
-      console.log(UserList.users)
+				UserList.users[row['user_name']] = {
+                    password: row['password'],
+					id: row['user_id']
+                };
+			}); 
 		});
 	},
 
 	/*
-	 * Callback after function is complete. Takes no arguments.  
+	 * Callback after function is complete. Takes two arguments, err and res.. True if function is completed, err if not.  
 	 */
 	addUser: function(user, pass, callback) {
 
 		if(UserList.users[user] !== undefined) {
-			return false;
-		}
-        bcrypt.hash(pass, 12, function(err, hash) {
-        	if(err) {
-				throw "Couldn't hash password: " + err;
-			}
-            var queryConf = {
-                text: "INSERT INTO users (user_name, password) VALUES ($1, $2) RETURNING user_id",
-                values: [user, hash]};
-            client.query(queryConf, function(err, result) {
-            	if(err) {
-            		throw "Couldn't insert user: " + err;
-            	}
-                UserList.users[user] = {password: hash,
-                						id: result.rows[0].user_id};
-                if(callback) { callback(); }
+			return callback(new Error("User Already Exists"));
+		} else {
+            bcrypt.hash(pass, 12, function(err, hash) {
+                if(err) {
+                    return callback(err);
+                } else {
+                    var queryConf = {
+                        text: "INSERT INTO users (user_name, password) VALUES ($1, $2) RETURNING user_id",
+                        values: [user, hash]
+                    };
+                    client.query(queryConf, function(err, result) {
+                        if(err) {
+                            return callback(err);
+                        } else {
+                            UserList.users[user] = {
+                                password: hash,
+                                id: result.rows[0].user_id
+                            };
+                            return callback(null, true);
+                        }
+                    });
+                }
             });
-        });
+        }
 	},
 	
 
 	removeUserAdmin: function(user, callback) {
-        console.log("Hi");
 		var queryConf = {
 			text: "DELETE FROM users WHERE user_name=$1",
-			values: [user]};
+			values: [user] 
+        };
 		client.query(queryConf, function(err, result) {
 			if(err) {
-				throw "Couldn't remove user: " + err;
-			}
-			delete UserList.users[user];
-            if(callback) { callback(); }
+				return callback(err);
+			} else {
+                delete UserList.users[user];
+                return callback(null, true);
+            }
 		});
 	},
 
     removeUser: function(user, pass, callback) {
-        var result;
         UserList.checkPassword(user, pass, function(err, res) {
             if(err) {
-                throw "Couldn't remove user: " + err;
-            }
-            if(res) {
-
+                return callback(err);
+            } else if(res) {
                 UserList.removeUserAdmin(user, callback);
             } else {
-                
-                throw new Error("Invalid password");
+                return callback(new Error("Invalid password"));
             }
         });
 
@@ -102,7 +106,7 @@ var UserList = {
       try{
         bcrypt.compare(pass, UserList.users[user]['password'], callback);
       } catch (err) {
-        callback(false, false);
+        return callback(err);
       }
     }
 }
@@ -111,7 +115,7 @@ var ScoreList = {
 	scores: new Array(),
 
 	initializeScoreList: function() {
-		client.query("SELECT scores.score, scores.score_date, users.user_name FROM scores \
+		client.query("SELECT scores.score, scores.score_date, scores.scoreid users.user_name FROM scores \
 						INNER JOIN users \
 							ON scores.userid = users.user_id \
 						ORDER BY scores.score DESC", function(err, result) {
@@ -119,6 +123,7 @@ var ScoreList = {
 				throw "Couldn't select scores: " + err;
 			}
 			result.rows.forEach(function(row) {
+                console.log(row);
 				ScoreList.scores.push({
 					username: row['user_name'],
 					score: row['score'],
@@ -131,21 +136,26 @@ var ScoreList = {
 		var userId = UserList.users[user]['id'];
 		var queryConf = {
 			text: "INSERT INTO scores (userid, score) VALUES ($1, $2) RETURNING scoreid",
-			values: [userId, score] };
+			values: [userId, score] 
+        };
 		client.query(queryConf, function(err, result) {
 			if(err) {
 				throw "Could not insert score: " + err;
 			}
             ScoreList.scores.push({
-            	username: row['user_name'],
-				score: row['score'],
-				date: row['score_date'] });
+            	username: user,
+				score: score,
+				date: new Date() });
 
             ScoreList.scores.sort(function(a, b) {
             	return b.score - a.score;
             });
         });
 	},
+
+    updateScore: function(user, score) {}
+
+    removeScore: function()
 
 	topNScores: function(n) {
 		return ScoreList.scores.slice(0, n);
@@ -189,22 +199,6 @@ function restrict(req, res, callback) {
   }
 }
  
-// app.get('/login', function(request, response) {
-//    response.send('<form method="post" action="/login">' +
-//   '<p>' +
-//     '<label>Username:</label>' +
-//     '<input type="text" name="username">' +
-//   '</p>' +
-//   '<p>' +
-//     '<label>Password:</label>' +
-//     '<input type="text" name="password">' +
-//   '</p>' +
-//   '<p>' +
-//     '<input type="submit" value="Login">' +
-//   '</p>' +
-//   '</form>');
-// });
- 
 app.post('/login', function(request, response) {
  
     var username = request.body.username;
@@ -215,7 +209,7 @@ app.post('/login', function(request, response) {
     }
     UserList.checkPassword(username, password, function(err, res)
     {
-        if(res === true) {
+        if(res) {
             request.session.regenerate(function() {
                 request.session.user = username;
                 response.send(RES_SUCCESS);
@@ -225,22 +219,6 @@ app.post('/login', function(request, response) {
         }
     })
 });
-
-// app.get('/register', function(request, response) {
-//    response.send('<form method="post" action="/register">' +
-//   '<p>' +
-//     '<label>Username:</label>' +
-//     '<input type="text" name="username">' +
-//   '</p>' +
-//   '<p>' +
-//     '<label>Password:</label>' +
-//     '<input type="text" name="password">' +
-//   '</p>' +
-//   '<p>' +
-//     '<input type="submit" value="Register">' +
-//   '</p>' +
-//   '</form>');
-// });
  
 app.post('/register', function(request, response) {
  
@@ -252,10 +230,14 @@ app.post('/register', function(request, response) {
     if(UserList.users[username] !== undefined) {
     	response.send(RES_DUPLICATE_USER);
     }
-    UserList.addUser(username, password, function(){
+    UserList.addUser(username, password, function(err, res){
     	request.session.regenerate(function(){
         	request.session.user = username;
-        	response.send(RES_SUCCESS);
+            if(err) {
+                response.send(RES_FAIL);
+            } else {
+                response.send(RES_SUCCESS);
+            }
         });
     });
 });
