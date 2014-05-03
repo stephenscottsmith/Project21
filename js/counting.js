@@ -10,7 +10,6 @@ var Counting = {
         var properCount = 0;
         var wait = false;
         Counting.count = 0;
-        $('#count').val(0);
 
 
         function count() {
@@ -30,6 +29,7 @@ var Counting = {
                 deckCount++;
                 wait = true;
                 setTimeout(count, speed);
+
             } else {
                 $('#count').show();
                 Counting.count = properCount;
@@ -68,7 +68,6 @@ var Counting = {
     },
 
 };
-
 
 var loadCount = function () {
     $('#begin').button();

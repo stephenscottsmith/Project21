@@ -25,9 +25,6 @@ function processUserInput(chatApp, socket) {
 
 var socket = io.connect();
 var loadChat = function () {
-    alert(' I AM SETTING THE LISTENER TO ' + document.getElementById("chatSend"))
-    
-
     var chatApp = new Chat(socket);
     socket.on('nameResult', function (result) {
         var message;
@@ -39,7 +36,7 @@ var loadChat = function () {
         $('#messages').append(divSystemContentElement(message));
     });
     socket.on('joinResult', function (result) {
-        $('#room').text(result.room);
+        $('#room').text(result.room)
         $('#messages').append(divSystemContentElement('Room changed.'));
     });
     socket.on('message', function (message) {
