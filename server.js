@@ -15,37 +15,37 @@ var RES_DUPLICATE_USER = "duplicate";
 
 var client = new pg.Client(param);
 client.connect(function (err) {
-	if(err) {
-		throw "Cannot connect to Postgres: " + err;
-	}
+    if(err) {
+        throw "Cannot connect to Postgres: " + err;
+    }
 });
 
 
 
 var UserList = {
-	users: {},
-	initializeUserList: function(){
-		client.query("SELECT * FROM users", function(err, result) {
-			if(err) {
-				throw err;
-			}
-			result.rows.forEach(function(row) {
-				UserList.users[row['user_name']] = {
+    users: {},
+    initializeUserList: function(){
+        client.query("SELECT * FROM users", function(err, result) {
+            if(err) {
+                throw err;
+            }
+            result.rows.forEach(function(row) {
+                UserList.users[row['user_name']] = {
                     password: row['password'],
-					id: row['user_id']
+                    id: row['user_id']
                 };
-			}); 
-		});
-	},
+            }); 
+        });
+    },
 
-	/*
-	 * Callback after function is complete. Takes two arguments, err and res.. True if function is completed, err if not.  
-	 */
-	addUser: function(user, pass, callback) {
+    /*
+     * Callback after function is complete. Takes two arguments, err and res.. True if function is completed, err if not.  
+     */
+    addUser: function(user, pass, callback) {
 
-		if(UserList.users[user] !== undefined) {
-			return callback(new Error("User Already Exists"));
-		} else {
+        if(UserList.users[user] !== undefined) {
+            return callback(new Error("User Already Exists"));
+        } else {
             bcrypt.hash(pass, 12, function(err, hash) {
                 if(err) {
                     return callback(err);
@@ -68,23 +68,23 @@ var UserList = {
                 }
             });
         }
-	},
-	
+    },
+    
 
-	removeUserAdmin: function(user, callback) {
-		var queryConf = {
-			text: "DELETE FROM users WHERE user_name=$1",
-			values: [user] 
+    removeUserAdmin: function(user, callback) {
+        var queryConf = {
+            text: "DELETE FROM users WHERE user_name=$1",
+            values: [user] 
         };
-		client.query(queryConf, function(err, result) {
-			if(err) {
-				return callback(err);
-			} else {
+        client.query(queryConf, function(err, result) {
+            if(err) {
+                return callback(err);
+            } else {
                 delete UserList.users[user];
                 return callback(null, true);
             }
-		});
-	},
+        });
+    },
 
     removeUser: function(user, pass, callback) {
         UserList.checkPassword(user, pass, function(err, res) {
@@ -112,54 +112,119 @@ var UserList = {
 }
 
 var ScoreList = {
-	scores: new Array(),
+    scores: new Array(),
 
-	initializeScoreList: function() {
-		client.query("SELECT scores.score, scores.score_date, scores.scoreid users.user_name FROM scores \
-						INNER JOIN users \
-							ON scores.userid = users.user_id \
-						ORDER BY scores.score DESC", function(err, result) {
-			if(err) {
-				throw "Couldn't select scores: " + err;
-			}
-			result.rows.forEach(function(row) {
-                console.log(row);
-				ScoreList.scores.push({
-					username: row['user_name'],
-					score: row['score'],
-					date: row['score_date']});
-			});
-		});
-	},
-
-	addScore: function(user, score) {
-		var userId = UserList.users[user]['id'];
-		var queryConf = {
-			text: "INSERT INTO scores (userid, score) VALUES ($1, $2) RETURNING scoreid",
-			values: [userId, score] 
-        };
-		client.query(queryConf, function(err, result) {
-			if(err) {
-				throw "Could not insert score: " + err;
-			}
-            ScoreList.scores.push({
-            	username: user,
-				score: score,
-				date: new Date() });
-
-            ScoreList.scores.sort(function(a, b) {
-            	return b.score - a.score;
+    initializeScoreList: function() {
+        client.query("SELECT scores.score, scores.score_date, users.user_name FROM scores \
+                        INNER JOIN users \
+                            ON scores.userid = users.user_id \
+                        ORDER BY scores.score DESC", function(err, result) {
+            if(err) {
+                throw err;
+            }
+            result.rows.forEach(function(row) {
+                ScoreList.scores.push({
+                    username: row['user_name'],
+                    score: row['score'],
+                    date: row['score_date']
+                });
             });
         });
-	},
+    },
 
-    updateScore: function(user, score) {}
+    addScore: function(user, score, callback) {
+        var userId = UserList.users[user]['id'];
+        ScoreList.updateScore(user, score, function(err, res) {
+            if(res) {
+                return callback(null, res);
+            } else {
+                var queryConf = {
+                    text: "INSERT INTO scores (userid, score) VALUES ($1, $2) RETURNING scoreid",
+                    values: [userId, score] 
+                };
+                client.query(queryConf, function(err, result) {
+                    if(err) {
 
-    removeScore: function()
+                        return callback(err);
+                    }
 
-	topNScores: function(n) {
-		return ScoreList.scores.slice(0, n);
-	},
+                    ScoreList.scores.push({
+                        username: user,
+                        score: score,
+                        date: new Date() 
+                    });
+                    ScoreList.scores.sort(function(a, b) {
+                        return b.score - a.score;
+                    });
+
+                    return callback(null, true);
+                });
+            }
+        });
+        
+    },
+
+    updateScore: function(user, score, callback) {
+        var index = ScoreList.findScoreIndexByUser(user);
+        if(index === -1) {
+            return callback(new Error("User not found"));
+        }
+        var userId = UserList.users[user]['id'];
+        var queryConf = {
+            text: "UPDATE scores SET score=$1 WHERE userid=$2",
+            values: [score, userId] 
+        };
+        client.query(queryConf, function(err, result) {
+            if(err) {
+                return callback(err);
+            }
+            ScoreList.scores[index].score = score;
+            ScoreList.scores.sort(function(a, b) {
+                return b.score - a.score;
+            });
+            return callback(null, true);
+        });
+    },
+
+    removeScore: function(user, callback) {
+        var index = ScoreList.findScoreIndexByUser(user);
+        if(index === -1) {
+            return callback(new Error("User has no score"));
+        }
+        var userId = UserList.users[user]['id'];
+        var queryConf = {
+            text: "DELETE FROM scores WHERE userid=$1",
+            values: [userId] 
+        };
+        client.query(queryConf, function(err, result) {
+            if(err) {
+                return callback(err);
+            }
+            ScoreList.scores.splice(index, 1);
+            return callback(null, true);
+        });
+    },
+
+    getScore: function(user) {
+        var index = ScoreList.findScoreIndexByUser(user);
+        if(index === -1) {
+            return false;
+        }
+        return ScoreList.scores[index].score;
+    },
+
+    findScoreIndexByUser: function(user) {
+        for(var i = 0; i < ScoreList.scores.length; i++) {
+            if(ScoreList.scores[i].username === user) {
+                return i;
+            }
+        }
+        return -1;
+    },
+
+    topNScores: function(n) {
+        return ScoreList.scores.slice(0, n);
+    }
 }
 
 module.exports = {
@@ -228,11 +293,11 @@ app.post('/register', function(request, response) {
         response.send(RES_FAIL)
     }
     if(UserList.users[username] !== undefined) {
-    	response.send(RES_DUPLICATE_USER);
+        response.send(RES_DUPLICATE_USER);
     }
     UserList.addUser(username, password, function(err, res){
-    	request.session.regenerate(function(){
-        	request.session.user = username;
+        request.session.regenerate(function(){
+            request.session.user = username;
             if(err) {
                 response.send(RES_FAIL);
             } else {
@@ -250,7 +315,7 @@ app.get('/logout', function(request, response){
  
 
 app.get('/highscore/:num', function(request, response) {
-	response.send(ScoreList.topNScores(request.param("num")));
+    response.send(ScoreList.topNScores(request.param("num")));
 });
 
 app.post('/highscore/', restrict, function(request, response) {

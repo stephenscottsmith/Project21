@@ -54,5 +54,53 @@ describe('UserList', function () {
 });
 
 describe('ScoreList', function() {
-    it('')
+    it('should initialize the scores', function() {
+        server.ScoreList.initializeScoreList();
+        server.ScoreList.scores.should.be.ok;
+    });
+
+    it('should add a score', function(done) {
+        server.UserList.addUser('test', 'test', function(err, res) {
+            res.should.be.true;
+            server.ScoreList.addScore('test', 92, function(err2, res2) {
+                res2.should.be.true;
+                server.ScoreList.scores.should.containDeep([{username: "test", score: 92}]);
+                done();
+            });
+        });
+    });
+
+    it('should change a score', function(done) {
+        server.ScoreList.updateScore('test', 90, function(err, res) {
+            res.should.be.true;
+            server.ScoreList.scores.should.containDeep([{username: "test", score: 90}]);
+            done();
+        });
+    });
+
+    it('should get a score', function() {
+        server.ScoreList.getScore('test').should.equal(90);
+    });
+
+    it('should remove a score', function(done) {
+        server.ScoreList.removeScore('test', function(err, res) {
+            res.should.be.true;
+            server.ScoreList.scores.should.not.containDeep({username: 'test', score: 90});
+            done();
+        });
+    });
+
+    it('should not remove a score that doesn\'t exist', function(done) {
+        server.ScoreList.removeScore('test', function(err, res) {
+            err.should.be.ok;
+            done();
+        });
+    });
+
+    it('should not update a score that doesn\'t exist', function(done) {
+        server.ScoreList.updateScore('test', 95, function(err, res) {
+            err.should.be.ok;
+            done();
+        });
+    });
 });
