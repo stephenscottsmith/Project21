@@ -20,6 +20,8 @@ client.connect(function (err) {
 	}
 });
 
+
+
 var UserList = {
 	users: {},
 	initializeUserList: function(){
@@ -60,20 +62,10 @@ var UserList = {
             });
         });
 	},
-	removeUser: function(user, pass, callback) {
-		var result;
-		UserList.checkPassword(user, pass, function(err, res) {
-			if(err) {
-				throw "Couldn't remove user: " + err;
-			}
-			if(res) {
-				remvoeUserAdmin(user, callback);
-			}
-		});
-
-	},
+	
 
 	removeUserAdmin: function(user, callback) {
+        console.log("Hi");
 		var queryConf = {
 			text: "DELETE FROM users WHERE user_name=$1",
 			values: [user]};
@@ -82,9 +74,27 @@ var UserList = {
 				throw "Couldn't remove user: " + err;
 			}
 			delete UserList.users[user];
-      if(callback) { callback(); }
+            if(callback) { callback(); }
 		});
 	},
+
+    removeUser: function(user, pass, callback) {
+        var result;
+        UserList.checkPassword(user, pass, function(err, res) {
+            if(err) {
+                throw "Couldn't remove user: " + err;
+            }
+            if(res) {
+
+                UserList.removeUserAdmin(user, callback);
+            } else {
+                
+                throw new Error("Invalid password");
+            }
+        });
+
+    },
+
     /*
      * Callback with two arguments, err and res. res===true if correct password, false otherwise
      */
@@ -141,6 +151,11 @@ var ScoreList = {
 		return ScoreList.scores.slice(0, n);
 	},
 }
+
+module.exports = {
+    UserList: UserList,
+    ScoreList: ScoreList
+};
 
 
 UserList.initializeUserList();
