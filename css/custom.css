@@ -68,8 +68,8 @@ background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #F
 
 @media (max-width: 640px) {
     .card {
+        margin: 5px;
         height: 30%;
         width: 30%;
-        margin: 5px;
     }
 }
