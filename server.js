@@ -30,7 +30,8 @@ var UserList = {
 			result.rows.forEach(function(row) {
 				UserList.users[row['user_name']] = {password: row['password'],
 													id: row['user_id']};
-			})
+			});
+      console.log(UserList.users)
 		});
 	},
 
@@ -55,24 +56,24 @@ var UserList = {
             	}
                 UserList.users[user] = {password: hash,
                 						id: result.rows[0].user_id};
-                callback();
+                if(callback) { callback(); }
             });
         });
 	},
-	removeUser: function(user, pass) {
+	removeUser: function(user, pass, callback) {
 		var result;
 		UserList.checkPassword(user, pass, function(err, res) {
 			if(err) {
 				throw "Couldn't remove user: " + err;
 			}
 			if(res) {
-				remvoeUserAdmin(user);
+				remvoeUserAdmin(user, callback);
 			}
 		});
 
 	},
 
-	removeUserAdmin: function(user) {
+	removeUserAdmin: function(user, callback) {
 		var queryConf = {
 			text: "DELETE FROM users WHERE user_name=$1",
 			values: [user]};
@@ -81,7 +82,8 @@ var UserList = {
 				throw "Couldn't remove user: " + err;
 			}
 			delete UserList.users[user];
-		})
+      if(callback) { callback(); }
+		});
 	},
     /*
      * Callback with two arguments, err and res. res===true if correct password, false otherwise
@@ -112,7 +114,6 @@ var ScoreList = {
 					score: row['score'],
 					date: row['score_date']});
 			});
-			console.log(ScoreList.scores);
 		});
 	},
 
