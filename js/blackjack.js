@@ -75,11 +75,17 @@ var Blackjack = {
         return new Deck(deckNum);
     },
 
-    populateSelectDecks: function () {
-        for (var i = 0; i < this.VALID_DECKS.length; i++) {
+    populateSelectDecks: function (validNumbers) {
+        var validDecks = [];
+        if (validNumbers) {
+            validDecks = validNumbers;
+        } else {
+            validDecks = Blackjack.VALID_DECKS;
+        }
+        for (var i = 0; i < validDecks.length; i++) {
             $('#numdecks').append($("<option></option>")
-                .attr("value", this.VALID_DECKS[i])
-                .text(this.VALID_DECKS[i]));
+                .attr("value", validDecks[i])
+                .text(validDecks[i]));
         }
     }
 };

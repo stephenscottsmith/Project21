@@ -322,5 +322,5 @@ var loadStrategy = function () {
     });
 
 
-    Blackjack.populateSelectDecks();
+    Blackjack.populateSelectDecks([4, 6, 8]);
 };
