@@ -6,6 +6,7 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+    padding: 20px 5px 75px 5px;
     /* IE10 Consumer Preview */
 
 background-image: -ms-radial-gradient(center, ellipse closest-side, #000000 0%, #FF0000 100%);
@@ -40,13 +41,13 @@ background-image: radial-gradient(ellipse closest-side at center, #000000 0%, #F
     background-color: rgba(255, 255, 255, .4);
     border: 2px solid black;
     filter: alpha(opacity=50);
-    padding: 25px 50px;
+    padding: 0px 0px 0px 0px;
 }
 .containerextend {
     height: 100%;
     display: table;
-    width: 75%;
-    padding: 5;
+    width: 95%;
+    padding: 0;
 }
 .rowextend {
     height: 100%;
