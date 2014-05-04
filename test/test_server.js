@@ -2,7 +2,6 @@ var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
 var server = require('../server.js');
-console.log(server);
 
 describe('Routing', function() {
     var url = 'http://localhost:3000';
