@@ -19,17 +19,11 @@ $(document).ready(function() {
         loadStrategy();
     });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1ae8ad4b0d16f97159df7b24ccfd3b1547d83ee1
     $("#login").click(function(){
         $('#container').empty();
         var login = $('#login-container').html();
     });
-<<<<<<< HEAD
 
-=======
     $("#chat").click(function() {
         $("li").removeClass("active");
         $(this).addClass("active");
@@ -37,8 +31,7 @@ $(document).ready(function() {
         $("#container").empty();
         $("#container").prepend(chat);
         loadChat();
-    })
->>>>>>> 1ae8ad4b0d16f97159df7b24ccfd3b1547d83ee1
+    });
 
     $("#stats").click(function() {
         $.get("/highscore/10", function(data) {
@@ -57,7 +50,3 @@ $(document).ready(function() {
         });
     });
 });
-
-var clearActives = function() {
-
-}
