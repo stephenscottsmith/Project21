@@ -28,15 +28,11 @@ $(document).ready(function() {
         })
         return;
     });
-});
-
-$(document).ready(function() {
      $("#register_form").submit(function(event){
-        alert("GOT IN HERE");
         event.preventDefault();
-        var user = $("#usrname").val();
-        var pass = $("password").val();
-        var test = $.post("/register", { username: test, password: pass });
+        var regUser = $("#register_name").val();
+        var regPass = $("#register_pass").val();
+        var test = $.post("/register", { username: regUser, password: regPass });
         test.done(function(data) {
             if (data == "success"){
                 $("#registerModal").modal('hide');
