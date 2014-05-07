@@ -25,6 +25,51 @@
 
     <script src="js/chat_ui.js"></script>
 
+
+  <div class="alert alert-success alert-dismissable" style="display: none" id="correctMoveAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   You made the right move!
+</div>
+
+ <div class="alert alert-danger alert-dismissable" style="display: none" id="standAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to stand.
+ </div>
+
+<div class="alert alert-danger alert-dismissable" style="display: none" id="hitAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to hit.
+ </div>
+
+ <div class="alert alert-danger alert-dismissable" style="display: none" id="doubleDownAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to double down.
+ </div>
+ 
+ <div class="alert alert-danger alert-dismissable" style="display: none" id="splitAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to split.
+ </div>
+
+
+<script>
+$(function() {
+   $(document).on('click', '.alert-close', function() {
+       $(this).parent().hide();
+   })
+});
+</script>
+
     <!-- Index's handlebars -->
 
     <script id="index" type="text/x-handlebars-template">
@@ -149,6 +194,8 @@
         </div>
   </div>
 </div>
+
+
 
           
     <!-- High Scores Template -->
