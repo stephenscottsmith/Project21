@@ -34,6 +34,9 @@ $(document).ready(function() {
     });
 
     $("#stats").click(function() {
+        $('#container').empty();
+        var stats = $("stats-container").html();
+        
         $.get("/highscore/10", function(data) {
             var users =  new Array();
             data.forEach(function(user) {
