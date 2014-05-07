@@ -212,7 +212,7 @@ var ScoreList = {
     getUserScore: function(user) {
         var index = ScoreList.findScoreIndexByUser(user);
         if(index === -1) {
-            return false;
+            return RES_FAIL;
         }
         return ScoreList.scores[index];
     },
@@ -326,6 +326,10 @@ app.get('/highscore/:num', function(request, response) {
 app.get('/score/:user', function(request, response) {
     response.send(ScoreList.getUserScore(request.param("user")));
 });
+
+app.get('/score/', restrict, function(request, response) {
+    response.send(ScoreList.getUserScore(request.session.user));
+})
 
 app.post('/highscore/', restrict, function(request, response) {
   var score = request.body.score;
