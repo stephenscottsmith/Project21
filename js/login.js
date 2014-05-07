@@ -10,22 +10,30 @@ $(document).ready(function() {
             if (data === "fail"){
                 $("#loginModal").modal('hide');
                 $("#loginAlert").show();
+                setTimeout(function() {$("#loginAlert").hide(); }, 2000);
             }
 
             if (data === "denied"){
                 $("#loginModal").modal('hide');
                 $("#deniedLoginAlert").show();
+                setTimeout(function() {$("#deniedLoginAlert").hide(); }, 2000);
+
             }
 
             if (data === "duplicate"){
                 $("#loginModal").modal('hide');
                 $("#duplicateLoginAlert").show();
+                setTimeout(function() {$("#duplicateLoginAlert").hide(); }, 2000);
+
             }
 
             if (data == "success"){
                 loggedIn = true;
                 $("#loginModal").modal('hide');
                 $("#loginSuccessAlert").show();
+                setTimeout(function() {$("#loginSuccessAlert").hide(); }, 2000);
+
+
             }
         })
         return;
@@ -39,21 +47,29 @@ $(document).ready(function() {
             if (data == "success"){
                 $("#registerModal").modal('hide');
                 $("#registerAlert").show();
+                setTimeout(function() {$("#registerAlert").hide(); }, 2000);
+
         }
 
             if (data === "fail"){
                 $("#registerModal").modal('hide');
                 $("#loginAlert").show();
+                setTimeout(function() {$("#loginAlert").hide(); }, 2000);
+
             }
 
             if (data === "denied"){
                 $("#registerModal").modal('hide');
                 $("#deniedLoginAlert").show();
+                setTimeout(function() {$("#deniedLoginAlert").hide(); }, 2000);
+
             }
 
             if (data === "duplicate"){
                 $("#registerModal").modal('hide');
                 $("#duplicateLoginAlert").show();
+                setTimeout(function() {$("#duplicateLoginAlert").hide(); }, 2000);
+
             }
         })
         return;
