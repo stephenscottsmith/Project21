@@ -21,6 +21,7 @@
     <script src='/socket.io/socket.io.js'></script>
     <script src="js/handlebars-v1.3.0.js"></script>
     <script src="js/chat.js"></script>
+    <script src="js/login.js"></script>
 
     <script src="js/chat_ui.js"></script>
 
@@ -132,12 +133,13 @@
             <h3>Login to Project21</h3>
           </div>
           <div class="modal-body">
-            <form method="post" action='' name="login_form">
+            <form id="login_form">
               <p><input type="text" class="span3" name="eid" id="username" placeholder="Username"></p>
-              <p><input type = "text" class ="span3" name ="passwd" placeholder="Password"></p>
+              <p><input type = "text" class ="span3" id="passwd" placeholder="Password"></p>
               <p><button type="submit" class="btn btn-primary">Sign in</button>
                 <a href="#">Forgot Your Password?</a>
               </p>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                </form>
           </div>
           <div class="modal-footer">
@@ -147,7 +149,6 @@
         </div>
   </div>
 </div>
-
 
           
     <!-- High Scores Template -->
