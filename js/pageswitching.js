@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var source = $("#index").html();
     $("#container").append(source);
+    
     $("#count").click(function(){
         $("#container").empty();
         var counting = $("#counting-container").html();
@@ -34,15 +35,16 @@ $(document).ready(function() {
     });
 
     $("#stats").click(function() {
-        $('#container').empty();
-        var stats = $("stats-container").html();
-        
+        $("#container").empty();
+        var stats = $("#stats-container").html();
+        $("#container").prepend(stats);
+
         $.get("/highscore/10", function(data) {
             var users =  new Array();
             data.forEach(function(user) {
                 users.push(user);
             });
-            var templateUsers = { userObj: users }
+            var templateUsers = { userObj: users };
             var scores = $("#scores-container").html();
 
             var scoresTemplate = Handlebars.compile(scores);

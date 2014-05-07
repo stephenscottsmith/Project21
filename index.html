@@ -126,11 +126,15 @@ $(function() {
       <div class="clearfix"></div>
     </script>
 
-    <script id="stats-container" type="text/x-handlebars-template">
+    <script id="scores-container" type="text/x-handlebars-template">
       <div id="mainbox">
         <h1 class="bg-success">Project 21</h1>
         <div class="bg-info">
-
+          <ol>
+          {{#each userObj}}
+            <li>{{this.username}}: {{this.score}}</li>
+          {{/each}}
+          </ol>
         </div>
       </div>
     </script>
@@ -267,19 +271,6 @@ $(function() {
         </div>
   </div>
 </div>
-
-
-
-
-          
-    <!-- High Scores Template -->
-    <script id="scores-container" type="text/x-handlebars-template">
-      <ul>
-      {{#each userObj}}
-        <li>{{this.username}}: {{this.score}}</li>
-      {{/each}}
-      </ul>
-    </script>
     <!-- Chat Template -->
     <script id="chat-container" type="text/x-handlebars-template">
       <div id='content'>
