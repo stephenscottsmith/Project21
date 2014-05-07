@@ -1,3 +1,4 @@
+var loggedIn = false
 
 $(document).ready(function() {
     $("#login_form").submit(function(event){
@@ -22,6 +23,7 @@ $(document).ready(function() {
             }
 
             if (data == "success"){
+                loggedIn = true;
                 $("#loginModal").modal('hide');
                 $("#loginSuccessAlert").show();
             }
