@@ -2,7 +2,8 @@ var loggedIn = false
 var hostServer = ""
 
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    hostServer = "http://project-21.herokuapp.com/"
+    hostServer = "http://project-21.herokuapp.com/";
+    $.getScript(hostServer + '/socket.io/socket.io.js');
 }
 
 $(document).ready(function() {
