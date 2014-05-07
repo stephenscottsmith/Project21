@@ -20,13 +20,13 @@ $(document).ready(function() {
             if (data === "denied"){
                 $("#loginModal").modal('hide');
                 $("#deniedLoginAlert").show();
-
+                setTimeout(function() {$("#deniedLoginAlert").hide(); }, 2000);
             }
 
             if (data === "duplicate"){
                 $("#loginModal").modal('hide');
                 $("#duplicateLoginAlert").show();
-
+                setTimeout(function() {$("#duplicateLoginAlert").hide(); }, 2000);
             }
 
             if (data === "success"){
@@ -35,13 +35,11 @@ $(document).ready(function() {
                 $("#loginModal").modal('hide');
                 $("#loginSuccessAlert").show();
                 setTimeout(function() {$("#loginSuccessAlert").hide(); }, 2000);
-
-
             }
         })
         return;
     });
-     $("#register_form").submit(function(event){
+    $("#register_form").submit(function(event){
         event.preventDefault();
         var regUser = $("#register_name").val();
         var regPass = $("#register_pass").val();
