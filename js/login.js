@@ -6,8 +6,6 @@ $(document).ready(function() {
         var pass = $("passwd").val();
         var test = $.post("/login", { username: test, password: pass });
         test.done(function(data) {
-            alert(data);
-
             if (data === "fail"){
                 $("#loginModal").modal('hide');
                 $("#loginAlert").show();
@@ -40,8 +38,6 @@ $(document).ready(function() {
         var pass = $("password").val();
         var test = $.post("/register", { username: test, password: pass });
         test.done(function(data) {
-            alert(data);
-
             if (data == "success"){
                 $("#registerModal").modal('hide');
                 $("#registerAlert").show();
