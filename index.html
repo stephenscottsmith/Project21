@@ -148,11 +148,10 @@ $(function() {
 
     <script id="counting-container" type="text/x-handlebars-template">
       <div id="mainbox">
-        <h1 class="bg-success">Project 21</h1>
+        <h1 class="bg-success" style="font-size:12">Counting</h1>
         <div class="bg-info">
           <div id="instructions" type="text">
-            <p>Basic card counting assigns a positive, negative, or zero value to each card value available. When a card of that value is dealt, the count is adjusted by that card's counting value. Low cards increase the count as they increase the percentage of high cards in the remaining shoe, while high cards decrease it for the opposite reason. For instance, the Hi-Lo system subtracts one for each dealt ten, Jack, Queen, King or Ace, and adds one for any value 2-6. Values 7-9 are assigned a value of zero and therefore do not affect the count.</p>
-            <p class="bg-warning"><a href=http://en.wikipedia.org/wiki/Card_counting#Systems>Copied from Wikipedia</a></p>
+            <p>Basic card counting assigns a positive, negative, or zero value to each card value available. When a card of that value is dealt, the count is adjusted by that card's counting value. This counting game utilizes the standard Hi-Lo system.</p>
           </div>
           <div id="countgroup" style="display:none">
             <div id="card"></div>
@@ -161,12 +160,12 @@ $(function() {
           </div>
         </div>
         <div id="beginbtn">
-          <div class="table-responsive">
-            <table class="table table-hover bg-danger">
+          <div>
+            <table class="table table-condensed bg-danger">
               <tr>
-                <th>Speed that cards get displayed (in seconds)</th>
-                <th>Number of decks</th>
-                <th>Number of cards to count</th>
+                <th style="font-size:3">Speed that cards get displayed (in seconds)</th>
+                <th style="font-size:3">Number of decks</th>
+                <th style="font-size:3">Number of cards to count</th>
               </tr>
               <tr>
                 <td>
