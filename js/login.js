@@ -15,25 +15,23 @@ $(document).ready(function() {
             if (data === "fail"){
                 $("#loginModal").modal('hide');
                 $("#loginAlert").show();
-                setTimeout(function() {$("#loginAlert").hide(); }, 2000);
             }
 
             if (data === "denied"){
                 $("#loginModal").modal('hide');
                 $("#deniedLoginAlert").show();
-                setTimeout(function() {$("#deniedLoginAlert").hide(); }, 2000);
 
             }
 
             if (data === "duplicate"){
                 $("#loginModal").modal('hide');
                 $("#duplicateLoginAlert").show();
-                setTimeout(function() {$("#duplicateLoginAlert").hide(); }, 2000);
 
             }
 
-            if (data == "success"){
+            if (data === "success"){
                 loggedIn = true;
+                $("#loginNav").hide();
                 $("#loginModal").modal('hide');
                 $("#loginSuccessAlert").show();
                 setTimeout(function() {$("#loginSuccessAlert").hide(); }, 2000);
@@ -49,7 +47,7 @@ $(document).ready(function() {
         var regPass = $("#register_pass").val();
         var test = $.post(hostServer + "/register", { username: regUser, password: regPass });
         test.done(function(data) {
-            if (data == "success"){
+            if (data === "success"){
                 $("#registerModal").modal('hide');
                 $("#registerAlert").show();
                 setTimeout(function() {$("#registerAlert").hide(); }, 2000);
