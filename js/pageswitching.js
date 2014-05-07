@@ -34,7 +34,6 @@ $(document).ready(function() {
         $("#container").prepend(chat);
         loadChat();
     } else {
-
             $("#chatModal").modal('show');
         }
     });
