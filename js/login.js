@@ -24,7 +24,7 @@ $(document).ready(function() {
 
             }
 
-            if (data == "success"){
+            if (data === "success"){
                 loggedIn = true;
                 $("#loginNav").hide();
                 $("#loginModal").modal('hide');
@@ -42,7 +42,7 @@ $(document).ready(function() {
         var regPass = $("#register_pass").val();
         var test = $.post("/register", { username: regUser, password: regPass });
         test.done(function(data) {
-            if (data == "success"){
+            if (data === "success"){
                 $("#registerModal").modal('hide');
                 $("#registerAlert").show();
                 setTimeout(function() {$("#registerAlert").hide(); }, 2000);

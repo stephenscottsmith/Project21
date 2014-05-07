@@ -229,6 +229,8 @@ var Strategy = {
         if (playerMove === Strategy.correctMove) {
             Strategy.player.numberOfCorrectMoves += 1;
             $('#correctMoveAlert').show();
+            setTimeout(function() {$("#correctMoveAlert").hide(); }, 2000);
+
         } else {
             Strategy.player.numberOfIncorrectMoves += 1;
             var move = "";
