@@ -27,18 +27,21 @@
 
 
   <div class="alert alert-success alert-dismissable" style="display: none" id="correctMoveAlert">
-   <button type="button" class="close alert-close" >
+     <button type="button" class="close alert-close" >
       &times;
-   </button>
-   You made the right move!
-</div>
+     </button>
+      You made the right move!
+  </div>
 
- <div class="alert alert-danger alert-dismissable" style="display: none" id="standAlert">
+
+  <div class="alert alert-danger alert-dismissable" style="display: none" id="standAlert">
    <button type="button" class="close alert-close" >
       &times;
    </button>
    Wrong move! You should have chosen to stand.
  </div>
+
+
 <div class="alert alert-danger alert-dismissable" style="display: none" id="hitAlert">
    <button type="button" class="close alert-close" >
       &times;
@@ -50,6 +53,8 @@
    </button>
    Wrong move! You should have chosen to double down.
  </div>
+ 
+
  <div class="alert alert-danger alert-dismissable" style="display: none" id="splitAlert">
    <button type="button" class="close alert-close" >
       &times;
@@ -243,8 +248,8 @@ $(function() {
           </div>
           <div class="modal-body">
             <form id="register_form">
-              <p><input type="text" class="span3" name="eid" id="usrname" placeholder="Username"></p>
-              <p><input type = "password" class ="span3" id="password" placeholder="Password"></p>
+              <p><input type="text" class="span3" name="eid" id="register_name" placeholder="Username"></p>
+              <p><input type = "password" class ="span3" id="register_pass" placeholder="Password"></p>
               <p><button type="submit" class="btn btn-primary">Register</button>
               </p>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
