@@ -67,7 +67,7 @@
    <button type="button" class="close alert-close" >
       &times;
    </button>
-   You are not a member of Project21. Please <a href = "#registerModal"  data-toggle="modal">register</a> today!
+   Incorrect username or password. If you are not already a member, please <a href = "#registerModal"  data-toggle="modal">register</a> today!
  </div>
 
   <div class="alert alert-success alert-dismissable" style="display: none" id="registerAlert">
@@ -98,10 +98,16 @@
    <button type="button" class="close alert-close" >
       &times;
    </button>
-   This username is already in use.
+   That username is already in use. Please choose another.
  </div>
 
-
+ <script>
+setTimeout(function(){
+  $(this).parent().hide();
+    }, 4000);
+    })
+});
+</script>
 
 <script>
 $(function() {
@@ -245,9 +251,22 @@ $(function() {
           </div>
           <div class="modal-footer">
             New To Project21?
-            <a href = "#registerModal"  data-toggle="modal" class="btn btn-primary">Register</a>
+            <a href = "#registerModal" data-dismiss="modal" data-toggle="modal" class="btn btn-primary">Register</a>
           </div>
         </div>
+  </div>
+</div>
+
+    <!--Login Modal-->
+   <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="chatModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4>Chat is only available to members.  Please <a href = "#loginModal"  data-toggle="modal" data-dismiss="modal">Login</a> </h4>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
 

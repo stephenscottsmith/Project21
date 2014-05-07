@@ -232,10 +232,14 @@ var Strategy = {
         } else {
             Strategy.player.numberOfIncorrectMoves += 1;
             var move = "";
-            if (Strategy.correctMove === "H") {$('#hitAlert').show(); } 
-            else if (Strategy.correctMove === "S") {$('#standAlert').show();}
-            else if (Strategy.correctMove === "P") {$('#splitAlert').show();}
-            else if (Strategy.correctMove === "D") {$('#doubleDownAlert').show();}   
+            if (Strategy.correctMove === "H") {$('#hitAlert').show();setTimeout(function() {$("#hitAlert").hide(); }, 2000);
+} 
+            else if (Strategy.correctMove === "S") {$('#standAlert').show();setTimeout(function() {$("#standAlert").hide(); }, 2000);
+}
+            else if (Strategy.correctMove === "P") {$('#splitAlert').show();setTimeout(function() {$("#splitAlert").hide(); }, 2000);
+}
+            else if (Strategy.correctMove === "D") {$('#doubleDownAlert').show();setTimeout(function() {$("#doubleDownAlert").hide(); }, 2000);
+}   
         }
     },
 

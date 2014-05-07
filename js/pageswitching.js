@@ -26,12 +26,17 @@ $(document).ready(function() {
     });
 
     $("#chat").click(function() {
+        if (loggedIn){
         $("li").removeClass("active");
         $(this).addClass("active");
         var chat = $("#chat-container").html();
         $("#container").empty();
         $("#container").prepend(chat);
         loadChat();
+    } else {
+
+            $("#chatModal").modal('show');
+        }
     });
 
     $("#stats").click(function() {
