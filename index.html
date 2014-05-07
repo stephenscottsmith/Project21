@@ -84,6 +84,13 @@
    You are now logged in!
 </div>
 
+<div class="alert alert-success alert-dismissable" style="display: none" id="logoutSuccessAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   You are now logged out!
+</div>
+
 
 
  <div class="alert alert-info alert-dismissable" style="display: none" id="deniedLoginAlert">
@@ -101,13 +108,7 @@
    That username is already in use. Please choose another.
  </div>
 
- <script>
-setTimeout(function(){
-  $(this).parent().hide();
-    }, 4000);
-    })
-});
-</script>
+
 
 <script>
 $(function() {
