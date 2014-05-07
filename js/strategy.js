@@ -224,22 +224,19 @@ var Strategy = {
         $('#instructions').hide();
     }, 
 
+
     displayOutcomeMessage: function (playerMove) {
         if (playerMove === Strategy.correctMove) {
             Strategy.player.numberOfCorrectMoves += 1;
-            alert("YOU MADE THE CORRECT MOVE!!!");
+            $('#correctMoveAlert').show();
         } else {
             Strategy.player.numberOfIncorrectMoves += 1;
             var move = "";
-            if (Strategy.correctMove === "H") {move = "HIT";} 
-            else if (Strategy.correctMove === "S") {move = "STAND";}
-            else if (Strategy.correctMove === "P") {move = "SPLIT";}
-            else if (Strategy.correctMove === "D") {move = "DOUBLE DOWN";}
-
-            alert("WRONG MOVE! You should have done a " + move + "!");
+            if (Strategy.correctMove === "H") {$('#hitAlert').show(); } 
+            else if (Strategy.correctMove === "S") {$('#standAlert').show();}
+            else if (Strategy.correctMove === "P") {$('#splitAlert').show();}
+            else if (Strategy.correctMove === "D") {$('#doubleDownAlert').show();}   
         }
-        //console.log("Correct: " + Strategy.player.numberOfCorrectMoves + 
-        //            "\nIncorrect: " + Strategy.player.numberOfIncorrectMoves);
     },
 
     gameDone: function () {
@@ -251,7 +248,6 @@ var Strategy = {
 };
 
 var loadStrategy = function () {
-    //$('#beginStrategyTest').button();
 
     $('#beginStrategyTest').click(function () {
         Strategy.hideStrategyBegins();

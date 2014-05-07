@@ -21,8 +21,98 @@
     <script src='/socket.io/socket.io.js'></script>
     <script src="js/handlebars-v1.3.0.js"></script>
     <script src="js/chat.js"></script>
+    <script src="js/login.js"></script>
 
     <script src="js/chat_ui.js"></script>
+
+
+  <div class="alert alert-success alert-dismissable" style="display: none" id="correctMoveAlert">
+     <button type="button" class="close alert-close" >
+      &times;
+     </button>
+      You made the right move!
+  </div>
+
+
+  <div class="alert alert-danger alert-dismissable" style="display: none" id="standAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to stand.
+ </div>
+
+
+<div class="alert alert-danger alert-dismissable" style="display: none" id="hitAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to hit.
+ </div><div class="alert alert-danger alert-dismissable" style="display: none" id="doubleDownAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to double down.
+ </div>
+ 
+
+ <div class="alert alert-danger alert-dismissable" style="display: none" id="splitAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Wrong move! You should have chosen to split.
+ </div>
+
+ 
+ <div class="alert alert-danger alert-dismissable" style="display: none" id="loginAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   You are not a member of Project21. Please <a href = "#registerModal"  data-toggle="modal">register</a> today!
+ </div>
+
+  <div class="alert alert-success alert-dismissable" style="display: none" id="registerAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   You are now a registered member!
+</div>
+
+  <div class="alert alert-success alert-dismissable" style="display: none" id="loginSuccessAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   You are now logged in!
+</div>
+
+
+
+ <div class="alert alert-info alert-dismissable" style="display: none" id="deniedLoginAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   Access denied.
+ </div>
+
+
+ <div class="alert alert-info alert-dismissable" style="display: none" id="duplicateLoginAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   This username is already in use.
+ </div>
+
+
+
+<script>
+$(function() {
+   $(document).on('click', '.alert-close', function() {
+       $(this).parent().hide();
+   })
+});
+</script>
+
+
+
 
     <!-- Index's handlebars -->
 
@@ -96,7 +186,7 @@
             
           </div>
           <div id="buttongroup">
-            <button class="btn btn-primary" style="display:none" id="hit" type="button">Hit</button>
+            <button class="btn btn-default" style="display:none" id="hit" type="button">Hit</button>
             <button class="btn btn-default" style="display:none" id="stand" type="button">Stand</button>
             <button class="btn btn-default" style="display:none" id="split" type="button">Split</button>
             <button class="btn btn-default" style="display:none" id="double" type="button">Double Down</button>
@@ -132,21 +222,44 @@
             <h3>Login to Project21</h3>
           </div>
           <div class="modal-body">
-            <form method="post" action='' name="login_form">
+            <form id="login_form">
               <p><input type="text" class="span3" name="eid" id="username" placeholder="Username"></p>
-              <p><input type = "text" class ="span3" name ="passwd" placeholder="Password"></p>
+              <p><input type = "password" class ="span3" id="passwd" placeholder="Password"></p>
               <p><button type="submit" class="btn btn-primary">Sign in</button>
-                <a href="#">Forgot Your Password?</a>
               </p>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                </form>
           </div>
           <div class="modal-footer">
             New To Project21?
-            <a href="#" class="btn btn-primary">Register</a>
+            <a href = "#registerModal"  data-toggle="modal" class="btn btn-primary">Register</a>
           </div>
         </div>
   </div>
 </div>
+
+    <!--Login Modal-->
+   <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Register for Project21</h3>
+          </div>
+          <div class="modal-body">
+            <form id="register_form">
+              <p><input type="text" class="span3" name="eid" id="register_name" placeholder="Username"></p>
+              <p><input type = "password" class ="span3" id="register_pass" placeholder="Password"></p>
+              <p><button type="submit" class="btn btn-primary">Register</button>
+              </p>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               </form>
+          </div>
+        </div>
+  </div>
+</div>
+
+
 
 
           
