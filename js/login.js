@@ -3,9 +3,14 @@ $(document).ready(function() {
     $("#login_form").submit(function(event){
         event.preventDefault();
         var user = $("#username").val();
-        var pass = $("passwd").val();
-        var test = $.post("/login", { username: test, password: pass });
+        alert("username: " + user);
+        var pass = $("#passwd").val();
+        alert("password: " + pass);
+        var test = $.post("/login", { username: user, password: pass });
         test.done(function(data) {
+        alert("username: " + user);
+       alert("password: " + pass);
+            alert("data: " + data); 
             if (data === "fail"){
                 $("#loginModal").modal('hide');
                 $("#loginAlert").show();
@@ -34,11 +39,12 @@ $(document).ready(function() {
         var regPass = $("#register_pass").val();
         var test = $.post("/register", { username: regUser, password: regPass });
         test.done(function(data) {
+            alert("data: " + data); 
+
             if (data == "success"){
                 $("#registerModal").modal('hide');
                 $("#registerAlert").show();
         }
-
 
             if (data === "fail"){
                 $("#registerModal").modal('hide');
