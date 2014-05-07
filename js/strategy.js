@@ -4,16 +4,6 @@ var STAND = "S";
 var DOUBLE_DOWN = "D";
 var SPLIT = "P";
 
-// 1. Implement back
-// 2. Fix the constant highlight of a previous move
-// 4. Meet w/ Alex for database
-// 5. Look at login for posting a new registry
-//      a. server.js - try to use html only
-//          write a post in this file
-//      b. index.html
-//          write a form with input with username and password
-// 6. Get signed up for developer account
-
 var Strategy = {
     numberOfHandsToBePlayed: 0,
     numberOfHandsPlayed: 0,
@@ -244,6 +234,17 @@ var Strategy = {
     },
 
     gameDone: function () {
+        // if (loggedIn) {
+        //     var test = $.post("/highscores", { score: Strategy.correctMoves });
+        //     test.done(function(data) {
+        //     if (data === "fail"){
+                
+        //     }
+
+        //     if (data === "success"){
+
+        //     }
+        // }
         Strategy.clearTable();
         Strategy.hideChoiceButtons();
         Strategy.showStrategyBegins();
