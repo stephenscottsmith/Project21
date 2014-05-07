@@ -39,26 +39,29 @@
    </button>
    Wrong move! You should have chosen to stand.
  </div>
-
 <div class="alert alert-danger alert-dismissable" style="display: none" id="hitAlert">
    <button type="button" class="close alert-close" >
       &times;
    </button>
    Wrong move! You should have chosen to hit.
- </div>
-
- <div class="alert alert-danger alert-dismissable" style="display: none" id="doubleDownAlert">
+ </div><div class="alert alert-danger alert-dismissable" style="display: none" id="doubleDownAlert">
    <button type="button" class="close alert-close" >
       &times;
    </button>
    Wrong move! You should have chosen to double down.
  </div>
- 
  <div class="alert alert-danger alert-dismissable" style="display: none" id="splitAlert">
    <button type="button" class="close alert-close" >
       &times;
    </button>
    Wrong move! You should have chosen to split.
+ </div>
+
+ <div class="alert alert-info alert-dismissable" style="display: none" id="loginAlert">
+   <button type="button" class="close alert-close" >
+      &times;
+   </button>
+   You are not a member of Project21. Please register today!
  </div>
 
 
@@ -69,6 +72,9 @@ $(function() {
    })
 });
 </script>
+
+
+
 
     <!-- Index's handlebars -->
 
@@ -182,7 +188,6 @@ $(function() {
               <p><input type="text" class="span3" name="eid" id="username" placeholder="Username"></p>
               <p><input type = "password" class ="span3" id="passwd" placeholder="Password"></p>
               <p><button type="submit" class="btn btn-primary">Sign in</button>
-                <a href="#">Forgot Your Password?</a>
               </p>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                </form>
