@@ -45,7 +45,7 @@ $(document).ready(function() {
         var stats = $("#stats-container").html();
         $("#container").prepend(stats);
 
-        $.get("/highscore/10", function(data) {
+        $.get(hostServer + "/highscore/10", function(data) {
             var users =  new Array();
             data.forEach(function(user) {
                 users.push(user);
