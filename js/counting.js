@@ -99,11 +99,11 @@ var loadCount = function () {
         $('#count').hide();
         $('#submitcount').hide();
         alert("Proper count was: " + Counting.count +
-            "\nYour count was: " + $('#count').val());
+              "\nYour count was: " + $('#count').val());
 
         Counting.showBegins();
 
-    })
+    });
 
     Counting.populateSelectSpeeds();
     Blackjack.populateSelectDecks();

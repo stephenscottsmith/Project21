@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var source = $("#index").html();
     $("#container").append(source);
+    
     $("#count").click(function(){
         $("#container").empty();
         var counting = $("#counting-container").html();
@@ -25,21 +26,31 @@ $(document).ready(function() {
     });
 
     $("#chat").click(function() {
+        if (loggedIn){
         $("li").removeClass("active");
         $(this).addClass("active");
         var chat = $("#chat-container").html();
         $("#container").empty();
         $("#container").prepend(chat);
         loadChat();
+    } else {
+            $("#chatModal").modal('show');
+        }
     });
 
     $("#stats").click(function() {
+        $("li").removeClass("active");
+        $(this).addClass("active");
+        $("#container").empty();
+        var stats = $("#stats-container").html();
+        $("#container").prepend(stats);
+
         $.get("/highscore/10", function(data) {
             var users =  new Array();
             data.forEach(function(user) {
                 users.push(user);
             });
-            var templateUsers = { userObj: users }
+            var templateUsers = { userObj: users };
             var scores = $("#scores-container").html();
 
             var scoresTemplate = Handlebars.compile(scores);
@@ -49,4 +60,5 @@ $(document).ready(function() {
             console.log(templateUsers);
         });
     });
+    
 });
