@@ -1,11 +1,16 @@
 var loggedIn = false
+var hostServer = ""
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    hostServer = "http://project-21.herokuapp.com/"
+}
 
 $(document).ready(function() {
     $("#login_form").submit(function(event){
         event.preventDefault();
         var user = $("#username").val();
         var pass = $("#passwd").val();
-        var test = $.post("/login", { username: user, password: pass });
+        var test = $.post(hostServer + "/login", { username: user, password: pass });
         test.done(function(data) {
             if (data === "fail"){
                 $("#loginModal").modal('hide');
@@ -42,7 +47,7 @@ $(document).ready(function() {
         event.preventDefault();
         var regUser = $("#register_name").val();
         var regPass = $("#register_pass").val();
-        var test = $.post("/register", { username: regUser, password: regPass });
+        var test = $.post(hostServer + "/register", { username: regUser, password: regPass });
         test.done(function(data) {
             if (data == "success"){
                 $("#registerModal").modal('hide');
