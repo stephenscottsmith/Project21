@@ -63,6 +63,11 @@ var loadChat = function () {
         processUserInput(chatApp, socket);
         return false;
     });
+    $(document).keypress(function(e) {
+        if(e.which === 13) {
+            $('#chatSend').click();
+        }
+    });
 
 }
     /*$('#send-message').focus();
