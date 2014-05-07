@@ -10,25 +10,23 @@ $(document).ready(function() {
             if (data === "fail"){
                 $("#loginModal").modal('hide');
                 $("#loginAlert").show();
-                setTimeout(function() {$("#loginAlert").hide(); }, 2000);
             }
 
             if (data === "denied"){
                 $("#loginModal").modal('hide');
                 $("#deniedLoginAlert").show();
-                setTimeout(function() {$("#deniedLoginAlert").hide(); }, 2000);
 
             }
 
             if (data === "duplicate"){
                 $("#loginModal").modal('hide');
                 $("#duplicateLoginAlert").show();
-                setTimeout(function() {$("#duplicateLoginAlert").hide(); }, 2000);
 
             }
 
             if (data == "success"){
                 loggedIn = true;
+                $("#loginNav").hide();
                 $("#loginModal").modal('hide');
                 $("#loginSuccessAlert").show();
                 setTimeout(function() {$("#loginSuccessAlert").hide(); }, 2000);
