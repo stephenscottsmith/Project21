@@ -35,6 +35,8 @@ $(document).ready(function() {
     });
 
     $("#stats").click(function() {
+        $("li").removeClass("active");
+        $(this).addClass("active");
         $("#container").empty();
         var stats = $("#stats-container").html();
         $("#container").prepend(stats);
